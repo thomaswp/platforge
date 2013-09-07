@@ -33,6 +33,13 @@
       <version>${project.version}</version>
       <classifier>sources</classifier>
     </dependency>
+	
+	<dependency>
+      <groupId>com.twp</groupId>
+      <artifactId>platforge-data</artifactId>
+      <version>${project.version}</version>
+      <classifier>sources</classifier>
+    </dependency>
 
     <dependency>
       <groupId>com.twp</groupId>
@@ -85,9 +92,13 @@
 
   <build>
     <plugins>
+	
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
+		<configuration>
+		  <disableClassMetadata>false</disableClassMetadata>
+		</configuration>
         <executions>
           <execution>
             <phase>prepare-package</phase>

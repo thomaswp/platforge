@@ -1,0 +1,2 @@
+-.areEqual()
+- make local storage for MapEditorView$EditorData, Tutorial and copydata

@@ -1,6 +1,7 @@
 <module rename-to='platforge'>
   <inherits name='playn.PlayN'/>
   <inherits name='PlatforgeAssets'/>
+  <inherits name='edu.elon.honors.price.PlatforgeData'/>
 
   <source path='core'/>
   <source path='html'/>

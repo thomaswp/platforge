@@ -9,32 +9,36 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>platforge-core</artifactId>
+  <artifactId>platforge-data</artifactId>
   <packaging>jar</packaging>
-  <name>Platforge Core</name>
+  <name>Platforge Data</name>
 
   <dependencies>
-    <dependency>
-      <groupId>com.googlecode.playn</groupId>
-      <artifactId>playn-core</artifactId>
-      <version>${playn.version}</version>
-    </dependency>
-	
-	<dependency>
-      <groupId>com.threerings</groupId>
-      <artifactId>tripleplay</artifactId>
-      <version>${playn.version}</version>
-    </dependency>
-	
-	<dependency>
-      <groupId>com.twp</groupId>
-      <artifactId>platforge-data</artifactId>
-      <version>${project.version}</version>
-    </dependency>
   </dependencies>
 
   <build>
     <plugins>
+	<plugin>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>build-helper-maven-plugin</artifactId>
+		<version>1.4</version>
+		<executions>
+			<execution>
+			<id>add-gamedata</id>
+			<phase>generate-sources</phase>
+			<goals>
+				<goal>add-source</goal>
+			</goals>
+			<configuration>
+				<sources>
+					<source>${basedir}/../../GameData/src</source>
+					<source>${basedir}/../../Eujeux/src_shared</source>
+				</sources>
+			</configuration>
+			<!-- [...] -->
+			</execution>
+		</executions>
+	</plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
