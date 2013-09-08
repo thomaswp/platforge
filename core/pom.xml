@@ -21,6 +21,12 @@
     </dependency>
 	
 	<dependency>
+      <groupId>org.jbox2d</groupId>
+      <artifactId>jbox2d-library</artifactId>
+      <version>2.2.1.1</version>
+    </dependency>
+	
+	<dependency>
       <groupId>com.threerings</groupId>
       <artifactId>tripleplay</artifactId>
       <version>${playn.version}</version>

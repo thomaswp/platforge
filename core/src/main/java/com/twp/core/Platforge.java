@@ -1,7 +1,11 @@
 package com.twp.core;
 
 import static playn.core.PlayN.regularExpression;
+
+import com.twp.platform.PlatformLogic;
+
 import playn.core.Game;
+import edu.elon.honors.price.data.PlatformGame;
 import edu.elon.honors.price.game.Formatter;
 import edu.elon.honors.price.game.Formatter.Impl;
 import edu.elon.honors.price.game.Logic;
@@ -10,7 +14,7 @@ import edu.elon.honors.price.input.Input;
 
 public class Platforge extends Game.Default {
 
-	private Logic logic = new PlatforgeLogic();
+	private Logic logic;
 	
 	public Platforge() {
 		super(16); // call update every 33ms (30 times per second)
@@ -38,8 +42,8 @@ public class Platforge extends Game.Default {
 			}
 		};
 		
+		logic = new PlatformLogic(new PlatformGame());
 		logic.initialize();
-
 	}
 
 	@Override

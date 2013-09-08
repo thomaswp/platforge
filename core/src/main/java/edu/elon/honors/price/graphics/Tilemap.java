@@ -1,13 +1,13 @@
 package edu.elon.honors.price.graphics;
 
 import playn.core.Image;
-import pythagoras.i.Rectangle;
 import edu.elon.honors.price.game.Cache;
+import edu.elon.honors.price.game.Rect;
 
 public class Tilemap {
 	private Image[] tiles;
 	private int[][] map;
-	private Rectangle displayRect;
+	private Rect displayRect;
 	private Viewport viewport;
 	private Sprite[][] sprites;
 	private int rows, columns, tileWidth, tileHeight;
@@ -36,7 +36,7 @@ public class Tilemap {
 		scroll(0, scrollY - this.scrollY);
 	}
 
-	public Rectangle getDisplayRect() {
+	public Rect getDisplayRect() {
 		return displayRect;
 	}
 
@@ -141,7 +141,7 @@ public class Tilemap {
 	}
 
 	public Tilemap(Image tilesBitmap, int tileWidth, int tileHeight, int tileSpacing, 
-			int[][] map, Rectangle displayRect, int z) {
+			int[][] map, Rect displayRect, int z) {
 		this.tiles = createTiles(tilesBitmap, tileWidth, tileHeight, tileSpacing);
 		this.tileWidth = tileWidth;
 		this.tileHeight = tileHeight;

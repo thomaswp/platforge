@@ -2,8 +2,9 @@ package edu.elon.honors.price.graphics;
 
 import java.util.ArrayList;
 
-import pythagoras.i.Rectangle;
 import edu.elon.honors.price.game.Debug;
+import edu.elon.honors.price.game.Rect;
+import edu.elon.honors.price.game.RectF;
 import static playn.core.PlayN.*;
 
 public class Graphics {
@@ -76,12 +77,12 @@ public class Graphics {
 		return height;
 	}
 	
-	public static Rectangle getRect() {
-		return new Rectangle(0, 0, getWidth(), getHeight());
+	public static Rect getRect() {
+		return new Rect(0, 0, getWidth(), getHeight());
 	}
 	
-	public static pythagoras.f.Rectangle getRectF() {
-		return new pythagoras.f.Rectangle(0, 0, getWidth(), getHeight());
+	public static RectF getRectF() {
+		return new RectF(0, 0, getWidth(), getHeight());
 	}
 	
 	public static boolean isShowingFPS() {

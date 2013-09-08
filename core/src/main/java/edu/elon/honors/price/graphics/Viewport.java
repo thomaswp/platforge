@@ -5,8 +5,9 @@ import static playn.core.PlayN.graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.elon.honors.price.game.Rect;
+import edu.elon.honors.price.game.RectF;
 import playn.core.GroupLayer;
-import pythagoras.i.Rectangle;
 
 public class Viewport implements Comparable<Viewport> {
 
@@ -16,8 +17,8 @@ public class Viewport implements Comparable<Viewport> {
 
 	private int width, height;
 
-	private Rectangle rect = new Rectangle();
-	private pythagoras.f.Rectangle rectF = new pythagoras.f.Rectangle();
+	private Rect rect = new Rect();
+	private RectF rectF = new RectF();
 	
 	protected GroupLayer layer;
 	
@@ -185,20 +186,20 @@ public class Viewport implements Comparable<Viewport> {
 	 * Gets the rect that the Viewport fills.
 	 * @return
 	 */
-	public Rectangle getRect() {
+	public Rect getRect() {
 		if (!hasRect()) {
-			rect.setBounds(0, 0, Graphics.getWidth(), Graphics.getHeight());
+			rect.set(0, 0, Graphics.getWidth(), Graphics.getHeight());
 		} else {
-			rect.setBounds((int)getX(), (int)getY(), width + (int)getX(), height + (int)getY());
+			rect.set((int)getX(), (int)getY(), width + (int)getX(), height + (int)getY());
 		}
 		return rect;
 	}
 
-	public pythagoras.f.Rectangle getRectF() {
+	public RectF getRectF() {
 		if (!hasRect()) {
-			rectF.setBounds(0, 0, Graphics.getWidth(), Graphics.getHeight());
+			rectF.set(0, 0, Graphics.getWidth(), Graphics.getHeight());
 		} else {
-			rectF.setBounds(getX(), getY(), width + getX(), height + getY());
+			rectF.set(getX(), getY(), width + getX(), height + getY());
 		}
 		return rectF;
 	}
@@ -267,8 +268,8 @@ public class Viewport implements Comparable<Viewport> {
 	}
 
 	public boolean isSpriteInBounds(Sprite sprite) {
-		pythagoras.f.Rectangle spriteRect = sprite.getRect();
-		pythagoras.f.Rectangle viewportRect = getRectF();
+		RectF spriteRect = sprite.getRect();
+		RectF viewportRect = getRectF();
 		return !(spriteRect.minX() > viewportRect.maxX() ||
 				spriteRect.maxX() < viewportRect.minX() ||
 				spriteRect.minY() > viewportRect.maxY() ||

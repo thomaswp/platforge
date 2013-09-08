@@ -1,10 +1,10 @@
 package edu.elon.honors.price.graphics;
 
+import edu.elon.honors.price.game.Rect;
 import playn.core.Image;
-import pythagoras.i.Rectangle;
 
 public class BackgroundSprite {
-	private Rectangle fullRect;
+	private Rect fullRect;
 	private Image tile;
 	private Sprite[][] sprites;
 	private Viewport viewport;
@@ -50,11 +50,11 @@ public class BackgroundSprite {
 		viewport.setY(y);
 	}
 	
-	public Rectangle getRect() {
+	public Rect getRect() {
 		return viewport.getRect();
 	}
 	
-	public BackgroundSprite(Image bitmap, Rectangle rect, int z) {
+	public BackgroundSprite(Image bitmap, Rect rect, int z) {
 		viewport = createViewport(rect, z);
 		fullRect = viewport.getRect();
 		tile = bitmap;
@@ -94,7 +94,7 @@ public class BackgroundSprite {
 		Graphics.getViewports().remove(viewport);
 	}
 
-	private static Viewport createViewport(Rectangle rect, int z) {
+	private static Viewport createViewport(Rect rect, int z) {
 		Viewport vp = new Viewport(rect.minX(), rect.minY(), rect.width(), rect.height());
 		vp.setZ(z);
 		return vp;

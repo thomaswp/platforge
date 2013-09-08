@@ -1,12 +1,7 @@
 package com.twp.java;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 
 import playn.core.PlayN;
 import playn.java.JavaPlatform;
@@ -28,6 +23,8 @@ public class PlatforgeJava {
 		
 
 		JavaPlatform.Config config = new JavaPlatform.Config();
+		config.width = 1000;
+		config.height = 700;
 		// use config to customize the Java platform, if needed
 		JavaPlatform.register(config);
 		PlayN.run(new Platforge());
