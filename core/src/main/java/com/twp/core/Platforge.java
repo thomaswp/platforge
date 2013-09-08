@@ -1,11 +1,16 @@
 package com.twp.core;
 
+import static playn.core.PlayN.keyboard;
+import static playn.core.PlayN.pointer;
 import static playn.core.PlayN.regularExpression;
+import static playn.core.PlayN.touch;
+import playn.core.Game;
+import playn.core.PlayN;
 
 import com.twp.platform.PlatformLogic;
 
-import playn.core.Game;
 import edu.elon.honors.price.data.PlatformGame;
+import edu.elon.honors.price.game.Debug;
 import edu.elon.honors.price.game.Formatter;
 import edu.elon.honors.price.game.Formatter.Impl;
 import edu.elon.honors.price.game.Logic;
@@ -15,9 +20,15 @@ import edu.elon.honors.price.input.Input;
 public class Platforge extends Game.Default {
 
 	private Logic logic;
+	private PlatformGame game;
 	
 	public Platforge() {
-		super(16); // call update every 33ms (30 times per second)
+		this(new PlatformGame());
+	}
+	
+	public Platforge(PlatformGame game) {
+		super(16);
+		this.game = game;
 	}
 
 	@Override
@@ -42,7 +53,16 @@ public class Platforge extends Game.Default {
 			}
 		};
 		
-		logic = new PlatformLogic(new PlatformGame());
+//		if (touch().hasTouch()) {
+//			touch().setListener(Input.getInstance());
+//		} else {
+			pointer().setListener(Input.getInstance());
+//		}
+		keyboard().setListener(Input.getInstance());
+		
+		Graphics.resize(PlayN.graphics().width(), PlayN.graphics().height());
+		
+		logic = new PlatformLogic(game);
 		logic.initialize();
 	}
 
@@ -51,10 +71,17 @@ public class Platforge extends Game.Default {
 		Input.update(delta);
 		logic.update(delta);
 		Graphics.update(delta);
+		time += delta;
+		if (time > 1000) {
+			Debug.write("%d FPS", frames);
+			time -= 1000;
+			frames = 0;
+		}
 	}
 
+	int frames; long time;
 	@Override
 	public void paint(float alpha) {
-		// the background automatically paints itself, so no need to do anything here!
+		frames++;
 	}
 }

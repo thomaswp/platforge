@@ -13,9 +13,10 @@ import edu.elon.honors.price.data.PlatformGame;
 public class PlatforgeJava {
 
 	public static void main(String[] args) {
+		PlatformGame game = new PlatformGame();
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tutorial1.game"));
-			PlatformGame game = (PlatformGame) ois.readObject();
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tutorial2.game"));
+			game = (PlatformGame) ois.readObject();
 			ois.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -27,6 +28,6 @@ public class PlatforgeJava {
 		config.height = 700;
 		// use config to customize the Java platform, if needed
 		JavaPlatform.register(config);
-		PlayN.run(new Platforge());
+		PlayN.run(new Platforge(game));
 	}
 }

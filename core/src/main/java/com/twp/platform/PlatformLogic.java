@@ -16,7 +16,7 @@ import edu.elon.honors.price.game.Debug;
 import edu.elon.honors.price.game.Logic;
 import edu.elon.honors.price.game.RectF;
 import edu.elon.honors.price.graphics.Graphics;
-import edu.elon.honors.price.graphics.Sprite;
+import edu.elon.honors.price.graphics.ImageSprite;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.input.Button;
 import edu.elon.honors.price.input.Input;
@@ -39,12 +39,12 @@ public class PlatformLogic implements Logic {
 
 	private LinkedList<JoyStick> joysticks = new LinkedList<JoyStick>();
 	private LinkedList<Button> buttons = new LinkedList<Button>();
-	private Sprite hero;
+	private ImageSprite hero;
 	private Vector cameraOffset = new Vector(), joystickPull = new Vector();
 	private Vector offset;
 
-	private LinkedList<Sprite> drawScreenSprites = new LinkedList<Sprite>();
-	private LinkedList<Sprite> drawWorldSprites = new LinkedList<Sprite>();
+	private LinkedList<ImageSprite> drawScreenSprites = new LinkedList<ImageSprite>();
+	private LinkedList<ImageSprite> drawWorldSprites = new LinkedList<ImageSprite>();
 	private Viewport drawViewport;
 	
 	Vec2 tempVector = new Vec2();
@@ -255,7 +255,7 @@ public class PlatformLogic implements Logic {
 		int right = Math.max(x1, x2), bot = Math.max(y1, y2);
 		int width = right - left, height = bot - top;
 		CanvasImage bmp = PlayN.graphics().createImage(width, height);
-		Sprite s = new Sprite(drawViewport, bmp);
+		ImageSprite s = new ImageSprite(drawViewport, bmp);
 		s.getBitmapCanvas().setStrokeColor(color);
 		s.getBitmapCanvas().setStrokeWidth(3);
 		s.getBitmapCanvas().drawLine(x1 - left, y1 - top, x2 - left, y2 - top);
@@ -267,7 +267,7 @@ public class PlatformLogic implements Logic {
 	public void drawCircle(int x, int y, int rad, boolean world, int color, boolean filled) {
 		Debug.write("Draw: %d %d %d", x, y, rad);
 		CanvasImage bmp = PlayN.graphics().createImage(rad * 2, rad * 2);
-		Sprite s = new Sprite(drawViewport, bmp);
+		ImageSprite s = new ImageSprite(drawViewport, bmp);
 		if (filled) {
 			s.getBitmapCanvas().setFillColor(color);
 			s.getBitmapCanvas().fillCircle(rad, rad, rad);
@@ -286,7 +286,7 @@ public class PlatformLogic implements Logic {
 		int right = Math.max(x1, x2), bot = Math.max(y1, y2);
 		int width = right - left, height = bot - top;
 		CanvasImage bmp = PlayN.graphics().createImage(width, height);
-		Sprite s = new Sprite(drawViewport, bmp);
+		ImageSprite s = new ImageSprite(drawViewport, bmp);
 		if (filled) {
 			s.getBitmapCanvas().setFillColor(color);
 			s.getBitmapCanvas().fillRect(0, 0, width, height);
@@ -300,7 +300,7 @@ public class PlatformLogic implements Logic {
 		addDrawSprite(s, world);
 	}
 
-	private void addDrawSprite(Sprite s, boolean world) {
+	private void addDrawSprite(ImageSprite s, boolean world) {
 		if (world) {
 			drawWorldSprites.add(s);
 		} else {
@@ -377,12 +377,11 @@ public class PlatformLogic implements Logic {
 			}
 		}
 		
-		//Debug.write(offset.toString());
 
 
 		physics.updateScroll(offset);
 		for (int i = 0; i < drawScreenSprites.size(); i++) {
-			Sprite sprite = drawScreenSprites.get(i);
+			ImageSprite sprite = drawScreenSprites.get(i);
 			sprite.setX(offset.getX());
 			sprite.setY(offset.getY());
 		}

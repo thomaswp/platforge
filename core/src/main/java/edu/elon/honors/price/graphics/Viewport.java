@@ -8,6 +8,9 @@ import java.util.List;
 import edu.elon.honors.price.game.Rect;
 import edu.elon.honors.price.game.RectF;
 import playn.core.GroupLayer;
+import playn.core.ImmediateLayer;
+import playn.core.ImmediateLayer.Renderer;
+import playn.core.Surface;
 
 public class Viewport implements Comparable<Viewport> {
 
@@ -153,6 +156,7 @@ public class Viewport implements Comparable<Viewport> {
 	 */
 	public void setWidth(int width) {
 		this.width = width;
+		refreshClip();
 	}
 
 	/**
@@ -171,6 +175,7 @@ public class Viewport implements Comparable<Viewport> {
 	 */
 	public void setHeight(int height) {
 		this.height = height;
+		refreshClip();
 	}
 
 	/**
@@ -245,8 +250,30 @@ public class Viewport implements Comparable<Viewport> {
 		setX(x); setY(y);
 		this.width = width;
 		this.height = height;
+		refreshClip();
 
 		Graphics.addViewport(this);
+	}
+	
+	private void refreshClip() {
+		layer.clear();
+		
+		Renderer renderer = new Renderer() {
+			@Override
+			public void render(Surface surface) {
+				for (int i = 0; i < sprites.size(); i++) {
+					surface.drawLayer(sprites.get(i).layer);
+				}
+			}
+		};
+		
+		ImmediateLayer immediateLayer;
+		if (width == STRETCH || height == STRETCH) {
+			immediateLayer = graphics().createImmediateLayer(renderer);
+		} else {
+			immediateLayer = graphics().createImmediateLayer(width, height, renderer);
+		}
+		layer.add(immediateLayer);
 	}
 
 	/**
@@ -254,7 +281,6 @@ public class Viewport implements Comparable<Viewport> {
 	 * @param sprite the Sprite
 	 */
 	public void addSprite(Sprite sprite) {
-		layer.add(sprite.imageLayer);
 		sprites.add(sprite);
 	}
 
@@ -263,11 +289,10 @@ public class Viewport implements Comparable<Viewport> {
 	 * @param sprite The Sprite
 	 */
 	public void removeSprite(Sprite sprite) {
-		layer.remove(sprite.imageLayer);
 		sprites.remove(sprite);
 	}
 
-	public boolean isSpriteInBounds(Sprite sprite) {
+	public boolean isSpriteInBounds(ImageSprite sprite) {
 		RectF spriteRect = sprite.getRect();
 		RectF viewportRect = getRectF();
 		return !(spriteRect.minX() > viewportRect.maxX() ||

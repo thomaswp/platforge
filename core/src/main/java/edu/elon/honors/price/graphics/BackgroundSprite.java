@@ -6,7 +6,7 @@ import playn.core.Image;
 public class BackgroundSprite {
 	private Rect fullRect;
 	private Image tile;
-	private Sprite[][] sprites;
+	private ImageSprite[][] sprites;
 	private Viewport viewport;
 	
 	
@@ -62,14 +62,14 @@ public class BackgroundSprite {
 	}
 	
 	public void setScroll(float x, float y) {
-		Sprite corner = sprites[0][0];
+		ImageSprite corner = sprites[0][0];
 		scroll(x + corner.getX(), y + corner.getY());
 	}
 	
 	public void scroll(float x, float y) {
 		shiftAll(-x, -y);
 		
-		Sprite corner = sprites[0][0];
+		ImageSprite corner = sprites[0][0];
 		while (corner.getX() > 0) {
 			shiftAll(-tile.width(), 0);
 		}
@@ -104,7 +104,7 @@ public class BackgroundSprite {
 		for (int i = 0; i < sprites.length; i++) {
 			for (int j = 0; j < sprites[i].length; j++) {
 				if (sprites[i][j] != null) {
-					Sprite s = sprites[i][j];
+					ImageSprite s = sprites[i][j];
 					s.setX(Math.round(s.getX() + x));
 					s.setY(Math.round(s.getY() + y));
 				}
@@ -116,11 +116,11 @@ public class BackgroundSprite {
 		int rows = (fullRect.height() - 1) / (int)tile.height() + 2; //round up + 1
 		int cols = (fullRect.width() - 1) / (int)tile.width() + 2;
 		
-		sprites = new Sprite[rows][cols];
+		sprites = new ImageSprite[rows][cols];
 		
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				sprites[i][j] = new Sprite(viewport, tile);
+				sprites[i][j] = new ImageSprite(viewport, tile);
 				sprites[i][j].setX(j * (int)tile.width());
 				sprites[i][j].setY(i * (int)tile.height());
 			}

@@ -9,7 +9,7 @@ public class Tilemap {
 	private int[][] map;
 	private Rect displayRect;
 	private Viewport viewport;
-	private Sprite[][] sprites;
+	private ImageSprite[][] sprites;
 	private int rows, columns, tileWidth, tileHeight;
 	private float scrollX, scrollY;
 	
@@ -73,7 +73,7 @@ public class Tilemap {
 		//grid.setOpacity(opacity);
 	}
 
-	public Sprite[][] getSprites() {
+	public ImageSprite[][] getSprites() {
 		return sprites;
 	}
 	
@@ -120,7 +120,7 @@ public class Tilemap {
 					if (map[i][j] > 0) {
 						if (sprites[i][j] == null) {
 							int id = map[i][j];
-							Sprite s = new Sprite(viewport, tiles[id]);
+							ImageSprite s = new ImageSprite(viewport, tiles[id]);
 							s.setX(j * tileWidth);
 							s.setY(i * tileHeight);
 							s.setOriginX(scrollX);
@@ -151,7 +151,7 @@ public class Tilemap {
 		this.rows = map.length;
 		this.columns = map[0].length;
 		this.map = new int[rows][columns];
-		this.sprites = new Sprite[rows][columns];
+		this.sprites = new ImageSprite[rows][columns];
 		setMap(map);
 	}
 	
@@ -187,7 +187,7 @@ public class Tilemap {
 	private void updateScroll(boolean updateVisible) {
 		for (int i = 0; i < sprites.length; i++) {
 			for (int j = 0; j < sprites[i].length; j++) {
-				Sprite sprite = sprites[i][j];
+				ImageSprite sprite = sprites[i][j];
 				if (sprite != null) {
 					sprite.setOriginX(scrollX);
 					sprite.setOriginY(scrollY);

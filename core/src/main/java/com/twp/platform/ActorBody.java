@@ -21,15 +21,14 @@ import edu.elon.honors.price.data.BehaviorInstance;
 import edu.elon.honors.price.data.Data;
 import edu.elon.honors.price.data.MapClass;
 import edu.elon.honors.price.data.MapClass.CollidesWith;
-import edu.elon.honors.price.game.Debug;
-import edu.elon.honors.price.graphics.Sprite;
+import edu.elon.honors.price.graphics.ImageSprite;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.input.Input;
 import edu.elon.honors.price.physics.Vector;
 
 public class ActorBody extends PlatformBody {
 	
-	private Sprite sprite;
+	private ImageSprite sprite;
 	private ActorClass actor;
 	private boolean isHero;
 	private int directionX;
@@ -104,7 +103,7 @@ public class ActorBody extends PlatformBody {
 //	}
 
 	@Override
-	public Sprite getSprite() {
+	public ImageSprite getSprite() {
 		return sprite;
 	}
 
@@ -144,10 +143,9 @@ public class ActorBody extends PlatformBody {
 //			c.drawOval(new RectF(0, 0, bmp.getWidth(), bmp.getHeight()), p);
 //			//c.drawRect(new Rect(0, 0, bmp.getWidth() - 1, bmp.getHeight() - 1), p);
 //		}
-		this.sprite = new Sprite(viewport, frames[ActorAnimator.Action.WalkingRight.ordinal()][0]);
+		this.sprite = new ImageSprite(viewport, frames[ActorAnimator.Action.WalkingRight.ordinal()][0]);
 		sprite.setX(startX); sprite.setY(startY);
 		this.sprite.centerOrigin();
-		Debug.write(actor.imageName + ", " + actor.zoom);
 		this.sprite.setZoom(actor.zoom);
 		this.sprite.setBaseColor(actor.color);
 		super.sprite = sprite;
@@ -329,7 +327,7 @@ public class ActorBody extends PlatformBody {
 			//}
 			stopped = false;
 			if (isHero) {
-				Input.getVibrator().vibrate(actor.stunDuration / 2);
+				Input.vibrate(actor.stunDuration / 2);
 			}
 			onLadder = false;
 		}
@@ -349,10 +347,10 @@ public class ActorBody extends PlatformBody {
 		Vec2 gHat = temp.set(world.getGravity());
 		gHat.normalize();
 		//Project b onto gravity to erase horizontal velocity
-		velocity.set(gHat.mul(VectorUtils.dot(gHat, velocity)));
+		velocity.set(gHat.mulLocal(VectorUtils.dot(gHat, velocity)));
 		Vec2 horizontal = VectorUtils.rotateDeg(temp.set(world.getGravity()), -90);
-		horizontal.mul(hv / horizontal.length());
-		velocity.add(horizontal);
+		horizontal.mulLocal(hv / horizontal.length());
+		velocity.addLocal(horizontal);
 		
 		setVelocity(velocity);
 	}
@@ -366,11 +364,11 @@ public class ActorBody extends PlatformBody {
 		Vec2 velocity = getVelocity();
 		Vec2 gHat = VectorUtils.rotateDeg(temp.set(world.getGravity()), -90);
 		//Project b onto gravity to erase horizontal velocity
-		velocity.set(gHat.mul(VectorUtils.dot(gHat, velocity)));
+		velocity.set(gHat.mulLocal(VectorUtils.dot(gHat, velocity)));
 		//Debug.write("%f, %f", newVelocity.x, newVelocity.y);
 		Vec2 vertical = VectorUtils.rotateDeg(temp.set(world.getGravity()), 180);
-		vertical.mul(hv / vertical.length());
-		velocity.add(vertical);
+		vertical.mulLocal(hv / vertical.length());
+		velocity.addLocal(vertical);
 		
 		setVelocity(velocity);
 	}

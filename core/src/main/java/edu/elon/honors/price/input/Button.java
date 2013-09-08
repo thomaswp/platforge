@@ -1,7 +1,8 @@
 package edu.elon.honors.price.input;
 
 import playn.core.Color;
-import edu.elon.honors.price.graphics.Sprite;
+import edu.elon.honors.price.game.Debug;
+import edu.elon.honors.price.graphics.ImageSprite;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.physics.Vector;
 
@@ -9,7 +10,7 @@ public class Button extends UIControl {
 	private Viewport viewport;
 	private float radius;
 	private Vector center, touch, dragStart, pull, temp;
-	private Sprite outer, top;
+	private ImageSprite outer, top;
 	private int pid = -1;
 	private boolean tapped;
 	private boolean released;
@@ -32,8 +33,6 @@ public class Button extends UIControl {
 	}
 	
 	public Button(int x, int y, int z, int radius, int color) {
-		Input.setMultiTouch(true);
-		
 		viewport = new Viewport();
 		viewport.setZ(z);
 		center = new Vector(x, y);
@@ -43,12 +42,12 @@ public class Button extends UIControl {
 		dragStart = new Vector();
 		this.radius = radius;
 
-		outer = new Sprite(viewport, x, y, radius * 2, radius * 2);
+		outer = new ImageSprite(viewport, x, y, radius * 2, radius * 2);
 		outer.centerOrigin();
 		outer.getBitmapCanvas().setFillColor(color);
 		outer.getBitmapCanvas().fillCircle(radius, radius, radius);
 				
-		top = new Sprite(viewport, x, y, radius * 2, radius * 2);
+		top = new ImageSprite(viewport, x, y, radius * 2, radius * 2);
 		top.centerOrigin();
 		top.getBitmapCanvas().setFillColor(Color.argb(100, 0, 0, 0));
 		top.getBitmapCanvas().fillCircle(radius, radius, radius);
@@ -63,10 +62,11 @@ public class Button extends UIControl {
 			temp.set(touch);
 			temp.subtract(center);
 			if (temp.magnitude() <= radius) {
+				Debug.write("!");
 				dragStart.set(touch);
 				pid = tapped;
 				this.tapped = true;
-				Input.getVibrator().vibrate(40);
+				Input.vibrate(40);
 			}
 		}
 		if (pid >= 0 && Input.isTouchDown(pid)) {

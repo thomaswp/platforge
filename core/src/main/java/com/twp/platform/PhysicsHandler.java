@@ -33,7 +33,7 @@ import edu.elon.honors.price.data.ObjectInstance;
 import edu.elon.honors.price.data.PlatformGame;
 import edu.elon.honors.price.data.Tileset;
 import edu.elon.honors.price.graphics.Graphics;
-import edu.elon.honors.price.graphics.Sprite;
+import edu.elon.honors.price.graphics.ImageSprite;
 import edu.elon.honors.price.graphics.Tilemap;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.physics.Vector;
@@ -68,7 +68,7 @@ public class PhysicsHandler {
 	private Vec2 gravity = new Vec2();
 
 	private HashMap<Fixture, PlatformBody> bodyMap = new HashMap<Fixture, PlatformBody>();
-	private HashMap<Fixture, Sprite> levelMap = new HashMap<Fixture, Sprite>();
+	private HashMap<Fixture, ImageSprite> levelMap = new HashMap<Fixture, ImageSprite>();
 
 	private float mapFloor, mapRight, mapLeft;
 
@@ -108,7 +108,7 @@ public class PhysicsHandler {
 		return bodyMap.get(fixture);
 	}
 
-	public Sprite getFixtureTile(Fixture fixture) {
+	public ImageSprite getFixtureTile(Fixture fixture) {
 		return levelMap.get(fixture);
 	}
 
@@ -370,11 +370,11 @@ public class PhysicsHandler {
 			if (!map.layers[k].active)
 				continue;
 
-			Sprite[][] sprites = layers[k].getSprites();
+			ImageSprite[][] sprites = layers[k].getSprites();
 
 			for (int i = 0; i < sprites.length; i++) {
 				for (int j = 0; j < sprites[i].length; j++) {
-					Sprite s = sprites[i][j];
+					ImageSprite s = sprites[i][j];
 					if (s != null) {
 						BodyDef tileDef = new BodyDef();
 						float x = (s.getX() + s.getWidth() / 2) / SCALE;
@@ -667,7 +667,7 @@ public class PhysicsHandler {
 						bodyA.doWallContact(fixtureB);
 					}
 				} else {
-					Sprite spriteB = levelMap.get(fixtureB);
+					ImageSprite spriteB = levelMap.get(fixtureB);
 					doPlatformContact(bodyA, fixtureB, spriteB, contact.normal);
 				}
 			}
@@ -689,7 +689,7 @@ public class PhysicsHandler {
 	}
 	
 	Vec2 tempVector = new Vec2();
-	private void doPlatformContact(PlatformBody bodyA, Fixture fixtureB, Sprite spriteB,
+	private void doPlatformContact(PlatformBody bodyA, Fixture fixtureB, ImageSprite spriteB,
 			Vec2 normal) {
 		
 		if (world.getGravity().length() == 0) {

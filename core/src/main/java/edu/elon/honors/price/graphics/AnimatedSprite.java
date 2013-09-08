@@ -1,56 +1,64 @@
 package edu.elon.honors.price.graphics;
 
+import static playn.core.PlayN.graphics;
 import playn.core.Image;
-
+import playn.core.ImmediateLayer;
+import playn.core.ImmediateLayer.Renderer;
+import playn.core.Surface;
+import edu.elon.honors.price.physics.Vector;
 
 public class AnimatedSprite extends Sprite {
-	private int frame;
-	private Image[] frames;
-	private int animFrameLength, animStartFrame, animNumFrames, animTime = -1;
+
+	private Image image;
+	private Vector[][] frames;
+	private int width, height;
+	private int frameRow, frameCol;
 	
-	public int getFrame() {
-		return frame;
+	public int getFrameRow() {
+		return frameRow;
+	}
+	
+	public int getFrameCol() {
+		return frameCol;
 	}
 
-	public void setFrame(int frame) {
-		this.frame = frame;
-		StopAnimation();
-		setBitmap(frames[frame]);
-	}
-
-	public Image[] getFrames() {
-		return frames;
+	public void setFrame(int frameRow, int frameCol) {
+		this.frameRow = frameRow;
+		this.frameCol = frameCol;
 	}
 	
-	public boolean isAnimated() {
-		return animTime >= 0;
-	}
-	
-	public AnimatedSprite(Viewport viewport, Image[] frames, float x, float y) {
-		super(viewport, frames[0]);
+	public AnimatedSprite(Viewport viewport, Image image, Vector[][] frames, 
+			int x, int y, int width, int height) {
+		super(viewport);
 		setX(x);
 		setY(y);
+		this.image = image;
 		this.frames = frames;
+		this.width = width;
+		this.height = height;
+		
+		ImmediateLayer layer = graphics().createImmediateLayer(width, height, new Renderer() {
+			@Override
+			public void render(Surface surface) {
+				draw(surface);
+			}
+		});
+		super.layer = layer;
+		addToViewport();
 	}
 	
-	public void Animate(int frameLength, int startFrame, int numFrames) {
-		animTime = 0;
-		animFrameLength = frameLength;
-		animStartFrame = startFrame;
-		animNumFrames = numFrames;
+	private void draw(Surface surface) {
+		Vector offset = frames[frameRow][frameCol];
+		surface.drawImage(image, offset.getX(), offset.getY());
 	}
-	
-	public void StopAnimation() {
-		animTime = -1;
-	}
-	
+
 	@Override
-	public void update(long timeElapsed) {
-		if (animTime >= 0) {
-			animTime += timeElapsed;
-			frame = animStartFrame + ((animTime / animFrameLength) % animNumFrames);
-			setBitmap(frames[frame]);
-		}
-		super.update(timeElapsed);
+	protected int baseWidth() {
+		return width;
+	}
+
+	@Override
+	protected int baseHeight() {
+		return height;
 	}
 }

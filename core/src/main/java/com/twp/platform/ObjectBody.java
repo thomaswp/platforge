@@ -17,7 +17,7 @@ import edu.elon.honors.price.data.Data;
 import edu.elon.honors.price.data.MapClass;
 import edu.elon.honors.price.data.MapClass.CollidesWith;
 import edu.elon.honors.price.data.ObjectClass;
-import edu.elon.honors.price.graphics.Sprite;
+import edu.elon.honors.price.graphics.ImageSprite;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.physics.Vector;
 
@@ -58,7 +58,7 @@ public class ObjectBody extends PlatformBody {
 		}
 
 		Image bitmap = Data.loadObject(object.imageName);
-		this.sprite = new Sprite(viewport, bitmap);
+		this.sprite = new ImageSprite(viewport, bitmap);
 		this.sprite.setX(startX); this.sprite.setY(startY);
 		this.sprite.centerOrigin();
 		this.sprite.setZoom(object.zoom);

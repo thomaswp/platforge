@@ -470,9 +470,10 @@ public class TriggerHandler {
 		trigger(event);
 	}
 	
+	Vec2 tempVector = new Vec2();
 	private void trigger(Event event, PlatformBody body, PlatformBody collided) {
-		Vec2 point = body.getPosition().add(
-				collided.getPosition()).mul(0.5f);
+		Vec2 point = tempVector.set(body.getPosition()).addLocal(
+				collided.getPosition()).mulLocal(0.5f);
 		if (collided instanceof ActorBody) {
 			triggeringInfo.triggeringActor = (ActorBody)collided;
 		} else {

@@ -8,6 +8,7 @@ import static playn.core.PlayN.*;
 import playn.core.CanvasImage;
 import playn.core.Image;
 import edu.elon.honors.price.game.Cache;
+import edu.elon.honors.price.game.Debug;
 
 /**
  * A class for saving and loading persistent data as well as

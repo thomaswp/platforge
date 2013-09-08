@@ -1,7 +1,7 @@
 package edu.elon.honors.price.input;
 
 import playn.core.Color;
-import edu.elon.honors.price.graphics.Sprite;
+import edu.elon.honors.price.graphics.ImageSprite;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.physics.Vector;
 
@@ -9,7 +9,7 @@ public class JoyStick extends UIControl {
 	private Viewport viewport;
 	private float radius;
 	private Vector center, touch, dragStart, temp, pull, lastPull;
-	private Sprite outer, inner;
+	private ImageSprite outer, inner;
 	private int pid = -1;
 	private boolean tapped, released, pressed;
 
@@ -42,7 +42,6 @@ public class JoyStick extends UIControl {
 	}
 
 	public JoyStick(int x, int y, int z, int radius, int color) {
-		Input.setMultiTouch(true);
 		viewport = new Viewport();
 		viewport.setZ(z);
 		center = new Vector(x, y);
@@ -53,12 +52,12 @@ public class JoyStick extends UIControl {
 		dragStart = new Vector();
 		this.radius = radius;
 
-		outer = new Sprite(viewport, x, y, radius * 2, radius * 2);
+		outer = new ImageSprite(viewport, x, y, radius * 2, radius * 2);
 		outer.centerOrigin();
 		outer.getBitmapCanvas().setFillColor(color);
 		outer.getBitmapCanvas().fillCircle(radius, radius, radius);
 		
-		inner = new Sprite(viewport, x, y, radius, radius);
+		inner = new ImageSprite(viewport, x, y, radius, radius);
 		inner.centerOrigin();
 		inner.getBitmapCanvas().setFillColor(Color.argb(100, 100, 100, 100));
 		inner.getBitmapCanvas().fillCircle(radius / 2, radius / 2, radius / 2);
@@ -78,7 +77,7 @@ public class JoyStick extends UIControl {
 				this.tapped = true;
 				dragStart.set(touch);
 				pid = tapped;
-				Input.getVibrator().vibrate(40);
+				Input.vibrate(40);
 			}
 		}
 		if (pid >= 0 && Input.isTouchDown(pid)) {
@@ -95,7 +94,7 @@ public class JoyStick extends UIControl {
 		} else {
 			if (pid >= 0) {
 				released = true;
-				Input.getVibrator().vibrate(40);
+				Input.vibrate(40);
 			}
 			inner.setX(center.getX());
 			inner.setY(center.getY());
