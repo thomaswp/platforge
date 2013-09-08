@@ -15,7 +15,7 @@ public class PlatforgeJava {
 	public static void main(String[] args) {
 		PlatformGame game = new PlatformGame();
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tutorial2.game"));
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tutorial3.game"));
 			game = (PlatformGame) ois.readObject();
 			ois.close();
 		} catch (Exception e) {

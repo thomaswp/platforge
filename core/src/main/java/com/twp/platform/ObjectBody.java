@@ -26,6 +26,7 @@ public class ObjectBody extends PlatformBody {
 	private static final float SCALE = PlatformLogic.SCALE;
 
 	private ObjectClass object;
+	ImageSprite sprite;
 
 	public boolean isPlatform() {
 		return object.isPlatform;
@@ -63,6 +64,8 @@ public class ObjectBody extends PlatformBody {
 		this.sprite.centerOrigin();
 		this.sprite.setZoom(object.zoom);
 		this.sprite.setBaseColor(object.color);
+		
+		super.sprite = this.sprite;
 
 		BodyDef objectDef = new BodyDef();
 		objectDef.position.set(spriteToVect(sprite, null));

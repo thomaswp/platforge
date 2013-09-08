@@ -11,7 +11,7 @@ import edu.elon.honors.price.data.ActorClass;
 import edu.elon.honors.price.data.MapClass;
 import edu.elon.honors.price.data.MapClass.CollidesWith;
 import edu.elon.honors.price.game.RectF;
-import edu.elon.honors.price.graphics.ImageSprite;
+import edu.elon.honors.price.graphics.Sprite;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.physics.Vector;
 
@@ -28,7 +28,7 @@ public abstract class PlatformBody implements IBehaving {
 	}
 
 	protected Body body;
-	protected ImageSprite sprite;
+	protected Sprite sprite;
 	protected int id;
 	protected PhysicsHandler physics;
 	protected Vec2 lastVelocity = new Vec2();
@@ -135,7 +135,7 @@ public abstract class PlatformBody implements IBehaving {
 		setPosition(x / SCALE, y / SCALE);
 	}
 
-	public ImageSprite getSprite() {
+	public Sprite getSprite() {
 		return sprite;
 	}
 
@@ -159,14 +159,14 @@ public abstract class PlatformBody implements IBehaving {
 		sprite.setRotation(body.getAngle() * 180 / (float)Math.PI);
 	}
 
-	public static Vec2 spriteToVect(ImageSprite sprite, Vector offset) {
+	public static Vec2 spriteToVect(Sprite sprite, Vector offset) {
 		if (offset == null)
 			return new Vec2(sprite.getX() / SCALE, sprite.getY() / SCALE);
 
 		return new Vec2((sprite.getX() - offset.getX()) / SCALE, (sprite.getY() - offset.getY()) / SCALE);
 	}
 
-	public static void setSpritePosition(ImageSprite sprite, Body body, Vector offset) {
+	public static void setSpritePosition(Sprite sprite, Body body, Vector offset) {
 		sprite.setX(body.getPosition().x * SCALE + offset.getX());
 		sprite.setY(body.getPosition().y * SCALE + offset.getY());
 	}

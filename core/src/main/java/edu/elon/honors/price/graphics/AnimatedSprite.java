@@ -28,10 +28,8 @@ public class AnimatedSprite extends Sprite {
 	}
 	
 	public AnimatedSprite(Viewport viewport, Image image, Vector[][] frames, 
-			int x, int y, int width, int height) {
+			float x, float y, int width, int height) {
 		super(viewport);
-		setX(x);
-		setY(y);
 		this.image = image;
 		this.frames = frames;
 		this.width = width;
@@ -45,11 +43,14 @@ public class AnimatedSprite extends Sprite {
 		});
 		super.layer = layer;
 		addToViewport();
+
+		setX(x);
+		setY(y);
 	}
 	
 	private void draw(Surface surface) {
 		Vector offset = frames[frameRow][frameCol];
-		surface.drawImage(image, offset.getX(), offset.getY());
+		surface.drawImage(image, -offset.getX(), -offset.getY());
 	}
 
 	@Override

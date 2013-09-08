@@ -17,6 +17,7 @@ import edu.elon.honors.price.game.Logic;
 import edu.elon.honors.price.game.RectF;
 import edu.elon.honors.price.graphics.Graphics;
 import edu.elon.honors.price.graphics.ImageSprite;
+import edu.elon.honors.price.graphics.Sprite;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.input.Button;
 import edu.elon.honors.price.input.Input;
@@ -39,7 +40,7 @@ public class PlatformLogic implements Logic {
 
 	private LinkedList<JoyStick> joysticks = new LinkedList<JoyStick>();
 	private LinkedList<Button> buttons = new LinkedList<Button>();
-	private ImageSprite hero;
+	private Sprite hero;
 	private Vector cameraOffset = new Vector(), joystickPull = new Vector();
 	private Vector offset;
 

@@ -34,6 +34,7 @@ import edu.elon.honors.price.data.PlatformGame;
 import edu.elon.honors.price.data.Tileset;
 import edu.elon.honors.price.graphics.Graphics;
 import edu.elon.honors.price.graphics.ImageSprite;
+import edu.elon.honors.price.graphics.Sprite;
 import edu.elon.honors.price.graphics.Tilemap;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.physics.Vector;
@@ -689,7 +690,7 @@ public class PhysicsHandler {
 	}
 	
 	Vec2 tempVector = new Vec2();
-	private void doPlatformContact(PlatformBody bodyA, Fixture fixtureB, ImageSprite spriteB,
+	private void doPlatformContact(PlatformBody bodyA, Fixture fixtureB, Sprite spriteB,
 			Vec2 normal) {
 		
 		if (world.getGravity().length() == 0) {

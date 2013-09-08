@@ -74,6 +74,22 @@ public abstract class Sprite implements Comparable<Sprite> {
 	public void setY(float y) {
 		layer.setTy(y);
 	}
+	
+	/**
+	 * Gets the width of this Sprite, including zoom
+	 * @return The width
+	 */
+	public float getWidth() {
+		return baseWidth() * layer.scaleX();
+	}
+
+	/**
+	 * Gets the height of this Sprite, including zoom.
+	 * @return The height
+	 */
+	public float getHeight() {
+		return baseHeight() * layer.scaleY();
+	}
 
 	/**
 	 * Gets the X coordinate of this Sprite's origin.

@@ -62,7 +62,6 @@ public class Button extends UIControl {
 			temp.set(touch);
 			temp.subtract(center);
 			if (temp.magnitude() <= radius) {
-				Debug.write("!");
 				dragStart.set(touch);
 				pid = tapped;
 				this.tapped = true;

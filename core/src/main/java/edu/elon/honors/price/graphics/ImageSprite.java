@@ -59,23 +59,6 @@ public class ImageSprite extends Sprite {
 		if (!isMutable()) return null;
 		return ((CanvasImage) getBitmap()).canvas();
 	}
-
-
-	/**
-	 * Gets the width of this Sprite, including zoom
-	 * @return The width
-	 */
-	public float getWidth() {
-		return layer.width();
-	}
-
-	/**
-	 * Gets the height of this Sprite, including zoom.
-	 * @return The height
-	 */
-	public float getHeight() {
-		return layer.height();
-	}
 	
 
 	/**

@@ -21,14 +21,15 @@ import edu.elon.honors.price.data.BehaviorInstance;
 import edu.elon.honors.price.data.Data;
 import edu.elon.honors.price.data.MapClass;
 import edu.elon.honors.price.data.MapClass.CollidesWith;
-import edu.elon.honors.price.graphics.ImageSprite;
+import edu.elon.honors.price.graphics.AnimatedSprite;
+import edu.elon.honors.price.graphics.Sprite;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.input.Input;
 import edu.elon.honors.price.physics.Vector;
 
 public class ActorBody extends PlatformBody {
 	
-	private ImageSprite sprite;
+	private AnimatedSprite sprite;
 	private ActorClass actor;
 	private boolean isHero;
 	private int directionX;
@@ -39,7 +40,6 @@ public class ActorBody extends PlatformBody {
 	private Vec2 respawnLocation;
 	private Vec2 tempVector = new Vec2();
 	private ActorAnimator animator;
-	private Image[][] frames;
 	private boolean airJumped;
 	private boolean collidedEdge;
 	
@@ -103,7 +103,7 @@ public class ActorBody extends PlatformBody {
 //	}
 
 	@Override
-	public ImageSprite getSprite() {
+	public Sprite getSprite() {
 		return sprite;
 	}
 
@@ -119,35 +119,26 @@ public class ActorBody extends PlatformBody {
 		
 		Image bitmap = Data.loadActor(actor.imageName);
 		Action[] actions = Action.values();
-		frames = new Image[actions.length][];
+		Vector[][] frames = new Vector[actions.length][];
 		int frameWidth = (int)bitmap.width() / animator.getTotalCols();
 		int frameHeight = (int)bitmap.height() / animator.getTotalRows();
 		for (int i = 0; i < actions.length; i++) {
 			Action action = actions[i];
 			ActorAnimator.ActionParams actionParams =
 					animator.getActionParams(action);
-			frames[i] = new Image[actionParams.frames];
+			frames[i] = new Vector[actionParams.frames];
 			for (int j = 0; j < actionParams.frames; j++) {
-				frames[i][j] = bitmap.subImage(
+				frames[i][j] = new Vector(
 						(actionParams.column + j) * frameWidth, 
-						actionParams.row * frameHeight, 
-						frameWidth, frameHeight);
+						actionParams.row * frameHeight);
 			}
 		}
-//		for (Bitmap bmp : frames) {
-//			Canvas c = new Canvas();
-//			c.setBitmap(bmp);
-//			Paint p = new Paint();
-//			p.setStyle(Style.STROKE);
-//			p.setColor(Color.BLACK);
-//			c.drawOval(new RectF(0, 0, bmp.getWidth(), bmp.getHeight()), p);
-//			//c.drawRect(new Rect(0, 0, bmp.getWidth() - 1, bmp.getHeight() - 1), p);
-//		}
-		this.sprite = new ImageSprite(viewport, frames[ActorAnimator.Action.WalkingRight.ordinal()][0]);
-		sprite.setX(startX); sprite.setY(startY);
+		this.sprite = new AnimatedSprite(viewport, bitmap, frames, 
+				startX, startY, frameWidth, frameHeight);
 		this.sprite.centerOrigin();
 		this.sprite.setZoom(actor.zoom);
 		this.sprite.setBaseColor(actor.color);
+		this.sprite.setFrame(Action.ActionRight.ordinal(), 0);
 		super.sprite = sprite;
 		this.isHero = isHero;
 		world = physics.getWorld();
@@ -244,7 +235,7 @@ public class ActorBody extends PlatformBody {
 		}
 
 		animator.update(timeElapsed, directionX, isGrounded(), isOnLadder());
-		sprite.setBitmap(frames[animator.getAction()][animator.getFrame()]);
+		sprite.setFrame(animator.getAction(), animator.getFrame());
 		if (sprite.getZoomX() < 0 != animator.isFlipped()) {
 			sprite.setZoomX(sprite.getZoomX() * -1);
 		}
