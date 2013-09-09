@@ -7,6 +7,7 @@ import playn.core.PlayN;
 import com.twp.platform.PlatformLogic;
 
 import edu.elon.honors.price.data.PlatformGame;
+import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.game.Debug;
 import edu.elon.honors.price.game.Logic;
 import edu.elon.honors.price.graphics.Graphics;
@@ -40,6 +41,8 @@ public class Platforge extends Game.Default {
 		
 		Graphics.resize(PlayN.graphics().width(), PlayN.graphics().height());
 		Debug.write("%dx%d", PlayN.graphics().width(), PlayN.graphics().height());
+		
+		FieldData.persistData(game, "");
 		
 		logic = new PlatformLogic(game);
 		logic.initialize();
