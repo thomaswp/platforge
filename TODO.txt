@@ -1,2 +1,3 @@
 -.areEqual()
 - make local storage for MapEditorView$EditorData, Tutorial and copydata
+-make sure upgrader is called every time PlatformData is loaded

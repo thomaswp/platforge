@@ -102,11 +102,6 @@ public class ActorBody extends PlatformBody {
 //		return 0;
 //	}
 
-	@Override
-	public Sprite getSprite() {
-		return sprite;
-	}
-
 	public ActorBody(Viewport viewport, PhysicsHandler physics, ActorClass actor, int id, 
 			float startX, float startY, int startDir, boolean isHero) {
 		super(viewport, physics, id, startX, startY);
@@ -138,7 +133,7 @@ public class ActorBody extends PlatformBody {
 		this.sprite.centerOrigin();
 		this.sprite.setZoom(actor.zoom);
 		this.sprite.setBaseColor(actor.color);
-		this.sprite.setFrame(Action.ActionRight.ordinal(), 0);
+		this.sprite.setFrame(Action.WalkingRight.ordinal(), 0);
 		super.sprite = sprite;
 		this.isHero = isHero;
 		world = physics.getWorld();
@@ -236,9 +231,7 @@ public class ActorBody extends PlatformBody {
 
 		animator.update(timeElapsed, directionX, isGrounded(), isOnLadder());
 		sprite.setFrame(animator.getAction(), animator.getFrame());
-		if (sprite.getZoomX() < 0 != animator.isFlipped()) {
-			sprite.setZoomX(sprite.getZoomX() * -1);
-		}
+		sprite.setFlipped(animator.isFlipped());
 		
 		if (!isHero && actor.speed > 0) {
 			setHorizontalVelocity(stopped ? 0 : directionX * actor.speed);

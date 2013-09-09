@@ -9,15 +9,26 @@ import playn.java.JavaPlatform;
 import com.twp.core.Platforge;
 
 import edu.elon.honors.price.data.PlatformGame;
+import edu.elon.honors.price.data.Upgrader;
+import edu.elon.honors.price.game.Formatter;
+import edu.elon.honors.price.game.Formatter.Impl;
 
 public class PlatforgeJava {
 
 	public static void main(String[] args) {
+		Formatter.impl = new Impl() {
+			@Override
+			public String format(String format, Object... args) {
+				return String.format(format, args);
+			}
+		};
+		
 		PlatformGame game = new PlatformGame();
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tutorial3.game"));
 			game = (PlatformGame) ois.readObject();
 			ois.close();
+			Upgrader.upgrade(game);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

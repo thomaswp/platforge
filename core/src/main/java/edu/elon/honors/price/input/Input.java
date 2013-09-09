@@ -1,5 +1,6 @@
 package edu.elon.honors.price.input;
 
+import playn.core.Key;
 import playn.core.Keyboard;
 import playn.core.Keyboard.TypedEvent;
 import playn.core.Pointer;
@@ -17,6 +18,9 @@ public abstract class Input {
 		float getLastTouchX(int pointer);
 		float getLastTouchY(int pointer);
 		boolean isTouchDown(int pointer);
+		int getWalkDir();
+		boolean getJump();
+		void clearJump();
 	}
 
 	private static Impl instance = new DefaultImpl();
@@ -69,10 +73,22 @@ public abstract class Input {
 		return instance.isTouchDown(0);
 	}
 	
+	public static int getWalkDir() {
+		return instance.getWalkDir();
+	}
+	
+	public static boolean getJump() {
+		return instance.getJump();
+	}
+	
+	public static void clearJump() {
+		instance.clearJump();
+	}
+	
 	private static class DefaultImpl implements Impl {
 
-		boolean touchDown;
-		int tapped;
+		boolean touchDown, jump;
+		int tapped, walkDir;
 		float lastTouchX, lastTouchY;
 		
 		@Override
@@ -157,23 +173,46 @@ public abstract class Input {
 		}
 
 		@Override
-		public void onPointerCancel(Event event) {
-			
-		}
+		public void onPointerCancel(Event event) { }
 
 		@Override
 		public void onKeyDown(playn.core.Keyboard.Event event) {
-			
+			if (event.key() == Key.LEFT) {
+				walkDir--;
+			} else if (event.key() == Key.RIGHT) {
+				walkDir++;
+			} else if (event.key() == Key.SPACE) {
+				jump = true;
+			}
 		}
 
 		@Override
-		public void onKeyTyped(TypedEvent event) {
-			
-		}
+		public void onKeyTyped(TypedEvent event) { }
 
 		@Override
 		public void onKeyUp(playn.core.Keyboard.Event event) {
-			
+			if (event.key() == Key.LEFT) {
+				walkDir++;
+			} else if (event.key() == Key.RIGHT) {
+				walkDir--;
+			} else if (event.key() == Key.SPACE) {
+				jump = false;
+			}
+		}
+
+		@Override
+		public int getWalkDir() {
+			return walkDir;
+		}
+
+		@Override
+		public boolean getJump() {
+			return jump;
+		}
+
+		@Override
+		public void clearJump() {
+			jump = false;
 		}
 	}
 }

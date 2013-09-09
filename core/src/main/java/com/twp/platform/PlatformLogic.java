@@ -113,6 +113,10 @@ public class PlatformLogic implements Logic {
 		paused = true;
 		this.game = game;
 	}
+	
+	protected boolean hasKeyboard() {
+		return PlayN.keyboard().hasHardwareKeyboard();
+	}
 
 	@Override
 	public void initialize() {
@@ -131,6 +135,7 @@ public class PlatformLogic implements Logic {
 
 		for (int i = 0; i < game.uiLayout.buttons.size(); i++) {
 			UILayout.Button button = game.uiLayout.buttons.get(i);
+			if (hasKeyboard() && button.defaultAction) continue;
 			int x = button.x >= 0 ? button.x : Graphics.getWidth() + button.x;
 			int y = button.y >= 0 ? button.y : Graphics.getHeight() + button.y;
 			buttons.add(new Button(x, y, 10, 
@@ -139,6 +144,7 @@ public class PlatformLogic implements Logic {
 		}
 		for (int i = 0; i < game.uiLayout.joysticks.size(); i++) {
 			UILayout.JoyStick joystick = game.uiLayout.joysticks.get(i);
+			if (hasKeyboard() && joystick.defaultAction) continue;
 			int x = joystick.x >= 0 ? joystick.x : Graphics.getWidth() + joystick.x;
 			int y = joystick.y >= 0 ? joystick.y : Graphics.getHeight() + joystick.y;
 			joysticks.add(new JoyStick(x, y, 10, 
@@ -163,7 +169,7 @@ public class PlatformLogic implements Logic {
 	@Override
 	public void update(long timeElapsed) {
 
-		if (Input.isTapped()) paused = false;
+		if (Input.isTapped() || Input.getWalkDir() != 0 || Input.getJump()) paused = false;
 
 		if (paused) {
 			updateScroll(1);
@@ -184,6 +190,10 @@ public class PlatformLogic implements Logic {
 						buttons.get(i).isTapped()) {
 					heroBody.jump(true);
 				}
+			}
+			if (Input.getJump()) {
+				heroBody.jump(true);
+				Input.clearJump();
 			}
 
 			boolean joyFound = false;
@@ -212,7 +222,7 @@ public class PlatformLogic implements Logic {
 					
 					heroBody.setHorizontalVelocity(velocity);
 				} else {
-					heroBody.setHorizontalVelocity(0);
+					heroBody.setHorizontalVelocity(Input.getWalkDir() * heroBody.getActor().speed);
 				}
 			}
 		}

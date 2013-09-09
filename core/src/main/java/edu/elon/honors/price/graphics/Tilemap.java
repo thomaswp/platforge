@@ -13,13 +13,6 @@ public class Tilemap {
 	private int rows, columns, tileWidth, tileHeight;
 	private float scrollX, scrollY;
 	
-//	private Bitmap gridBitmap;
-//	private BackgroundSprite grid;
-	
-//	public BackgroundSprite getGrid() {
-//		return grid;
-//	}
-	
 	public float getScrollX() {
 		return scrollX;
 	}
@@ -70,27 +63,11 @@ public class Tilemap {
 
 	public void setOpacity(float opacity) {
 		viewport.setOpacity(opacity);
-		//grid.setOpacity(opacity);
 	}
 
 	public ImageSprite[][] getSprites() {
 		return sprites;
 	}
-	
-//	public boolean isShowingGrid() {
-//		return grid != null && grid.isVisible();
-//	}
-	
-//	public void setShowingGrid(boolean showing) {
-//		if (showing) {
-//			if (grid == null)
-//				createGrid();
-//			grid.setVisible(true);
-//		} else {
-//			if (grid != null)
-//				grid.setVisible(false);
-//		}
-//	}
 	
 	public boolean isVisible() {
 		return viewport.isVisible();

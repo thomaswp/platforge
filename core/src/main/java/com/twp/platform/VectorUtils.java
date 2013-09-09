@@ -9,7 +9,7 @@ public class VectorUtils {
 	public static float angleRad(Vec2 vector) {
 		float angle = (float)Math.atan2(vector.y, vector.x);
 		if(angle < 0)
-			angle += 360;
+			angle += 2 * Math.PI;
 		return angle;
 	}
 	
@@ -17,12 +17,22 @@ public class VectorUtils {
 		return angleRad(vector) * RADIANS_TO_DEGREES;
 	}
 
+//	public static Vec2 rotateRad(Vec2 vector, float radians) {
+//		float angle = angleRad(vector);
+//		angle += radians;
+//		float len = vector.length();
+//		vector.x = (float) Math.cos(angle) * len;
+//		vector.y = (float) Math.sin(angle) * len;
+//		return vector;
+//	}
+	
 	public static Vec2 rotateRad(Vec2 vector, float radians) {
-		float angle = angleRad(vector);
-		angle += radians;
-		float len = vector.length();
-		vector.x = (float) Math.cos(angle) * len;
-		vector.y = (float) Math.sin(angle) * len;
+		float cos = (float)Math.cos(radians);
+		float sin = (float)Math.sin(radians);
+	
+		float newX = vector.x * cos - vector.y * sin;
+		float newY = vector.x * sin + vector.y * cos;
+		vector.set(newX, newY);
 		return vector;
 	}
 	

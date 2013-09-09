@@ -682,11 +682,14 @@ public class PhysicsHandler {
 		}
 	}
 	
+	/**
+	 * Returns the direction of gravity (in degrees)
+	 */
 	public float getGravityRotation() {
 		if (world.getGravity().length() == 0) {
 			return 0;
 		}
-		return VectorUtils.angleDeg(world.getGravity());
+		return VectorUtils.angleDeg(world.getGravity()) - 90;
 	}
 	
 	Vec2 tempVector = new Vec2();

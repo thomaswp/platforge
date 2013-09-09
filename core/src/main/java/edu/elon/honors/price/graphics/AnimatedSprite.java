@@ -13,6 +13,7 @@ public class AnimatedSprite extends Sprite {
 	private Vector[][] frames;
 	private int width, height;
 	private int frameRow, frameCol;
+	private boolean flipped;
 	
 	public int getFrameRow() {
 		return frameRow;
@@ -25,6 +26,14 @@ public class AnimatedSprite extends Sprite {
 	public void setFrame(int frameRow, int frameCol) {
 		this.frameRow = frameRow;
 		this.frameCol = frameCol;
+	}
+	
+	public boolean isFlipped() {
+		return flipped;
+	}
+	
+	public void setFlipped(boolean flipped) {
+		this.flipped = flipped;
 	}
 	
 	public AnimatedSprite(Viewport viewport, Image image, Vector[][] frames, 
@@ -50,7 +59,11 @@ public class AnimatedSprite extends Sprite {
 	
 	private void draw(Surface surface) {
 		Vector offset = frames[frameRow][frameCol];
-		surface.drawImage(image, -offset.getX(), -offset.getY());
+		if (flipped) {
+			surface.drawImage(image, 0, 0, width, height, offset.getX() + width, offset.getY(), -width, height); 
+		} else {
+			surface.drawImage(image, -offset.getX(), -offset.getY() - 1);
+		}
 	}
 
 	@Override
