@@ -12,33 +12,9 @@
   <artifactId>platforge-data</artifactId>
   <packaging>jar</packaging>
   <name>Platforge Data</name>
-
-  <dependencies>
-  </dependencies>
-
+  
   <build>
     <plugins>
-	<plugin>
-		<groupId>org.codehaus.mojo</groupId>
-		<artifactId>build-helper-maven-plugin</artifactId>
-		<version>1.4</version>
-		<executions>
-			<execution>
-			<id>add-gamedata</id>
-			<phase>generate-sources</phase>
-			<goals>
-				<goal>add-source</goal>
-			</goals>
-			<configuration>
-				<sources>
-					<source>${basedir}/../../GameData/src</source>
-					<source>${basedir}/../../Eujeux/src_shared</source>
-				</sources>
-			</configuration>
-			<!-- [...] -->
-			</execution>
-		</executions>
-	</plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
