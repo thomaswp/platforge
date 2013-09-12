@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.elon.honors.price.data.field.DataObject.Constructor;
-import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 
-abstract class PersistData extends HashData {
+public class PersistData implements FieldData {
 
 	private final static String NULL = "<<null>>";
 	private final static String DIV = "\0";
@@ -15,14 +14,36 @@ abstract class PersistData extends HashData {
 	protected boolean writeMode;
 	protected boolean dataMode;
 	
-	public PersistData(DataObject dataObject) {
-		super(dataObject);
+	public static String persistData(DataObject persistable) {
+		PersistData data = new PersistData();
+		data.writeMode = true;
+		data.dataMode = true;
+		try {
+			persistable.addFields(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data.buffer.toString();
 	}
-	
-	@Override
-	protected void reset() {
-		super.reset();
-		dataMode = false;
+
+	/** 
+	 * Fetches the given object from {@link Storage}, using
+	 * the given identifier tag. Returns null if fetching fails.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends DataObject> T readData(Class<T> clazz, String data) {
+		try {
+			DataObject obj = Constructor.construct(clazz.getName());
+			PersistData fd = new PersistData();
+			fd.writeMode = false;
+			fd.dataMode = true;
+			fd.load(data);
+			obj.addFields(fd);
+			return (T) obj;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public boolean writeMode() {
@@ -33,7 +54,13 @@ abstract class PersistData extends HashData {
 		return !writeMode;
 	}
 	
-	public int persist(int x) throws ParseDataException, NumberFormatException {
+	private PersistData() { }
+	
+	private void addFields(DataObject x) throws NumberFormatException, ParseDataException {
+		x.addFields(this);
+	}
+	
+	public int add(int x) throws ParseDataException, NumberFormatException {
 		if (!dataMode) return x;
 		if (writeMode) {
 			write(String.valueOf(x));
@@ -43,7 +70,7 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public long persist(long x) throws ParseDataException, NumberFormatException {
+	public long add(long x) throws ParseDataException, NumberFormatException {
 		if (!dataMode) return x;
 		if (writeMode) {
 			write(String.valueOf(x));
@@ -53,7 +80,7 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public short persist(short x) throws ParseDataException, NumberFormatException {
+	public short add(short x) throws ParseDataException, NumberFormatException {
 		if (!dataMode) return x;
 		if (writeMode) {
 			write(String.valueOf(x));	
@@ -63,7 +90,7 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public float persist(float x) throws ParseDataException, NumberFormatException {
+	public float add(float x) throws ParseDataException, NumberFormatException {
 		if (!dataMode) return x;
 		if (writeMode) {
 			write(String.valueOf(x));
@@ -73,7 +100,7 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public double persist(double x) throws ParseDataException, NumberFormatException {
+	public double add(double x) throws ParseDataException, NumberFormatException {
 		if (!dataMode) return x;
 		if (writeMode) {
 			write(String.valueOf(x));
@@ -83,7 +110,7 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public byte persist(byte x) throws ParseDataException, NumberFormatException {
+	public byte add(byte x) throws ParseDataException, NumberFormatException {
 		if (!dataMode) return x;
 		if (writeMode) {
 			write(String.valueOf(x));
@@ -93,7 +120,7 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public char persist(char x) throws ParseDataException { 
+	public char add(char x) throws ParseDataException { 
 		if (!dataMode) return x;
 		if (writeMode) {
 			write(String.valueOf(x));
@@ -105,7 +132,7 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public boolean persist(boolean x) throws ParseDataException {
+	public boolean add(boolean x) throws ParseDataException {
 		if (!dataMode) return x;
 		if (writeMode) {
 			write(String.valueOf(x));
@@ -117,7 +144,7 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public String persist(String x) throws ParseDataException {
+	public String add(String x) throws ParseDataException {
 		if (!dataMode) return x;
 		if (writeMode) {
 			write(x == null ? NULL : x);
@@ -128,13 +155,13 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public <T extends DataObject> T persist(T x) throws ParseDataException, NumberFormatException {
+	public <T extends DataObject> T add(T x) throws ParseDataException, NumberFormatException {
 		if (!dataMode) return x;
-		return persist(x, (String) null);
+		return add(x, (String) null);
 	}
 	
-	public <T extends DataObject> T persist(T x, Class<? extends T> clazz) throws ParseDataException, NumberFormatException {
-		return persist(x, clazz == null ? null : clazz.getName());
+	public <T extends DataObject> T add(T x, Class<? extends T> clazz) throws ParseDataException, NumberFormatException {
+		return add(x, clazz == null ? null : clazz.getName());
 	}
 	
 	/** 
@@ -144,16 +171,16 @@ abstract class PersistData extends HashData {
 	 * persistent fields.
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends DataObject> T persist(T x, String clazz) throws ParseDataException, NumberFormatException {
+	public <T extends DataObject> T add(T x, String clazz) throws ParseDataException, NumberFormatException {
 		if (!dataMode) return x;
 		String type;
 		if (writeMode) {
 			type = x == null ? NULL : x.getClass().getName();
 			if (clazz != null) type = clazz;
-			persist(type);
+			add(type);
 			if (x != null) addFields(x);
 		} else {
-			type = persist((String) null);
+			type = add((String) null);
 			if (type.equals(NULL)) {
 				x = null;
 			} else {
@@ -169,10 +196,10 @@ abstract class PersistData extends HashData {
 	}
 	
 	// Arrays are stored int the format "length{\n}1|2|3|4"
-	private Object persistArray(Object x, ArrayIO io) throws NumberFormatException, ParseDataException {
+	private Object addArray(Object x, ArrayIO io) throws NumberFormatException, ParseDataException {
 		if (!dataMode) return x;
 		if (writeMode) {
-			int length = persist(x == null ? 0 : io.length(x));
+			int length = add(x == null ? 0 : io.length(x));
 			if (x != null) {
 				StringBuilder sb = new StringBuilder();
 				for (int i = 0; i < length; i++) {
@@ -182,7 +209,7 @@ abstract class PersistData extends HashData {
 				if (length > 0) write(sb.toString());
 			}
 		} else {
-			int length = persist(0);
+			int length = add(0);
 			if (length != 0) {
 				if (x == null || io.length(x) != length) {
 					x = io.create(length);
@@ -200,35 +227,35 @@ abstract class PersistData extends HashData {
 	}
 	
 	
-	public int[] persistArray(int[] x) throws NumberFormatException, ParseDataException {
-		return (int[]) persistArray(x, intIO);
+	public int[] addArray(int[] x) throws NumberFormatException, ParseDataException {
+		return (int[]) addArray(x, ArrayIO.intIO);
 	}
 	
-	public boolean[] persistArray(boolean[] x) throws NumberFormatException, ParseDataException {
-		return (boolean[]) persistArray(x, booleanIO);
+	public boolean[] addArray(boolean[] x) throws NumberFormatException, ParseDataException {
+		return (boolean[]) addArray(x, ArrayIO.booleanIO);
 	}
 	
-	public String[] persistArray(String[] x) throws NumberFormatException, ParseDataException {
-		return (String[]) persistArray(x, stringIO);
+	public String[] addArray(String[] x) throws NumberFormatException, ParseDataException {
+		return (String[]) addArray(x, ArrayIO.stringIO);
 	}
 	
-	public int[][] persist2DArray(int[][] x) throws NumberFormatException, ParseDataException {
+	public int[][] add2DArray(int[][] x) throws NumberFormatException, ParseDataException {
 		if (!dataMode) return x;
 		if (writeMode) {
-			int length = persist(x == null ? 0 : x.length);
+			int length = add(x == null ? 0 : x.length);
 			if (x != null) {
 				for (int i = 0; i < length; i++) {
-					persistArray(x[i]);
+					addArray(x[i]);
 				}
 			}
 		} else {
-			int length = persist(0);
+			int length = add(0);
 			if (length != 0) {
 				if (x == null || x.length != length){
 					x = new int[length][];
 				}
 				for (int i = 0; i < length; i++) {
-					x[i] = persistArray((int[]) null);
+					x[i] = addArray((int[]) null);
 				}
 			} else {
 				x = null;
@@ -237,17 +264,17 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public <T extends DataObject> T[] persistArray(T[] x) throws NumberFormatException, ParseDataException {
+	public <T extends DataObject> T[] addArray(T[] x) throws NumberFormatException, ParseDataException {
 		if (!dataMode) return x;
 		if (writeMode) {
-			persist(x == null ? -1 : x.length);
+			add(x == null ? -1 : x.length);
 			if (x != null) {
 				for (T t : x) {
-					persist(t);
+					add(t);
 				}
 			}
 		} else {
-			int length = persist(0);
+			int length = add(0);
 			if (length >= 0) {
 				if (x != null){
 					if (x.length != length) throw new ParseDataException("Cannot read into a different sized array");
@@ -255,7 +282,7 @@ abstract class PersistData extends HashData {
 					throw new ParseDataException("Cannot read into a null array");
 				}
 				for (int i = 0; i < length; i++) {
-					x[i] = persist((T) null);
+					x[i] = add((T) null);
 				}
 			} else {
 				x = null;
@@ -264,23 +291,22 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public <T extends DataObject, L extends List<T>> L persistList(L x) throws NumberFormatException, ParseDataException {
+	public <T extends DataObject, L extends List<T>> L addList(L x) throws NumberFormatException, ParseDataException {
 		if (!dataMode) return x;
-		return persistList(x, null);
+		return addList(x, null);
 	}
 	
-	/** Persists the list, using the provided class for reconstruction. See {@link Data#persist(Persistable, Class)} */
-	public <T extends DataObject, L extends List<T>> L persistList(L x, Class<? extends T> clazz) throws NumberFormatException, ParseDataException {
+	public <T extends DataObject, L extends List<T>> L addList(L x, Class<? extends T> clazz) throws NumberFormatException, ParseDataException {
 		if (!dataMode) return x;
 		if (writeMode) {
-			persist(x == null ? -1 : x.size());
+			add(x == null ? -1 : x.size());
 			if (x != null) {
 				for (T t : x) {
-					persist(t);
+					add(t);
 				}
 			}
 		} else {
-			int length = persist(0);
+			int length = add(0);
 			if (length >= 0) {
 				if (x != null){
 					x.clear();
@@ -288,7 +314,7 @@ abstract class PersistData extends HashData {
 					throw new ParseDataException("Cannot read into a null array");
 				}
 				for (int i = 0; i < length; i++) {
-					x.add(persist((T) null, clazz));
+					x.add(add((T) null, clazz));
 				}
 			} else {
 				x = null;
@@ -297,20 +323,20 @@ abstract class PersistData extends HashData {
 		return x;
 	}
 	
-	public List<Integer> persistIntList(List<Integer> x) throws NumberFormatException, ParseDataException  {
-		return persistPrimitiveList(x, intIO);
+	public List<Integer> addIntList(List<Integer> x) throws NumberFormatException, ParseDataException  {
+		return addPrimitiveList(x, ArrayIO.intIO);
 	}
 	
-	public List<String> persistStringList(List<String> x) throws NumberFormatException, ParseDataException  {
-		return persistPrimitiveList(x, stringIO);
+	public List<String> addStringList(List<String> x) throws NumberFormatException, ParseDataException  {
+		return addPrimitiveList(x, ArrayIO.stringIO);
 	}
 	
-	public List<Boolean> persistBooleanList(List<Boolean> x) throws NumberFormatException, ParseDataException  {
-		return persistPrimitiveList(x, booleanIO);
+	public List<Boolean> addBooleanList(List<Boolean> x) throws NumberFormatException, ParseDataException  {
+		return addPrimitiveList(x, ArrayIO.booleanIO);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T> List<T> persistPrimitiveList(List<T> x, ArrayIO io) throws NumberFormatException, ParseDataException  {
+	public <T> List<T> addPrimitiveList(List<T> x, ArrayIO io) throws NumberFormatException, ParseDataException  {
 		if (!dataMode) return x;
 		if (writeMode) {
 			int length = x == null ? 0 : x.size();
@@ -318,9 +344,9 @@ abstract class PersistData extends HashData {
 			for (int i = 0; i < length; i++) {
 				io.set(array, i, String.valueOf(x.get(i)));
 			}
-			persistArray(array, io);
+			addArray(array, io);
 		} else {
-			Object array = persistArray(null, io);
+			Object array = addArray(null, io);
 			if (array == null) return null;
 			if (x == null) {
 				x = new ArrayList<T>();

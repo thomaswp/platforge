@@ -3,21 +3,13 @@ package com.twp.core;
 import static playn.core.PlayN.keyboard;
 import static playn.core.PlayN.pointer;
 import static playn.core.PlayN.touch;
-
-import java.util.ArrayList;
-
 import playn.core.Game;
 import playn.core.PlayN;
 
 import com.twp.platform.PlatformLogic;
 
-import edu.elon.honors.price.data.Event;
-import edu.elon.honors.price.data.GameData;
-import edu.elon.honors.price.data.Map;
 import edu.elon.honors.price.data.PlatformGame;
-import edu.elon.honors.price.data.field.DataObject;
-import edu.elon.honors.price.data.field.FieldData;
-import edu.elon.honors.price.data.field.FieldData.ParseDataException;
+import edu.elon.honors.price.data.field.PersistData;
 import edu.elon.honors.price.game.Debug;
 import edu.elon.honors.price.game.Logic;
 import edu.elon.honors.price.graphics.Graphics;
@@ -54,8 +46,8 @@ public class Platforge extends Game.Default {
 		
 		
 //		PlatformGame game2 = FieldData.readData(PlatformGame.class, data);
-		String data = FieldData.persistData(game);
-		game = FieldData.readData(PlatformGame.class, data);
+		String data = PersistData.persistData(game);
+		game = PersistData.readData(PlatformGame.class, data);
 		
 		logic = new PlatformLogic(game);
 		logic.initialize();
