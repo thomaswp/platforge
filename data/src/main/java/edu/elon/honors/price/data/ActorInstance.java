@@ -1,5 +1,6 @@
 package edu.elon.honors.price.data;
 
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 
@@ -22,6 +23,15 @@ public class ActorInstance extends GameData implements Comparable<ActorInstance>
 		classIndex = fields.add(classIndex);
 		row = fields.add(row);
 		column = fields.add(column);
+	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new ActorInstance(0, 0);
+			}
+		};
 	}
 	
 	/**

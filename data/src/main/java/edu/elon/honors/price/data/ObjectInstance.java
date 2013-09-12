@@ -1,5 +1,6 @@
 package edu.elon.honors.price.data;
 
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 
@@ -18,6 +19,17 @@ public class ObjectInstance extends GameData implements Comparable<ObjectInstanc
 		startX = fields.add(startX);
 		startY = fields.add(startY);
 	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new ObjectInstance();
+			}
+		};
+	}
+	
+	private ObjectInstance() { }
 	
 	public ObjectInstance(int id, int classIndex, int startX, int startY) {
 		this.id = id;

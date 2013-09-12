@@ -1,5 +1,6 @@
 package edu.elon.honors.price.data;
 
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 
@@ -22,6 +23,17 @@ public class MapLayer extends GameData {
 		active = fields.add(active);
 		defaultValue = fields.add(defaultValue);
 	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new MapLayer();
+			}
+		};
+	}
+	
+	public MapLayer() { }
 	
 	public MapLayer(String name, int rows, int columns, boolean active,
 			int defaultValue) {

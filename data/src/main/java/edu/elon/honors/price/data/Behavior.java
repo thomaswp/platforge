@@ -7,6 +7,7 @@ import java.util.List;
 
 import edu.elon.honors.price.data.Event.Action;
 import edu.elon.honors.price.data.Event.Trigger;
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 import edu.elon.honors.price.data.types.ActorClassPointer;
@@ -73,12 +74,22 @@ public class Behavior extends GameData {
 	public void addFields(FieldData fields) throws ParseDataException,
 			NumberFormatException {
 		name = fields.add(name);
-		type = BehaviorType.values()[fields.add(type.ordinal())];
+		int ordinal = fields.add(type == null ? -1 : type.ordinal()); 
+		type = ordinal < 0 ? null : BehaviorType.values()[ordinal];
 		fields.addList(events);
 		fields.addIntList(variables);
 		fields.addStringList(variableNames);
 		fields.addBooleanList(switches);
 		fields.addStringList(switchNames);
+	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new Behavior();
+			}
+		};
 	}
 	
 	public LinkedList<Parameter> getParamters(ParameterType type) {
@@ -88,6 +99,8 @@ public class Behavior extends GameData {
 		}
 		return list;
 	}
+	
+	private Behavior() { }
 	
 	public Behavior(BehaviorType type) {
 		this.type = type;

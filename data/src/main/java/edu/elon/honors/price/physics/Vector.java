@@ -3,6 +3,7 @@ package edu.elon.honors.price.physics;
 import java.io.Serializable;
 
 import edu.elon.honors.price.data.GameData;
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 
@@ -16,6 +17,15 @@ public class Vector extends GameData implements Serializable{
 			NumberFormatException {
 		x = fields.add(x);
 		y = fields.add(y);
+	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new Vector();
+			}
+		};
 	}
 	
 	public float getX() {

@@ -11,6 +11,7 @@ import playn.core.PlayN;
 
 import com.twp.platform.PlatformLogic;
 
+import edu.elon.honors.price.data.Event;
 import edu.elon.honors.price.data.GameData;
 import edu.elon.honors.price.data.Map;
 import edu.elon.honors.price.data.PlatformGame;
@@ -51,7 +52,10 @@ public class Platforge extends Game.Default {
 		Graphics.resize(PlayN.graphics().width(), PlayN.graphics().height());
 		Debug.write("%dx%d", PlayN.graphics().width(), PlayN.graphics().height());
 		
-		System.out.println(FieldData.persistData(game));
+		
+//		PlatformGame game2 = FieldData.readData(PlatformGame.class, data);
+		String data = FieldData.persistData(game);
+		game = FieldData.readData(PlatformGame.class, data);
 		
 		logic = new PlatformLogic(game);
 		logic.initialize();

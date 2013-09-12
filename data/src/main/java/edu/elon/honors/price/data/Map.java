@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 import edu.elon.honors.price.game.Formatter;
@@ -29,11 +30,11 @@ public class Map extends GameData {
 	public String skyImageName;
 	public Vector gravity = new Vector(0, 10);
 	
-	public final MapLayer[] layers;
-	public final ArrayList<ActorInstance> actors;
-	public final ArrayList<ObjectInstance> objects;
-	public final LinkedList<BehaviorInstance> behaviors;
-	public final LinkedList<String> midGrounds;
+	public final MapLayer[] layers = new MapLayer[3];;
+	public final ArrayList<ActorInstance> actors = new ArrayList<ActorInstance>();
+	public final ArrayList<ObjectInstance> objects = new ArrayList<ObjectInstance>();
+	public final LinkedList<BehaviorInstance> behaviors = new LinkedList<BehaviorInstance>();
+	public final LinkedList<String> midGrounds = new LinkedList<String>();
 
 	public transient Serializable editorData;
 	
@@ -42,7 +43,6 @@ public class Map extends GameData {
 	public void addFields(FieldData fields) throws ParseDataException,
 			NumberFormatException {
 		name = fields.add(name);
-		events = fields.addArray(events);
 		tilesetId = fields.add(tilesetId);
 		rows = fields.add(rows);
 		columns = fields.add(columns);
@@ -51,11 +51,26 @@ public class Map extends GameData {
 		skyImageName = fields.add(skyImageName);
 		gravity = fields.add(gravity);
 		
+		int length = fields.add(events == null ? 0 : events.length);
+		if (fields.readMode() && (events == null || events.length != length)) {
+			events = new Event[length];
+		}
+		events = fields.addArray(events);
+		
 		fields.addArray(layers); 
 		fields.addList(actors);
 		fields.addList(objects);
 		fields.addList(behaviors);
 		fields.addStringList(midGrounds);
+	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new Map();
+			}
+		};
 	}
 	
 	private int getNextActorId() {
@@ -67,6 +82,8 @@ public class Map extends GameData {
 		return objects.size() == 0 ? 0 : 
 			(objects.get(objects.size() - 1).id + 1);
 	}
+	
+	private Map() { }
 
 	public Map(PlatformGame game) {
 
@@ -79,36 +96,24 @@ public class Map extends GameData {
 		groundImageName = "ground.png";
 		skyImageName = "sky.png";
 
-		midGrounds = new LinkedList<String>();
 		midGrounds.add("whiteclouds.png");
 		midGrounds.add("mountain.png");
 		midGrounds.add("trees.png");
 		
 		tilesetId = 0;
 
-		//layer with tiles representing indices in the actors ArrayList 
-//		actorLayer = new MapLayer("actors", rows, columns, false, -1);
-//		actorLayer.defaultValue = -1;
-
-		actors = new ArrayList<ActorInstance>();
 		actors.add(new ActorInstance(HERO_ID, 0));
-
-		objects = new ArrayList<ObjectInstance>();
-
 
 		events = new Event[3];
 		for (int i = 0; i < events.length; i++) 
 			events[i] = new Event(Formatter.format("Event%d", i));
 
-		layers = new MapLayer[3];
 		MapLayer layer = new MapLayer("background", rows, columns, false, 0);
 		layers[0] = layer;
 		layer = new MapLayer("l1", rows, columns, true, 0);
 		layers[1] = layer;
 		layer = new MapLayer("l2", rows, columns, false, 0);
 		layers[2] = layer;
-		
-		behaviors = new LinkedList<BehaviorInstance>();
 	}
 
 	public void resize(int dRow, int dCol, boolean anchorTop, boolean anchorLeft,

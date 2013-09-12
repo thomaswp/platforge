@@ -25,7 +25,7 @@ public class PlatforgeJava {
 		
 		PlatformGame game = new PlatformGame();
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tutorial3.game"));
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tutorial5.game"));
 			game = (PlatformGame) ois.readObject();
 			ois.close();
 			Upgrader.upgrade(game);

@@ -16,7 +16,8 @@ implements ICopyable<T> {
 	public void addFields(FieldData fields) throws ParseDataException,
 			NumberFormatException {
 		id = fields.add(id);
-		scope = DataScope.values()[fields.add(scope.ordinal())];
+		int ordinal = fields.add(scope == null ? -1 : scope.ordinal()); 
+		scope = ordinal < 0 ? null : DataScope.values()[ordinal];
 	}
 
 	public ScopedData(int id, DataScope scope) {

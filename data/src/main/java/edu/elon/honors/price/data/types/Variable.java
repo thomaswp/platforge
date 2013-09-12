@@ -2,11 +2,21 @@ package edu.elon.honors.price.data.types;
 
 import edu.elon.honors.price.data.Behavior;
 import edu.elon.honors.price.data.PlatformGame;
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.game.Formatter;
 
 public class Variable extends ScopedData<Variable> {
 	private static final long serialVersionUID = 1L;
 
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new Variable();
+			}
+		};
+	}
+	
 	public Variable(int id, DataScope scope) {
 		super(id, scope);
 	}

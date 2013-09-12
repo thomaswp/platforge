@@ -3,6 +3,7 @@ package edu.elon.honors.price.data;
 import java.io.Serializable;
 import java.util.LinkedList;
 
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 import edu.elon.honors.price.game.Color;
@@ -21,6 +22,15 @@ public class UILayout extends GameData {
 			NumberFormatException {
 		fields.addList(buttons);
 		fields.addList(joysticks);
+	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new UILayout();
+			}
+		};
 	}
 	
 	public UILayout() {
@@ -103,6 +113,15 @@ public class UILayout extends GameData {
 	public static class Button extends CircleControl {
 		private static final long serialVersionUID = 1L;
 
+		public static Constructor constructor() {
+			return new Constructor() {
+				@Override
+				public DataObject construct() {
+					return new Button(0, 0, 0, 0, false);
+				}
+			};
+		}
+		
 		public Button(int x, int y, int radius, int color,
 				boolean defaultAction) {
 			super(x, y, radius, color, defaultAction);
@@ -113,6 +132,15 @@ public class UILayout extends GameData {
 	public static class JoyStick extends CircleControl {
 		private static final long serialVersionUID = 1L;
 
+		public static Constructor constructor() {
+			return new Constructor() {
+				@Override
+				public DataObject construct() {
+					return new JoyStick(0, 0, 0, 0, false);
+				}
+			};
+		}
+		
 		public JoyStick(int x, int y, int radius, int color,
 				boolean defaultAction) {
 			super(x, y, radius, color, defaultAction);

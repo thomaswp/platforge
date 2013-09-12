@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import edu.elon.honors.price.data.Behavior.BehaviorType;
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 import edu.elon.honors.price.game.Formatter;
@@ -51,8 +52,26 @@ public class PlatformGame extends GameData {
 		fields.addList(maps);
 		selectedMapId = fields.add(selectedMapId);
 		uiLayout = fields.add(uiLayout);
+		
+		int length;
+		length = fields.add(tilesets == null ? 0 : tilesets.length);
+		if (fields.readMode() && (tilesets == null || tilesets.length != length)) {
+			tilesets = new Tileset[length];
+		}
 		tilesets = fields.addArray(tilesets);
+		
+		length = fields.add(actors == null ? 0 : actors.length);
+		if (fields.readMode() && (actors == null || actors.length != length)) {
+			actors = new ActorClass[length];
+		}
 		actors = fields.addArray(actors);
+		
+		length = fields.add(objects == null ? 0 : objects.length);
+		if (fields.readMode() && (objects == null || objects.length != length)) {
+			objects = new ObjectClass[length];
+		}
+		objects = fields.addArray(objects);
+		
 		switchNames = fields.addArray(switchNames);
 		switchValues = fields.addArray(switchValues);
 		variableNames = fields.addArray(variableNames);
@@ -61,6 +80,15 @@ public class PlatformGame extends GameData {
 		fields.addList(actorBehaviors);
 		fields.addList(objectBehaviors);
 		ID = fields.add(ID);
+	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new PlatformGame();
+			}
+		};
 	}
 
 	public int getVersion() {

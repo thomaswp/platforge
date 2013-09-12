@@ -72,6 +72,7 @@ abstract class HashData {
 		String read(Object x, int index);
 		void set(Object x, int index, String value);
 		Object create(int length);
+		Object readObject(Object x, int i);
 	}
 	
 	protected static ArrayIO intIO = new ArrayIO() {
@@ -108,6 +109,11 @@ abstract class HashData {
 		@Override
 		public int hash(Object x, int index) {
 			return cast(x)[index];
+		}
+
+		@Override
+		public Object readObject(Object x, int i) {
+			return cast(x)[i];
 		}
 	};
 	
@@ -146,6 +152,11 @@ abstract class HashData {
 		public int hash(Object x, int index) {
 			return cast(x)[index] ? 1231 : 1237;
 		}
+		
+		@Override
+		public Object readObject(Object x, int i) {
+			return cast(x)[i];
+		}
 	};
 	
 	protected static ArrayIO stringIO = new ArrayIO() {
@@ -182,6 +193,11 @@ abstract class HashData {
 		@Override
 		public int hash(Object x, int index) {
 			return cast(x)[index].hashCode();
+		}
+		
+		@Override
+		public Object readObject(Object x, int i) {
+			return cast(x)[i];
 		}
 	};
 	

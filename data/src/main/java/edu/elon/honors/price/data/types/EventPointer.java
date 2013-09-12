@@ -5,6 +5,7 @@ import edu.elon.honors.price.data.Behavior.BehaviorType;
 import edu.elon.honors.price.data.GameData;
 import edu.elon.honors.price.data.ICopyable;
 import edu.elon.honors.price.data.PlatformGame;
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 import edu.elon.honors.price.game.Formatter;
@@ -19,9 +20,19 @@ public class EventPointer extends GameData implements ICopyable<EventPointer>, C
 	@Override
 	public void addFields(FieldData fields) throws ParseDataException,
 			NumberFormatException {
-		behaviorType = BehaviorType.values()[fields.add(behaviorType.ordinal())];
+		int ordinal = fields.add(behaviorType == null ? -1 : behaviorType.ordinal()); 
+		behaviorType = ordinal < 0 ? null : BehaviorType.values()[ordinal];
 		behaviorIndex = fields.add(behaviorIndex);
 		eventIndex = fields.add(eventIndex);
+	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new EventPointer();
+			}
+		};
 	}
 	
 	public void setEvent(PlatformGame game, Behavior behavior, int index) {

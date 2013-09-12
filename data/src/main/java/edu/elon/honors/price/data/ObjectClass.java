@@ -1,5 +1,6 @@
 package edu.elon.honors.price.data;
 
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 
@@ -25,6 +26,15 @@ public class ObjectClass extends MapClass {
 		rotates = fields.add(rotates);
 		restitution = fields.add(restitution);
 		isPlatform = fields.add(isPlatform);
+	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new ObjectClass();
+			}
+		};
 	}
 	
 	@Override

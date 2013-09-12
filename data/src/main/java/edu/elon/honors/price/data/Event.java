@@ -3,6 +3,7 @@ package edu.elon.honors.price.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import edu.elon.honors.price.data.field.DataObject;
@@ -35,6 +36,15 @@ public class Event extends GameData {
 		disabled = fields.add(disabled);
 		fields.addList(actions);
 		fields.addList(triggers);
+	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new Event(new ArrayList<Action>());
+			}
+		};
 	}
 
 	/**
@@ -99,7 +109,16 @@ public class Event extends GameData {
 			id = fields.add(id);
 			indent = fields.add(indent);
 			description = fields.add(description);
-			dependsOn = fields.add(dependsOn);
+			//dependsOn = fields.add(dependsOn);
+		}
+		
+		public static Constructor constructor() {
+			return new Constructor() {
+				@Override
+				public DataObject construct() {
+					return new Action(0, null);
+				}
+			};
 		}
 
 		/**
@@ -138,13 +157,15 @@ public class Event extends GameData {
 		
 		public int version = 0;
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void addFields(FieldData fields) throws ParseDataException,
 				NumberFormatException {
 			if (fields.writeMode()) {
 				fields.add(params.size());
 				for (Object o : params) {
-					fields.add(o == null ? null : o.getClass().toString());
+					String name = o == null ? null : o.getClass().getName(); 
+					fields.add(name);
 					if (o instanceof Integer) {
 						fields.add((Integer) o);
 					} else if (o instanceof Boolean) {
@@ -157,6 +178,8 @@ public class Event extends GameData {
 						fields.add((String) o);
 					} else if (o instanceof DataObject) {
 						fields.add((DataObject) o);
+					} else if (o instanceof LinkedList<?>){
+						fields.addList((LinkedList<DataObject>) o);
 					} else {
 						throw new ParseDataException("Invalid object in Parameters: " + o.toString());
 					}
@@ -175,12 +198,23 @@ public class Event extends GameData {
 						params.add(fields.add(0.0f));
 					} else if (clazz.equals(String.class.getName())) {
 						params.add(fields.add(""));
-					} else if (clazz.equals(DataObject.class.getName())) {
+					} else if (clazz.equals(LinkedList.class.getName())){
+						params.add(fields.addList(new LinkedList<DataObject>()));
+					} else {
 						params.add(fields.add(null, clazz));
 					}
 				}
 			}
 			version = fields.add(version);
+		}
+		
+		public static Constructor constructor() {
+			return new Constructor() {
+				@Override
+				public DataObject construct() {
+					return new Parameters();
+				}
+			};
 		}
 		
 		public <T> List<T> getAllByClass(Class<T> c) {
@@ -498,6 +532,15 @@ public class Event extends GameData {
 			id = fields.add(id);
 			params = fields.add(params);
 			description = fields.add(description);
+		}
+		
+		public static Constructor constructor() {
+			return new Constructor() {
+				@Override
+				public DataObject construct() {
+					return new Trigger();
+				}
+			};
 		}
 		
 		public Trigger(int id, Parameters params) {

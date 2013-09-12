@@ -120,9 +120,10 @@ abstract class PersistData extends HashData {
 	public String persist(String x) throws ParseDataException {
 		if (!dataMode) return x;
 		if (writeMode) {
-			write(x);
+			write(x == null ? NULL : x);
 		} else {
 			x = read();
+			if (x.equals(NULL)) x = null;
 		}
 		return x;
 	}
@@ -164,7 +165,6 @@ abstract class PersistData extends HashData {
 				addFields(x);
 			}
 		}
-		System.out.println("end " + type);
 		return x;
 	}
 	
@@ -179,7 +179,7 @@ abstract class PersistData extends HashData {
 					if (sb.length() != 0) sb.append(DIV);
 					sb.append(io.read(x, i));
 				}
-				write(sb.toString());
+				if (length > 0) write(sb.toString());
 			}
 		} else {
 			int length = persist(0);
@@ -309,6 +309,7 @@ abstract class PersistData extends HashData {
 		return persistPrimitiveList(x, booleanIO);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> List<T> persistPrimitiveList(List<T> x, ArrayIO io) throws NumberFormatException, ParseDataException  {
 		if (!dataMode) return x;
 		if (writeMode) {
@@ -318,26 +319,33 @@ abstract class PersistData extends HashData {
 				io.set(array, i, String.valueOf(x.get(i)));
 			}
 			persistArray(array, io);
-			return x;
 		} else {
-			@SuppressWarnings("unchecked")
-			T[] array = (T[]) persistArray(null, io);
+			Object array = persistArray(null, io);
 			if (array == null) return null;
-			ArrayList<T> list = new ArrayList<T>();
-			for (T i : array) list.add(i);
-			return list;
+			if (x == null) {
+				x = new ArrayList<T>();
+			} else {
+				x.clear();
+			}
+			int length = io.length(array);
+			for (int i = 0; i < length; i++) {
+				x.add((T) io.readObject(array, i));
+			}
 		}
+		return x;
 	}
 	
 	protected StringBuffer buffer = new StringBuffer();
 	protected String[] lines;
+	protected int index = 0;
 	
 	protected void load(String text) {
 		lines = text.split(LINE);
 	}
 	
 	private String read() throws ParseDataException {
-		return "";
+		if (index >= lines.length) throw new ParseDataException("Not enough data!");
+		return lines[index++];
 	}
 	
 	private void write(String data) {

@@ -1,5 +1,6 @@
 package edu.elon.honors.price.data;
 
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 
@@ -69,6 +70,15 @@ public class ActorClass extends MapClass {
 		doubleJump = fields.add(doubleJump);
 		fields.addArray(actorContactBehaviors);
 		fields.addArray(heroContactBehaviors);
+	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new ActorClass();
+			}
+		};
 	}
 	
 	public ActorClass clone() {

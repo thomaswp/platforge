@@ -2,14 +2,23 @@ package edu.elon.honors.price.data.types;
 
 import edu.elon.honors.price.data.Behavior;
 import edu.elon.honors.price.data.PlatformGame;
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.game.Formatter;
 
 public class ActorClassPointer extends ScopedData<ActorClassPointer> {
 	private static final long serialVersionUID = 1L;
 
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new ActorClassPointer();
+			}
+		};
+	}
+	
 	public ActorClassPointer(int id, DataScope scope) {
 		super(id, scope);
-		
 	}
 	
 	public ActorClassPointer() {

@@ -1,5 +1,6 @@
 package edu.elon.honors.price.data;
 
+import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
 
@@ -20,6 +21,17 @@ public class Tileset extends GameData {
 		name = fields.add(name);
 		bitmapName = fields.add(bitmapName);
 	}
+	
+	public static Constructor constructor() {
+		return new Constructor() {
+			@Override
+			public DataObject construct() {
+				return new Tileset();
+			}
+		};
+	}
+	
+	private Tileset() { }
 	
 	public Tileset(String name, String bitmapName, 
 			int tileWidth, int tileHeight, int rows, int columns) {
