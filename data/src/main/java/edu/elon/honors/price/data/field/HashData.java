@@ -2,8 +2,6 @@ package edu.elon.honors.price.data.field;
 
 import java.util.List;
 
-import javax.xml.crypto.Data;
-
 public class HashData extends ValueData {
 
 	private int result = 1;
