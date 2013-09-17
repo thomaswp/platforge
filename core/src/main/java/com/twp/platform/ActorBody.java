@@ -22,7 +22,6 @@ import edu.elon.honors.price.data.Data;
 import edu.elon.honors.price.data.MapClass;
 import edu.elon.honors.price.data.MapClass.CollidesWith;
 import edu.elon.honors.price.graphics.AnimatedSprite;
-import edu.elon.honors.price.graphics.Sprite;
 import edu.elon.honors.price.graphics.Viewport;
 import edu.elon.honors.price.input.Input;
 import edu.elon.honors.price.physics.Vector;

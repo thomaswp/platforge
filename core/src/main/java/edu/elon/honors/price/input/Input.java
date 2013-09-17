@@ -12,7 +12,6 @@ public abstract class Input {
 	public interface Impl extends Touch.Listener, Pointer.Listener, Keyboard.Listener {
 		void update(int delta);
 		boolean isTapped();
-		boolean isPressed();
 		void vibrate(int ms);
 		int getTappedPointer();
 		float getLastTouchX(int pointer);
@@ -101,11 +100,6 @@ public abstract class Input {
 		@Override
 		public boolean isTapped() {
 			return tapped == 1;
-		}
-
-		@Override
-		public boolean isPressed() {
-			return touchDown;
 		}
 
 		@Override

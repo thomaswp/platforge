@@ -5,15 +5,14 @@ import com.twp.platform.PlatformBody;
 
 import edu.elon.honors.price.data.ActorClass;
 import edu.elon.honors.price.data.Event.Action;
-import edu.elon.honors.price.game.Debug;
 import edu.elon.honors.price.game.Rect;
 import edu.elon.honors.price.game.RectF;
 import edu.elon.honors.price.maker.action.ActionIf.CheckIfTheActorData;
 import edu.elon.honors.price.maker.action.ActionIf.CheckIfTheActorData.CheckTypeData;
 import edu.elon.honors.price.maker.action.ActionIf.CheckIfTheActorObjectData;
+import edu.elon.honors.price.maker.action.ActionIf.CheckIfTheActorObjectData.CheckPositionData;
 import edu.elon.honors.price.maker.action.ActionIf.CheckIfTheSwitchData;
 import edu.elon.honors.price.maker.action.ActionIf.CheckIfTheVariableData;
-import edu.elon.honors.price.maker.action.ActionIf.CheckIfTheActorObjectData.CheckPositionData;
 import edu.elon.honors.price.physics.Vector;
 
 public class InterpreterIf extends ActionInterpreter<ActionIf> {
@@ -132,7 +131,6 @@ public class InterpreterIf extends ActionInterpreter<ActionIf> {
 			RectF rectB = body2.getSprite().getRect();
 			
 			if (cpData.directionIsAbove) {
-				Debug.write("%f <= %f", rectA.bottom(), rectB.top());
 				return rectA.bottom() - rectB.top() <= THRESH;
 			} else if (cpData.directionIsBelow) {
 				return rectA.top() - rectB.bottom() >= -THRESH;

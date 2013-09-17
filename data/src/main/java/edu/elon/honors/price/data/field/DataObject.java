@@ -5,6 +5,7 @@ import java.util.HashMap;
 import edu.elon.honors.price.data.ActorClass;
 import edu.elon.honors.price.data.ActorInstance;
 import edu.elon.honors.price.data.Behavior;
+import edu.elon.honors.price.data.Behavior.Parameter;
 import edu.elon.honors.price.data.BehaviorInstance;
 import edu.elon.honors.price.data.Event;
 import edu.elon.honors.price.data.Hero;
@@ -40,6 +41,7 @@ public interface DataObject {
 			constructorMap.put(ActorClass.class, ActorClass.constructor());
 			constructorMap.put(ActorInstance.class, ActorInstance.constructor());
 			constructorMap.put(Behavior.class, Behavior.constructor());
+			constructorMap.put(Parameter.class, Parameter.constructor());
 			constructorMap.put(BehaviorInstance.class, BehaviorInstance.constructor());
 			constructorMap.put(Event.class, Event.constructor());
 			constructorMap.put(Parameters.class, Parameters.constructor());

@@ -27,7 +27,7 @@ public class Interpreter {
 
 		control.setEvent(event);
 		control.setTriggeringInfo(info);
-		Debug.write("Event: %s", event.name);
+//		Debug.write("Event: %s", event.name);
 		
 		if (!doEvent(control)) {
 			control.makePersistent();
@@ -47,10 +47,10 @@ public class Interpreter {
 				return false;
 			} else {
 				try {
-					Action action = control.getNextAction();
-					Debug.write("Action (%s): %s", 
-							ActionFactory.ACTION_NAMES[action.id],
-							action.params.toString());
+//					Action action = control.getNextAction();
+//					Debug.write("Action (%s): %s", 
+//							ActionFactory.ACTION_NAMES[action.id],
+//							action.params.toString());
 					control.nextAction(gameState);
 				} catch (ParameterException e) {
 					Debug.write("Param Exception!: %s", e.getMessage());

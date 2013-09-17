@@ -2,6 +2,7 @@ package edu.elon.honors.price.graphics;
 
 import java.util.ArrayList;
 
+import playn.core.PlayN;
 import edu.elon.honors.price.game.Debug;
 import edu.elon.honors.price.game.Rect;
 import edu.elon.honors.price.game.RectF;
@@ -59,10 +60,12 @@ public class Graphics {
 	
 	public static void setWidth(int width) {
 		scale = (float)getScreenWidth() / width;
+		PlayN.graphics().rootLayer().setScale(scale);
 	}
 	
 	public static void setHeight(int height) {
 		scale = (float)getScreenHeight() / height;
+		PlayN.graphics().rootLayer().setScale(scale);
 	}
 
 	/**

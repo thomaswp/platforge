@@ -3,6 +3,8 @@ package edu.elon.honors.price.data;
 import java.io.Serializable;
 
 import edu.elon.honors.price.data.field.DataObject;
+import edu.elon.honors.price.data.field.EqualsData;
+import edu.elon.honors.price.data.field.HashData;
 
 public abstract class GameData implements Serializable, DataObject {
 	private static final long serialVersionUID = 1L;
@@ -10,20 +12,22 @@ public abstract class GameData implements Serializable, DataObject {
 //	private static Class<?>[] shallow = {Integer.class, Long.class, Short.class, Double.class, 
 //		Float.class, Boolean.class, Byte.class, Character.class, String.class};
 
-	//private transient FieldData fieldData = new FieldData(this);
-	
-	@Override
-	public boolean equals(Object data) {
-		if (this == data) return true;
-		if (data == null) return false;
-		if (getClass() != data.getClass()) return false;
-		return false;
-		//return fieldData.equals(((GameData) data).fieldData);
-	}
+	public EqualsData equalsData = new EqualsData(this);
+	public HashData hashData = new HashData(this);
 	
 //	@Override
+//	public boolean equals(Object data) {
+//		if (this == data) return true;
+//		if (data == null) return false;
+//		if (getClass() != data.getClass()) return false;
+//		if (equalsData == null) equalsData = new EqualsData(this);
+//		return equalsData.equals(((GameData) data).equalsData);
+//	}
+//	
+//	@Override
 //	public int hashCode() {
-//		return fieldData.hashCode();
+//		if (hashData == null) hashData = new HashData(this);
+//		return hashData.hashCode();
 //	}
 	
 	public static boolean areEqual(GameData o1, GameData o2) {	

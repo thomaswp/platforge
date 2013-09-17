@@ -8,6 +8,7 @@ import edu.elon.honors.price.data.field.DataObject.Constructor;
 public class PersistData implements FieldData {
 
 	private final static String NULL = "<<null>>";
+	private final static String REF = "<<ref>>";
 	private final static String DIV = "\0";
 	private final static String LINE = "\3";
 	
@@ -175,13 +176,21 @@ public class PersistData implements FieldData {
 		if (!dataMode) return x;
 		String type;
 		if (writeMode) {
+			if (containsExactly(objects, x)) {
+				return addReference(x);
+			} 
+			if (x != null) objects.add(x);
+			
 			type = x == null ? NULL : x.getClass().getName();
 			if (clazz != null) type = clazz;
 			add(type);
 			if (x != null) addFields(x);
 		} else {
 			type = add((String) null);
-			if (type.equals(NULL)) {
+			if (type != null && type.equals(REF)) {
+				return addReference(x);
+			}
+			if (type == null || type.equals(NULL)) {
 				x = null;
 			} else {
 				if (x != null) {
@@ -189,7 +198,44 @@ public class PersistData implements FieldData {
 				} else {
 					x = (T) Constructor.construct(type);
 				}
+				if (x != null) objects.add(x);
 				addFields(x);
+			}
+		}
+		return x;
+	}
+	
+	private static boolean containsExactly(List<?> list, Object object) {
+		int size = list.size();
+		for (int i = 0; i < size; i++) {
+			if (list.get(i) == object) return true;
+		}
+		return false;
+	}
+	
+	private static int indexOfExactly(List<?> list, Object object) {
+		int size = list.size();
+		for (int i = 0; i < size; i++) {
+			if (list.get(i) == object) return i;
+		}
+		return -1;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private <T extends DataObject> T addReference(T x) throws ParseDataException, NumberFormatException {
+		if (writeMode) {
+			add(REF);
+			add(indexOfExactly(objects, x));
+		} else {
+			int index = add(0);
+			if (index < 0 || index >= objects.size()) {
+				throw new ParseDataException("Reference to nonexistent object");
+			}
+			Object o = objects.get(index);
+			try {
+				x = (T) o;
+			} catch (ClassCastException e) {
+				throw new ParseDataException(e.getMessage());
 			}
 		}
 		return x;
@@ -364,6 +410,7 @@ public class PersistData implements FieldData {
 	protected StringBuffer buffer = new StringBuffer();
 	protected String[] lines;
 	protected int index = 0;
+	private List<DataObject> objects = new ArrayList<DataObject>();
 	
 	protected void load(String text) {
 		lines = text.split(LINE);

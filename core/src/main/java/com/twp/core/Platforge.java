@@ -8,7 +8,12 @@ import playn.core.PlayN;
 
 import com.twp.platform.PlatformLogic;
 
+import edu.elon.honors.price.data.Map;
 import edu.elon.honors.price.data.PlatformGame;
+import edu.elon.honors.price.data.Event.Parameters;
+import edu.elon.honors.price.data.field.DataObject;
+import edu.elon.honors.price.data.field.EqualsData;
+import edu.elon.honors.price.data.field.HashData;
 import edu.elon.honors.price.data.field.PersistData;
 import edu.elon.honors.price.game.Debug;
 import edu.elon.honors.price.game.Logic;
@@ -42,12 +47,16 @@ public class Platforge extends Game.Default {
 		keyboard().setListener(Input.getInstance());
 		
 		Graphics.resize(PlayN.graphics().width(), PlayN.graphics().height());
-		Debug.write("%dx%d", PlayN.graphics().width(), PlayN.graphics().height());
 		
+		String data = null;
+		try {
+			data = PlayN.assets().getTextSync("game.txt");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		game = PersistData.readData(PlatformGame.class, data);	
+		game.objects[1].zoom = 0.3f;
 		
-//		PlatformGame game2 = FieldData.readData(PlatformGame.class, data);
-		String data = PersistData.persistData(game);
-		game = PersistData.readData(PlatformGame.class, data);
 		
 		logic = new PlatformLogic(game);
 		logic.initialize();
@@ -61,7 +70,7 @@ public class Platforge extends Game.Default {
 		Graphics.update(delta);
 		time += delta;
 		if (time > 1000) {
-			Debug.write("%d FPS", frames);
+//			Debug.write("%d FPS", frames);
 			time -= 1000;
 			frames = 0;
 		}

@@ -99,7 +99,6 @@ public class Event extends GameData {
 		public int id;
 		public int indent;
 		public String description;
-		//TODO: prevent circular references?
 		public Action dependsOn; 
 
 		@Override
@@ -109,7 +108,14 @@ public class Event extends GameData {
 			id = fields.add(id);
 			indent = fields.add(indent);
 			description = fields.add(description);
-			//dependsOn = fields.add(dependsOn);
+			dependsOn = fields.add(dependsOn);
+//			if (fields.readMode()) {
+//				if (id == 7) {
+//					System.out.println(this.hashCode());
+//				} else if (dependsOn != null) {
+//					System.out.println(dependsOn.hashCode());
+//				}
+//			}
 		}
 		
 		public static Constructor constructor() {
@@ -150,7 +156,7 @@ public class Event extends GameData {
 	 * Represents a set of parameters for an action.
 	 *
 	 */
-	public static class Parameters implements Serializable, DataObject {//, Iterable<Object> {
+	public static class Parameters extends GameData implements Serializable {//, Iterable<Object> {
 		private static final long serialVersionUID = 1L;
 
 		private ArrayList<Object> params = new ArrayList<Object>();

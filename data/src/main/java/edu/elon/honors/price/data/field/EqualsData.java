@@ -194,168 +194,167 @@ public class EqualsData extends ValueData {
 		lastBoolean = b;
 	}
 	
-	public void addHashField(Object o) {
+	protected void addField(Object o) {
 		if (inLeftEquals) addLeftEquals(o);
 		if (inRightEquals) addRightEquals(o);
 	}
 	
-	public <T extends DataObject> void addHashField(T[] o) {
+	protected <T extends DataObject> void addField(T[] o) {
 		if (inLeftEquals) addLeftEquals(o);
 		if (inRightEquals) addRightEquals(o);
 	}
 
-	public void addHashField(int i) {
+	protected void addField(int i) {
 		if (inLeftEquals) addLeftEquals(i);
 		if (inRightEquals) addRightEquals(i);
 	}
 
-	public void addHashField(long l) {
+	protected void addField(long l) {
 		if (inLeftEquals) addLeftEquals(l);
 		if (inRightEquals) addRightEquals(l);
 	}
 
-	public void addHashField(short s) {
+	protected void addField(short s) {
 		if (inLeftEquals) addLeftEquals(s);
 		if (inRightEquals) addRightEquals(s);
 	}
 
-	public void addHashField(float f) {
+	protected void addField(float f) {
 		if (inLeftEquals) addLeftEquals(f);
 		if (inRightEquals) addRightEquals(f);
 	}
 
-	public void addHashField(double d) {
+	protected void addField(double d) {
 		if (inLeftEquals) addLeftEquals(d);
 		if (inRightEquals) addRightEquals(d);
 	}
 
-	public void addHashField(byte b) {
+	protected void addField(byte b) {
 		if (inLeftEquals) addLeftEquals(b);
 		if (inRightEquals) addRightEquals(b);
 	}
 
-	public void addHashField(char c) {
+	protected void addField(char c) {
 		if (inLeftEquals) addLeftEquals(c);
 		if (inRightEquals) addRightEquals(c);
 	}
 
-	public void addHashField(boolean b) {
+	protected void addField(boolean b) {
 		if (inLeftEquals) addLeftEquals(b);
 		if (inRightEquals) addRightEquals(b);
 	}
 	
 	public int add(int x) throws ParseDataException, NumberFormatException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public long add(long x) throws ParseDataException, NumberFormatException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public short add(short x) throws ParseDataException, NumberFormatException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public float add(float x) throws ParseDataException, NumberFormatException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public double add(double x) throws ParseDataException, NumberFormatException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public byte add(byte x) throws ParseDataException, NumberFormatException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public char add(char x) throws ParseDataException { 
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public boolean add(boolean x) throws ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public String add(String x) throws ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public <T extends DataObject> T add(T x, Class<? extends T> clazz) throws ParseDataException, NumberFormatException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public <T extends DataObject> T add(T x) throws ParseDataException, NumberFormatException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public <T extends DataObject> T add(T x, String clazz) throws ParseDataException, NumberFormatException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	// Arrays are stored int the format "length \n 1|2|3|4"	
 	public boolean[] addArray(boolean[] x) throws NumberFormatException, ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public int[] addArray(int[] x) throws NumberFormatException, ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public String[] addArray(String[] x) throws NumberFormatException, ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public int[][] add2DArray(int[][] x) throws NumberFormatException, ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public <T extends DataObject> T[] addArray(T[] x) throws NumberFormatException, ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public <T extends DataObject, L extends List<T>> L addList(L x) throws NumberFormatException, ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	/** Persists the list, using the provided class for reconstruction. See {@link Data#persist(Persistable, Class)} */
 	public <T extends DataObject, L extends List<T>> L addList(L x, Class<? extends T> clazz) throws NumberFormatException, ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public List<Integer> addIntList(List<Integer> x) throws NumberFormatException, ParseDataException  {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 
 	public List<String> addStringList(List<String> x) throws NumberFormatException, ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
 	
 	public List<Boolean> addBooleanList(List<Boolean> x) throws NumberFormatException, ParseDataException {
-		addHashField(x);
+		addField(x);
 		return x;
 	}
-	
 	
 	// Iterates through the other hashable's fields
 	// until it reads the field with the desired index.

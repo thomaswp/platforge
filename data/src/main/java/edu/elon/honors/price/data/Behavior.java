@@ -1,6 +1,5 @@
 package edu.elon.honors.price.data;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -81,6 +80,7 @@ public class Behavior extends GameData {
 		fields.addStringList(variableNames);
 		fields.addBooleanList(switches);
 		fields.addStringList(switchNames);
+		parameters = fields.addList(parameters);
 	}
 	
 	public static Constructor constructor() {
@@ -222,10 +222,27 @@ public class Behavior extends GameData {
 		return true;
 	}
 		
-	public static class Parameter implements Serializable {
+	public static class Parameter extends GameData {
 		private static final long serialVersionUID = 1L;
 		public ParameterType type;
 		public String name;
+		
+		public static Constructor constructor() {
+			return new Constructor() {
+				@Override
+				public DataObject construct() {
+					return new Parameter();
+				}
+			};
+		}
+		
+		@Override
+		public void addFields(FieldData fields) throws ParseDataException,
+				NumberFormatException {
+			int ordinal = fields.add(type == null ? -1 : type.ordinal()); 
+			type = ordinal < 0 ? null : ParameterType.values()[ordinal];
+			name = fields.add(name);
+		}
 		
 		public Parameter() {
 			this("New Parameter", ParameterType.Switch);
