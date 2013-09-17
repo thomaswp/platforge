@@ -2,6 +2,7 @@
   <inherits name='playn.PlayN'/>
   <inherits name='PlatforgeAssets'/>
   <inherits name='edu.elon.honors.price.PlatforgeData'/>
+  <inherits name="org.jbox2d.JBox2D" />
 
   <source path='core'/>
   <source path='html'/>

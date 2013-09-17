@@ -2,12 +2,13 @@ package com.twp.android;
 
 import java.util.ArrayList;
 
+import com.twp.core.game.Debug;
+import com.twp.core.graphics.Graphics;
+import com.twp.core.input.Input;
+
 import playn.core.Keyboard.TypedEvent;
 import playn.core.Touch.Event;
 import android.os.Vibrator;
-import edu.elon.honors.price.game.Debug;
-import edu.elon.honors.price.graphics.Graphics;
-import edu.elon.honors.price.input.Input;
 
 public class AndroidInput implements Input.Impl {
 

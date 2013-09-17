@@ -6,7 +6,11 @@ import static playn.core.PlayN.touch;
 import playn.core.Game;
 import playn.core.PlayN;
 
-import com.twp.platform.PlatformLogic;
+import com.twp.core.game.Debug;
+import com.twp.core.game.Logic;
+import com.twp.core.graphics.Graphics;
+import com.twp.core.input.Input;
+import com.twp.core.platform.PlatformLogic;
 
 import edu.elon.honors.price.data.Map;
 import edu.elon.honors.price.data.PlatformGame;
@@ -15,10 +19,6 @@ import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.EqualsData;
 import edu.elon.honors.price.data.field.HashData;
 import edu.elon.honors.price.data.field.PersistData;
-import edu.elon.honors.price.game.Debug;
-import edu.elon.honors.price.game.Logic;
-import edu.elon.honors.price.graphics.Graphics;
-import edu.elon.honors.price.input.Input;
 
 public class Platforge extends Game.Default {
 

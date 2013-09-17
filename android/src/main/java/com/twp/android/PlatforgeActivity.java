@@ -5,10 +5,10 @@ import playn.core.PlayN;
 import android.os.Vibrator;
 
 import com.twp.core.Platforge;
+import com.twp.core.input.Input;
 
 import edu.elon.honors.price.game.Formatter;
 import edu.elon.honors.price.game.Formatter.Impl;
-import edu.elon.honors.price.input.Input;
 
 public class PlatforgeActivity extends GameActivity {
 

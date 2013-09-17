@@ -8,15 +8,16 @@ import edu.elon.honors.price.data.PlatformGame;
 import edu.elon.honors.price.data.field.DataObject;
 import edu.elon.honors.price.data.field.FieldData;
 import edu.elon.honors.price.data.field.FieldData.ParseDataException;
+import edu.elon.honors.price.data.field.PersistData;
 import edu.elon.honors.price.game.Formatter;
 
-public class EventPointer extends GameData implements ICopyable<EventPointer>, Cloneable {
+public class EventPointer extends GameData implements ICopyable<EventPointer> {
 	private static final long serialVersionUID = 1L;
 
 	private BehaviorType behaviorType;
 	private int behaviorIndex = -1;
 	private int eventIndex = -1;
-
+	
 	@Override
 	public void addFields(FieldData fields) throws ParseDataException,
 			NumberFormatException {
@@ -65,12 +66,6 @@ public class EventPointer extends GameData implements ICopyable<EventPointer>, C
 	
 	@Override
 	public EventPointer copy() {
-		try {
-			return (EventPointer)super.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return PersistData.copy(this, EventPointer.class);
 	}
-
 }

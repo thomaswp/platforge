@@ -47,6 +47,11 @@ public class PersistData implements FieldData {
 		return null;
 	}
 	
+	public static <T extends DataObject> T copy(T x, Class<T> clazz) {
+		String data = persistData(x);
+		return readData(clazz, data);
+	}
+	
 	public boolean writeMode() {
 		return writeMode;
 	}
