@@ -1,7 +1,5 @@
 package com.twp.core.action;
 
-import com.twp.core.action.ScriptableInstance;
-
 public class ActionFactory {
 	public final static int[] ACTION_IDS = new int[] {
 		0,
@@ -89,7 +87,7 @@ public class ActionFactory {
 		"Actor|Object",
 		"Actor|Object",
 	};
-	public static ScriptableInstance getInstance(int id) {
+	public static ScriptableInstance getActionInstance(int id) {
 		if (id == ActionSetSwitch.ID) return new ActionSetSwitch();
 		if (id == ActionSetVariable.ID) return new ActionSetVariable();
 		if (id == ActionCreateActor.ID) return new ActionCreateActor();
@@ -118,92 +116,39 @@ public class ActionFactory {
 		if (id == ActionChangeScale.ID) return new ActionChangeScale();
 		return null;
 	}
+	public static ActionInterpreter<?> getInterpreterInstance(int id) {
+		if (id == ActionSetSwitch.ID) return new InterpreterSetSwitch();
+		if (id == ActionSetVariable.ID) return new InterpreterSetVariable();
+		if (id == ActionCreateActor.ID) return new InterpreterCreateActor();
+		if (id == ActionDebugBox.ID) return new InterpreterDebugBox();
+		if (id == ActionMoveActor.ID) return new InterpreterMoveActor();
+		if (id == ActionTriggerActorBehavior.ID) return new InterpreterTriggerActorBehavior();
+		if (id == ActionIf.ID) return new InterpreterIf();
+		if (id == ActionCreateObject.ID) return new InterpreterCreateObject();
+		if (id == ActionMoveObject.ID) return new InterpreterMoveObject();
+		if (id == ActionSetVelocity.ID) return new InterpreterSetVelocity();
+		if (id == ActionDebugMessage.ID) return new InterpreterDebugMessage();
+		if (id == ActionPointOperation.ID) return new InterpreterPointOperation();
+		if (id == ActionChangeGravity.ID) return new InterpreterChangeGravity();
+		if (id == ActionUIAction.ID) return new InterpreterUIAction();
+		if (id == ActionDestroyObject.ID) return new InterpreterDestroyObject();
+		if (id == ActionDrawToScreen.ID) return new InterpreterDrawToScreen();
+		if (id == ActionLoop.ID) return new InterpreterLoop();
+		if (id == ActionTriggerActorAnimation.ID) return new InterpreterTriggerActorAnimation();
+		if (id == ActionAnimate.ID) return new InterpreterAnimate();
+		if (id == ActionWait.ID) return new InterpreterWait();
+		if (id == ActionStop.ID) return new InterpreterStop();
+		if (id == ActionElse.ID) return new InterpreterElse();
+		if (id == ActionTriggerEvent.ID) return new InterpreterTriggerEvent();
+		if (id == ActionChangeColor.ID) return new InterpreterChangeColor();
+		if (id == ActionSetBehaviorParameters.ID) return new InterpreterSetBehaviorParameters();
+		if (id == ActionChangeScale.ID) return new InterpreterChangeScale();
+		return null;
+	}
 	public static boolean isParent(int id) {
 		if (id == ActionIf.ID) return true;
 		if (id == ActionLoop.ID) return true;
 		if (id == ActionElse.ID) return true;
 		return false;
-	}
-	public static java.util.LinkedList<Class<?>> getInterpreters() {
-		java.util.LinkedList<Class<?>> classes = new java.util.LinkedList<Class<?>>();
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterSetSwitch"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterSetVariable"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterCreateActor"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterDebugBox"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterMoveActor"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterTriggerActorBehavior"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterIf"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterCreateObject"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterMoveObject"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterSetVelocity"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterDebugMessage"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterPointOperation"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterChangeGravity"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterUIAction"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterDestroyObject"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterDrawToScreen"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterLoop"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterTriggerActorAnimation"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterAnimate"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterWait"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterStop"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterElse"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterTriggerEvent"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterChangeColor"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterSetBehaviorParameters"));
-		} catch (Exception e) { }
-		try {
-			classes.add(Class.forName("com.twp.core.action.InterpreterChangeScale"));
-		} catch (Exception e) { }
-		return classes;
 	}
 }

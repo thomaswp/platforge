@@ -88,7 +88,8 @@ public abstract class Input {
 	private static class DefaultImpl implements Impl {
 
 		boolean touchDown, jump;
-		int tapped, walkDir;
+		int tapped;
+		boolean leftDown, rightDown, spaceDown;
 		float lastTouchX, lastTouchY;
 		
 		@Override
@@ -173,11 +174,12 @@ public abstract class Input {
 		@Override
 		public void onKeyDown(playn.core.Keyboard.Event event) {
 			if (event.key() == Key.LEFT) {
-				walkDir--;
+				leftDown = true;
 			} else if (event.key() == Key.RIGHT) {
-				walkDir++;
+				rightDown = true;
 			} else if (event.key() == Key.SPACE) {
-				jump = true;
+				if (!spaceDown) jump = true;
+				spaceDown = true;
 			}
 		}
 
@@ -187,17 +189,20 @@ public abstract class Input {
 		@Override
 		public void onKeyUp(playn.core.Keyboard.Event event) {
 			if (event.key() == Key.LEFT) {
-				walkDir++;
+				leftDown = false;
 			} else if (event.key() == Key.RIGHT) {
-				walkDir--;
+				rightDown = false;
 			} else if (event.key() == Key.SPACE) {
-				jump = false;
+				spaceDown = false;
 			}
 		}
 
 		@Override
 		public int getWalkDir() {
-			return walkDir;
+			int dir = 0;
+			if (leftDown) dir--;
+			if (rightDown) dir++;
+			return dir;
 		}
 
 		@Override

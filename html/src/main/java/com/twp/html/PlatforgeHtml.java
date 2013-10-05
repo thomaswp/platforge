@@ -14,6 +14,7 @@ public class PlatforgeHtml extends HtmlGame {
 
 	@Override
 	public void start() {
+		System.out.println("1");
 		Formatter.impl = new Impl() {
 			@Override
 			public String format(String format, Object... args) {
@@ -33,10 +34,15 @@ public class PlatforgeHtml extends HtmlGame {
 				return msg.toString();
 			}
 		};
+		System.out.println("2");
 		HtmlPlatform.Config config = new HtmlPlatform.Config();
 		// use config to customize the HTML platform, if needed
+		System.out.println("3");
 		HtmlPlatform platform = HtmlPlatform.register(config);
+		System.out.println("4");
 		platform.assets().setPathPrefix("platforge/");
+		System.out.println("5");
 		PlayN.run(new Platforge());
+		System.out.println("6");
 	}
 }

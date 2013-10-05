@@ -26,20 +26,20 @@ public class PlatforgeJava {
 			}
 		};
 		
-		PlatformGame game = new PlatformGame();
-		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tutorial5.game"));
-			game = (PlatformGame) ois.readObject();
-			ois.close();
-			Upgrader.upgrade(game);
-			
-			String data = PersistData.persistData(game);
-			BufferedWriter writer = new BufferedWriter(new FileWriter("game.txt"));
-			writer.write(data);
-			writer.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		PlatformGame game = new PlatformGame();
+//		try {
+//			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tutorial5.game"));
+//			game = (PlatformGame) ois.readObject();
+//			ois.close();
+//			Upgrader.upgrade(game);
+//			
+//			String data = PersistData.persistData(game);
+//			BufferedWriter writer = new BufferedWriter(new FileWriter("game.txt"));
+//			writer.write(data);
+//			writer.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
 		
 
@@ -48,6 +48,6 @@ public class PlatforgeJava {
 		config.height = 700;
 		// use config to customize the Java platform, if needed
 		JavaPlatform.register(config);
-		PlayN.run(new Platforge(game));
+		PlayN.run(new Platforge());
 	}
 }

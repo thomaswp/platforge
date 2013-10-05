@@ -1,6 +1,6 @@
 package com.twp.core.action;
 
-import java.lang.reflect.ParameterizedType;
+//import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -16,8 +16,8 @@ public abstract class ActionInterpreter<T extends ScriptableInstance> {
 	Random rand = new Random();
 	public static final float SCALE = PlatformLogic.SCALE;
 	
-	private static final List<Class<?>> interpreters = 
-			ActionFactory.getInterpreters();
+//	private static final List<Class<?>> interpreters = 
+//			ActionFactory.getInterpreters();
 
 	private static HashMap<Action, ScriptableInstance> actionMap =
 			new HashMap<Action, ScriptableInstance>();
@@ -25,15 +25,15 @@ public abstract class ActionInterpreter<T extends ScriptableInstance> {
 	private static HashMap<Integer, ActionInterpreter<?>> interperaterMap =
 			new HashMap<Integer, ActionInterpreter<?>>();
 
-	protected Class<?> getActionClass() {
-		return getActionClass(getClass());
-	}
+//	protected Class<?> getActionClass() {
+//		return getActionClass(getClass());
+//	}
 
-	private static Class<?> getActionClass(Class<?> cls) {
-		ParameterizedType parameterizedType =
-				(ParameterizedType) cls.getGenericSuperclass();
-		return (Class<?>) parameterizedType.getActualTypeArguments()[0];
-	}
+//	private static Class<?> getActionClass(Class<?> cls) {
+//		ParameterizedType parameterizedType =
+//				(ParameterizedType) cls.getGenericSuperclass();
+//		return (Class<?>) parameterizedType.getActualTypeArguments()[0];
+//	}
 
 	protected abstract void interperate(T action, PlatformGameState gameState) 
 			throws ParameterException;
@@ -55,7 +55,7 @@ public abstract class ActionInterpreter<T extends ScriptableInstance> {
 		
 		ScriptableInstance instance = actionMap.get(action);
 		if (instance == null) {
-			instance = ActionFactory.getInstance(action.id);
+			instance = ActionFactory.getActionInstance(action.id);
 			if (instance == null) throw new RuntimeException(
 					"Invalid action id: " + action.id);
 			instance.setParameters(action.params);
@@ -64,18 +64,7 @@ public abstract class ActionInterpreter<T extends ScriptableInstance> {
 
 		ActionInterpreter<?> interp = interperaterMap.get(action.id);
 		if (interp == null) {
-			for (Class<?> cls : interpreters) {
-				if (getActionClass(cls) == instance.getClass()) {
-					try {
-						interp = (ActionInterpreter<?>)cls
-								.getConstructors()[0]
-										.newInstance();
-						break;
-					} catch (Exception e) {
-						Debug.write(e);
-					}
-				}
-			}
+			interp = ActionFactory.getInterpreterInstance(action.id);
 			if (interp == null) throw new RuntimeException(
 					"No interpreter for action #" + action.id);
 			interperaterMap.put(action.id, interp);

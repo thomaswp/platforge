@@ -1,16 +1,25 @@
 package com.twp.core.platform;
 
 import static playn.core.PlayN.assets;
+import static playn.core.PlayN.graphics;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import playn.core.CanvasImage;
+import playn.core.Image;
+import playn.core.PlayN;
+import playn.core.util.Callback;
 
 import com.twp.core.game.Cache;
 import com.twp.core.game.Debug;
 
-import static playn.core.PlayN.*;
-import playn.core.CanvasImage;
-import playn.core.Image;
+import edu.elon.honors.price.data.ActorClass;
 import edu.elon.honors.price.data.Directories;
+import edu.elon.honors.price.data.Map;
+import edu.elon.honors.price.data.ObjectClass;
+import edu.elon.honors.price.data.PlatformGame;
+import edu.elon.honors.price.data.Tileset;
 
 /**
  * A class for saving and loading persistent data as well as
@@ -20,7 +29,7 @@ import edu.elon.honors.price.data.Directories;
  *
  */
 public final class Data extends Directories {
-
+	
 	private static Image loadBitmap(String name) {
 		try {
 			if (Cache.isBitmapRegistered(name)) {
@@ -28,11 +37,12 @@ public final class Data extends Directories {
 				return Cache.getRegisteredBitmap(name);
 			}
 			else {
-				Image image = assets().getImageSync(name);
+				Image image = assets().getImage(name);
 				Cache.RegisterBitmap(name, image);
 				return image;
 			}
 		} catch (Exception ex) {
+			PlayN.log().debug("Loading image exception: " + ex.getMessage());
 			ex.printStackTrace();
 			return null;
 		}
@@ -100,5 +110,54 @@ public final class Data extends Directories {
 			}
 		}
 		return mid;
+	}
+	
+	private static class Counter {
+		int value;
+	}
+	
+	public static void preload(PlatformGame game, final Callback<Integer> callback) {
+		final List<Image> images = new ArrayList<Image>();
+		for (ActorClass actor : game.actors) {
+			images.add(loadActor(actor.imageName));
+		}
+		for (ObjectClass obj : game.objects) {
+			images.add(loadObject(obj.imageName));
+		}
+		for (Tileset tileset : game.tilesets) {
+			images.add(loadTileset(tileset.bitmapName));
+		}
+		for (Map map : game.maps) {
+			images.add(loadBackground(map.skyImageName));
+			images.add(loadForeground(map.groundImageName));
+			for (String midground : map.midGrounds) {
+				images.add(loadMidground(midground));
+			}
+		}
+		
+		final Counter counter = new Counter();
+		counter.value = images.size(); 
+		
+		for (Image image : images) {
+			image.addCallback(new Callback<Image>() {
+				@Override
+				public void onSuccess(Image result) {
+					count();
+				}
+
+				@Override
+				public void onFailure(Throwable cause) {
+					cause.printStackTrace();
+					count();
+				}
+				
+				private void count() {
+					counter.value--;
+					if (counter.value == 0) {
+						callback.onSuccess(images.size());
+					}
+				}
+			});
+		}
 	}
 }
