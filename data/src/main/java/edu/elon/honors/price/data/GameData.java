@@ -12,23 +12,23 @@ public abstract class GameData implements Serializable, DataObject {
 //	private static Class<?>[] shallow = {Integer.class, Long.class, Short.class, Double.class, 
 //		Float.class, Boolean.class, Byte.class, Character.class, String.class};
 
-	public EqualsData equalsData = new EqualsData(this);
-	public HashData hashData = new HashData(this);
+	public transient EqualsData equalsData = new EqualsData(this);
+	public transient HashData hashData = new HashData(this);
 	
-//	@Override
-//	public boolean equals(Object data) {
-//		if (this == data) return true;
-//		if (data == null) return false;
-//		if (getClass() != data.getClass()) return false;
-//		if (equalsData == null) equalsData = new EqualsData(this);
-//		return equalsData.equals(((GameData) data).equalsData);
-//	}
-//	
-//	@Override
-//	public int hashCode() {
-//		if (hashData == null) hashData = new HashData(this);
-//		return hashData.hashCode();
-//	}
+	@Override
+	public boolean equals(Object data) {
+		if (this == data) return true;
+		if (data == null) return false;
+		if (getClass() != data.getClass()) return false;
+		if (equalsData == null) equalsData = new EqualsData(this);
+		return equalsData.equals(((GameData) data).equalsData);
+	}
+	
+	@Override
+	public int hashCode() {
+		if (hashData == null) hashData = new HashData(this);
+		return hashData.hashCode();
+	}
 	
 	public static boolean areEqual(GameData o1, GameData o2) {	
 		
