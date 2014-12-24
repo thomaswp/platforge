@@ -71,7 +71,8 @@ public class Debug {
 				"(): " + text;
 			}
 		}
-		PlayN.log().debug(text);
+//		TODO: PlayN.log().debug(text);
+		System.out.println(text);
 	}
 
 }

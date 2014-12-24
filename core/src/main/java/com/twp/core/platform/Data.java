@@ -12,7 +12,6 @@ import playn.core.PlayN;
 import playn.core.util.Callback;
 
 import com.twp.core.game.Cache;
-import com.twp.core.game.Debug;
 
 import edu.elon.honors.price.data.ActorClass;
 import edu.elon.honors.price.data.Directories;
@@ -28,7 +27,7 @@ import edu.elon.honors.price.data.Tileset;
  * @author Thomas Price
  *
  */
-public final class Data extends Directories {
+public class Data extends Directories {
 	
 	private static Image loadBitmap(String name) {
 		try {

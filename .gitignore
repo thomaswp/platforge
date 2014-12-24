@@ -6,6 +6,7 @@
 Thumbs.db
 ProgressLog.launch
 */target/
+*/bin/
 objc/*
 html/gwt-unitCache/*
 html/war/*

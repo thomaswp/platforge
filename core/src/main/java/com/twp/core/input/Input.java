@@ -1,13 +1,13 @@
 package com.twp.core.input;
 
-import com.twp.core.graphics.Graphics;
-
 import playn.core.Key;
 import playn.core.Keyboard;
 import playn.core.Keyboard.TypedEvent;
 import playn.core.Pointer;
 import playn.core.Pointer.Event;
 import playn.core.Touch;
+
+import com.twp.core.graphics.Graphics;
 
 public abstract class Input {
 	public interface Impl extends Touch.Listener, Pointer.Listener, Keyboard.Listener {
@@ -214,5 +214,13 @@ public abstract class Input {
 		public void clearJump() {
 			jump = false;
 		}
+	}
+
+	public static void reset() {
+		// TODO Auto-generated method stub
+	}
+
+	public static void setMultiTouch(boolean multiTouch) {
+		// TODO Auto-generated method stub
 	}
 }
