@@ -35,7 +35,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.eujeux.data.GameInfo;
-import com.twp.android.PlatforgeActivity;
+import com.platforge.android.PlatforgeActivity;
 import com.twp.core.game.Debug;
 
 import edu.elon.honors.price.data.Data;

@@ -1,6 +1,5 @@
 package com.twp.html;
 
-import static playn.core.PlayN.regularExpression;
 import playn.core.PlayN;
 import playn.html.HtmlGame;
 import playn.html.HtmlPlatform;
@@ -23,7 +22,7 @@ public class PlatforgeHtml extends HtmlGame {
 				for (int i = 0; i < format.length(); i++) {
 					if (i < format.length() - 1) {
 						String sub = format.substring(i, i + 2);
-						if (regularExpression().matches("%[a-z]", sub)) {
+						if (sub.charAt(0) == '%' && Character.isAlphabetic(sub.charAt(1))) {
 							msg.append(args[argIndex++]);
 							i++;
 							continue;

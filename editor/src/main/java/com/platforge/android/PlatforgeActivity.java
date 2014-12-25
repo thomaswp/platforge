@@ -1,4 +1,4 @@
-package com.twp.android;
+package com.platforge.android;
 
 import playn.android.GameActivity;
 import playn.core.PlayN;

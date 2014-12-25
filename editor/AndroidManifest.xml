@@ -59,7 +59,13 @@
     	<activity android:configChanges="keyboardHidden|orientation" android:name=".TestActivity" android:screenOrientation="landscape"/>
     	<activity android:configChanges="keyboardHidden|orientation" android:name=".DatabaseEditBehaviorInstance" android:screenOrientation="landscape"/>
     	<activity android:configChanges="keyboardHidden|orientation" android:label="@string/app_name" android:name="com.twp.platform.Platformer" android:screenOrientation="landscape" />
-    	
+    
+    	<activity android:name="com.platforge.android.PlatforgeActivity"
+                  android:label="@string/app_name"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                  android:configChanges="keyboardHidden|orientation">
+        </activity>
+    		
     	<provider android:authorities="edu.elon.honors.price.maker" android:name="ResourceProvider"/>
     
     </application>

@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.twp.android.PlatforgeActivity;
+import com.platforge.android.PlatforgeActivity;
 
 import edu.elon.honors.price.data.Data;
 import edu.elon.honors.price.data.GameCache.GameDetails;
