@@ -27,7 +27,7 @@ import com.platforge.data.ObjectClass;
 import com.platforge.data.ObjectInstance;
 import com.platforge.data.PlatformGame;
 import com.platforge.data.Tileset;
-import com.platforge.data.Vector;
+import com.platforge.physics.Vector;
 import com.platforge.data.MapClass.CollidesWith;
 import com.platforge.player.core.graphics.Graphics;
 import com.platforge.player.core.graphics.ImageSprite;

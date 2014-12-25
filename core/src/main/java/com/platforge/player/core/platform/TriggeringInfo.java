@@ -1,6 +1,6 @@
 package com.platforge.player.core.platform;
 
-import com.platforge.data.Vector;
+import com.platforge.physics.Vector;
 import com.platforge.player.core.action.Point;
 import com.platforge.player.core.input.UIControl;
 

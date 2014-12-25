@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 
 import com.platforge.data.Map;
-import com.platforge.data.Vector;
+import com.platforge.physics.Vector;
 import com.platforge.editor.data.tutorial.Tutorial.EditorButton;
 import com.platforge.editor.maker.R;
 import com.platforge.player.core.game.Debug;

@@ -2,7 +2,7 @@ package com.platforge.player.core.platform;
 
 import com.platforge.data.Map;
 import com.platforge.data.PlatformGame;
-import com.platforge.data.Vector;
+import com.platforge.physics.Vector;
 import com.platforge.player.core.game.Rect;
 import com.platforge.player.core.graphics.BackgroundSprite;
 import com.platforge.player.core.graphics.Graphics;

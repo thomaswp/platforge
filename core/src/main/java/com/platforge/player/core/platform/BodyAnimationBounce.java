@@ -2,7 +2,7 @@ package com.platforge.player.core.platform;
 
 import org.jbox2d.common.Vec2;
 
-import com.platforge.data.Vector;
+import com.platforge.physics.Vector;
 
 public class BodyAnimationBounce extends BodyAnimation {
 

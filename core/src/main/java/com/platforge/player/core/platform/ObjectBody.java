@@ -11,7 +11,7 @@ import org.jbox2d.dynamics.FixtureDef;
 import com.platforge.data.BehaviorInstance;
 import com.platforge.data.MapClass;
 import com.platforge.data.ObjectClass;
-import com.platforge.data.Vector;
+import com.platforge.physics.Vector;
 import com.platforge.data.MapClass.CollidesWith;
 import com.platforge.player.core.graphics.ImageSprite;
 import com.platforge.player.core.graphics.Viewport;

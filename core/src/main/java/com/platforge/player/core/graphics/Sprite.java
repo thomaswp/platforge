@@ -13,7 +13,7 @@ public abstract class Sprite implements Comparable<Sprite> {
 	protected Object tag;
 	protected int timeout = -1;
 	protected RectF rect = new RectF();
-	protected int baseColor = com.platforge.data.Color.WHITE;
+	protected int baseColor = com.platforge.game.Color.WHITE;
 	protected int flashColor, flashDuration, flashFrame;
 	protected Layer layer;
 	

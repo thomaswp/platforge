@@ -6,8 +6,7 @@ import java.util.LinkedList;
 import com.platforge.data.field.DataObject;
 import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-import com.platforge.data.GameData;
-import com.platforge.data.UILayout;
+import com.platforge.game.Color;
 
 public class UILayout extends GameData {
 	private static final long serialVersionUID = 1L;

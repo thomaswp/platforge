@@ -6,15 +6,8 @@ import java.util.Collections;
 
 import com.platforge.data.Event.Action;
 import com.platforge.data.Event.Parameters;
-import com.platforge.data.ActorClass;
-import com.platforge.data.ActorInstance;
-import com.platforge.data.Directories;
-import com.platforge.data.Event;
-import com.platforge.data.Map;
-import com.platforge.data.MapLayer;
-import com.platforge.data.ObjectClass;
-import com.platforge.data.PlatformGame;
-import com.platforge.data.Tileset;
+import com.platforge.game.Color;
+import com.platforge.physics.Vector;
 
 public class Upgrader {
 

@@ -1,7 +1,7 @@
 package com.platforge.player.core.action;
 
-import com.platforge.data.Vector;
 import com.platforge.data.action.ActionChangeGravity;
+import com.platforge.physics.Vector;
 
 
 public class InterpreterChangeGravity extends ActionInterpreter<ActionChangeGravity> {

@@ -5,8 +5,12 @@ import java.util.HashMap;
 import com.platforge.data.ActorClass;
 import com.platforge.data.ActorInstance;
 import com.platforge.data.Behavior;
+import com.platforge.data.Behavior.Parameter;
 import com.platforge.data.BehaviorInstance;
 import com.platforge.data.Event;
+import com.platforge.data.Event.Action;
+import com.platforge.data.Event.Parameters;
+import com.platforge.data.Event.Trigger;
 import com.platforge.data.Hero;
 import com.platforge.data.Map;
 import com.platforge.data.MapLayer;
@@ -15,11 +19,6 @@ import com.platforge.data.ObjectInstance;
 import com.platforge.data.PlatformGame;
 import com.platforge.data.Tileset;
 import com.platforge.data.UILayout;
-import com.platforge.data.Vector;
-import com.platforge.data.Behavior.Parameter;
-import com.platforge.data.Event.Action;
-import com.platforge.data.Event.Parameters;
-import com.platforge.data.Event.Trigger;
 import com.platforge.data.UILayout.Button;
 import com.platforge.data.UILayout.JoyStick;
 import com.platforge.data.field.FieldData.ParseDataException;
@@ -28,8 +27,7 @@ import com.platforge.data.types.EventPointer;
 import com.platforge.data.types.ObjectClassPointer;
 import com.platforge.data.types.Switch;
 import com.platforge.data.types.Variable;
-import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
+import com.platforge.physics.Vector;
 
 public interface DataObject {
 

@@ -10,7 +10,7 @@ import com.platforge.data.Map;
 import com.platforge.data.ObjectClass;
 import com.platforge.data.PlatformGame;
 import com.platforge.data.UILayout;
-import com.platforge.data.Vector;
+import com.platforge.physics.Vector;
 import com.platforge.player.core.game.Debug;
 import com.platforge.player.core.game.Logic;
 import com.platforge.player.core.game.RectF;

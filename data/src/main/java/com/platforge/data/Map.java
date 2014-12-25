@@ -8,16 +8,7 @@ import java.util.LinkedList;
 import com.platforge.data.field.DataObject;
 import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-import com.platforge.data.ActorInstance;
-import com.platforge.data.BehaviorInstance;
-import com.platforge.data.Copy;
-import com.platforge.data.Event;
-import com.platforge.data.GameData;
-import com.platforge.data.Map;
-import com.platforge.data.MapLayer;
-import com.platforge.data.ObjectInstance;
-import com.platforge.data.PlatformGame;
-import com.platforge.data.Tileset;
+import com.platforge.physics.Vector;
 
 public class Map extends GameData {
 	private static final long serialVersionUID = 9L;
@@ -28,6 +19,8 @@ public class Map extends GameData {
 
 	@Deprecated
 	public MapLayer actorLayer;
+	@Deprecated
+	public Serializable editorData;
 	
 	public String name;
 	public Event[] events;
@@ -43,8 +36,6 @@ public class Map extends GameData {
 	public final ArrayList<ObjectInstance> objects = new ArrayList<ObjectInstance>();
 	public final LinkedList<BehaviorInstance> behaviors = new LinkedList<BehaviorInstance>();
 	public final LinkedList<String> midGrounds = new LinkedList<String>();
-
-	public transient Serializable editorData;
 	
 
 	@Override

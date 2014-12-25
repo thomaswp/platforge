@@ -1,6 +1,6 @@
 package com.platforge.player.core.action;
 
-import com.platforge.data.Vector;
+import com.platforge.physics.Vector;
 import com.platforge.data.action.ActionSetVariable;
 import com.platforge.player.core.platform.ActorBody;
 

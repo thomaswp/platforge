@@ -1,7 +1,7 @@
 package com.platforge.player.core.action;
 
-import com.platforge.data.Vector;
 import com.platforge.data.action.ActionSetVelocity;
+import com.platforge.physics.Vector;
 import com.platforge.player.core.platform.PlatformBody;
 
 public class InterpreterSetVelocity extends ActionInterpreter<ActionSetVelocity> {
