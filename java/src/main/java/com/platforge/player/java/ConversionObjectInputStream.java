@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.platforge.data.EditorData;
 import com.platforge.game.Color;
 import com.platforge.physics.Vector;
 
@@ -19,7 +20,7 @@ public class ConversionObjectInputStream extends ObjectInputStream {
         Map<String, Class<?>> res = new HashMap<String, Class<?>>();
         res.put("edu.elon.honors.price.physics.Vector", Vector.class);
         res.put("edu.elon.honors.price.game.Color", Color.class);
-        res.put("edu.elon.honors.price.maker.MapEditorView$EditorData", null);
+        res.put("edu.elon.honors.price.maker.MapEditorView$EditorData", EditorData.class);
         return Collections.unmodifiableMap(res);
     }
 

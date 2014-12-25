@@ -13,9 +13,6 @@ import com.platforge.data.types.ActorClassPointer;
 import com.platforge.data.types.ObjectClassPointer;
 import com.platforge.data.types.Switch;
 import com.platforge.data.types.Variable;
-import com.platforge.data.Event;
-import com.platforge.data.GameData;
-import com.platforge.data.ICopyable;
 
 /**
  * Represents an Event, including its triggers and actions. Events
@@ -161,6 +158,10 @@ public class Event extends GameData {
 	public static class Parameters extends GameData implements Serializable {//, Iterable<Object> {
 		private static final long serialVersionUID = 1L;
 
+		@SuppressWarnings("unused")
+		@Deprecated
+		private Object tag;
+		
 		private ArrayList<Object> params = new ArrayList<Object>();
 		
 		public int version = 0;
@@ -174,7 +175,9 @@ public class Event extends GameData {
 				for (Object o : params) {
 					String name = o == null ? null : o.getClass().getName(); 
 					fields.add(name);
-					if (o instanceof Integer) {
+					if (o == null) {
+						fields.add((String) null);
+					} else if (o instanceof Integer) {
 						fields.add((Integer) o);
 					} else if (o instanceof Boolean) {
 						fields.add((Boolean) o);
@@ -196,7 +199,9 @@ public class Event extends GameData {
 				int length = fields.add(0);
 				for (int i = 0; i < length; i++) {
 					String clazz = fields.add((String) null);
-					if (clazz.equals(Integer.class.getName())) {
+					if (clazz == null) {
+						params.add(null);
+					} else if (clazz.equals(Integer.class.getName())) {
 						params.add(fields.add(0));
 					} else if (clazz.equals(Boolean.class.getName())) {
 						params.add(fields.add(false));

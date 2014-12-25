@@ -32,6 +32,9 @@ public class PlatformGame extends GameData {
 	@Deprecated
 	public long lastEdited;
 
+	// Don't persist in future
+	public Object copyData;
+	public transient Object tutorial;
 
 	public final ArrayList<Map> maps;
 	public int selectedMapId;
@@ -51,8 +54,6 @@ public class PlatformGame extends GameData {
 	public final LinkedList<Behavior> mapBehaviors, 
 	actorBehaviors, objectBehaviors;
 
-	public transient Object tutorial;
-	public transient Object copyData;
 
 	public String ID;
 

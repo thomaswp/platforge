@@ -1,6 +1,5 @@
 package com.platforge.editor.maker;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +28,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.platforge.data.ActorClass;
+import com.platforge.data.EditorData;
 import com.platforge.data.ObjectClass;
 import com.platforge.data.PlatformGame;
 import com.platforge.data.Tileset;
@@ -41,7 +41,6 @@ import com.platforge.editor.maker.MapEditorLayer.Action;
 import com.platforge.editor.maker.MapEditorLayer.DrawMode;
 import com.platforge.editor.maker.MapEditorTextureSelectorView.Poster;
 import com.platforge.editor.maker.ScrollingImageSelectorView.OnSelectionListener;
-import com.platforge.editor.maker.R;
 import com.platforge.player.core.game.Debug;
 
 public class MapEditorView extends MapView {
@@ -1229,14 +1228,5 @@ public class MapEditorView extends MapView {
 				c.drawBitmap(icon, null, destRect, paint);
 			}
 		}
-	}
-
-	public static class EditorData implements Serializable {
-		private static final long serialVersionUID = 1L;
-
-		public int layer = 1, editMode = 0;
-		public int tileSelectionLeft, tileSelectionTop; 
-		public int tileSelectionRight = 1, tileSelectionBottom = 1;
-		public int actorSelection, objectSelection;
 	}
 }

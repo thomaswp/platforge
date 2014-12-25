@@ -24,11 +24,16 @@ public class PlatforgeJava {
 				return String.format(format, args);
 			}
 		};
+
+		JavaPlatform.Config config = new JavaPlatform.Config();
+		config.width = 1024;
+		config.height = 700;
+		// use config to customize the Java platform, if needed
+		JavaPlatform.register(config);
 		
-		PlatformGame game = new PlatformGame();
 		try {
 			ObjectInputStream ois = new ConversionObjectInputStream(new FileInputStream("tutorial5.game"));
-			game = (PlatformGame) ois.readObject();
+			PlatformGame game = (PlatformGame) ois.readObject();
 			ois.close();
 			Upgrader.upgrade(game);
 			
@@ -36,16 +41,10 @@ public class PlatforgeJava {
 			BufferedWriter writer = new BufferedWriter(new FileWriter("game.txt"));
 			writer.write(data);
 			writer.close();
+			
+			PlayN.run(new Platforge(data));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-
-//		JavaPlatform.Config config = new JavaPlatform.Config();
-//		config.width = 1024;
-//		config.height = 700;
-//		// use config to customize the Java platform, if needed
-//		JavaPlatform.register(config);
-//		PlayN.run(new Platforge());
 	}
 }

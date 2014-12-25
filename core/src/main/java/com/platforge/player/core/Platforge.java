@@ -21,9 +21,19 @@ public class Platforge extends Game.Default {
 	private final static int MAX_FRAME_DELTA = 1000 * 3 / 2 / 60;
 	
 	private Logic logic;
+	private PlatformGame game;
 	
-	public Platforge() {
+	public Platforge(PlatformGame game) {
 		super(16);
+		this.game = game;
+	}
+	
+	public Platforge(String data) {
+		this(PersistData.readData(PlatformGame.class, data));
+	}
+		
+	public Platforge() {
+		this((PlatformGame)null);
 	}
 
 	@Override
@@ -38,17 +48,21 @@ public class Platforge extends Game.Default {
 		
 		Graphics.resize(PlayN.graphics().width(), PlayN.graphics().height());
 		
-		PlayN.assets().getText("game.txt", new Callback<String>() {
-			@Override
-			public void onSuccess(String result) {
-				startGame(result);
-			}
+		if (game == null) {
+			PlayN.assets().getText("game.txt", new Callback<String>() {
+				@Override
+				public void onSuccess(String result) {
+					startGame(result);
+				}
 
-			@Override
-			public void onFailure(Throwable cause) {
-				startGame(new PlatformGame());
-			}
-		});		
+				@Override
+				public void onFailure(Throwable cause) {
+					startGame(new PlatformGame());
+				}
+			});		
+		} else {
+			startGame(game);
+		}
 	}
 	
 	private void startGame(String data) {
