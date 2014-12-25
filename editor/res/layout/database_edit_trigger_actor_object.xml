@@ -65,24 +65,24 @@
                     android:text="any object with the class" />
             </RadioGroup>
 
-            <edu.elon.honors.price.maker.SelectorActorClass
+            <com.platforge.editor.maker.SelectorActorClass
                 android:id="@+id/selectorActorClass1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <edu.elon.honors.price.maker.SelectorActorInstance
+            <com.platforge.editor.maker.SelectorActorInstance
                 android:id="@+id/selectorActorInstance1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SelectorActorInstance" />
 
-            <edu.elon.honors.price.maker.SelectorObjectInstance
+            <com.platforge.editor.maker.SelectorObjectInstance
                 android:id="@+id/selectorObjectInstance1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SelectorObjectInstance" />
 
-            <edu.elon.honors.price.maker.SelectorObjectClass
+            <com.platforge.editor.maker.SelectorObjectClass
                 android:id="@+id/selectorObjectClass1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

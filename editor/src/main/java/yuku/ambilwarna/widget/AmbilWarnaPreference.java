@@ -1,6 +1,6 @@
 package yuku.ambilwarna.widget;
 
-import edu.elon.honors.price.maker.R;
+import com.platforge.editor.maker.R;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Parcel;

@@ -2,7 +2,7 @@ package com.ericharlow.DragNDrop;
 
 import com.ericharlow.DragNDrop.DragNDropListView.DragNDropListener;
 
-import edu.elon.honors.price.maker.R;
+import com.platforge.editor.maker.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Adapter;

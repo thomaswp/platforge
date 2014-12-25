@@ -19,7 +19,7 @@ package com.ericharlow.DragNDrop;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.elon.honors.price.maker.R;
+import com.platforge.editor.maker.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

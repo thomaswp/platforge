@@ -24,11 +24,11 @@
             android:layout_height="match_parent"
             android:baselineAligned="false" >
 
-            <edu.elon.honors.price.maker.SelectorBehaviorInstances
+            <com.platforge.editor.maker.SelectorBehaviorInstances
                 android:id="@+id/selectorBehaviorInstances"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-            </edu.elon.honors.price.maker.SelectorBehaviorInstances>
+            </com.platforge.editor.maker.SelectorBehaviorInstances>
         </LinearLayout>
     </LinearLayout>
 

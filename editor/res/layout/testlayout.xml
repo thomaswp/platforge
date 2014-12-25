@@ -15,70 +15,70 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <edu.elon.honors.price.maker.SelectorActorClass
+            <com.platforge.editor.maker.SelectorActorClass
                 android:id="@+id/selectorActorClass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <edu.elon.honors.price.maker.SelectorActorInstance
+            <com.platforge.editor.maker.SelectorActorInstance
                 android:id="@+id/selectorActorInstance1"
                 android:layout_width="294dp"
                 android:layout_height="wrap_content"
                 android:text="SelectorActorInstance" />
 
-            <edu.elon.honors.price.maker.SelectorActorInstance
+            <com.platforge.editor.maker.SelectorActorInstance
                 android:id="@+id/selectorActorInstance2"
                 android:layout_width="294dp"
                 android:layout_height="wrap_content"
                 android:text="SelectorActorInstance" />
 
-            <edu.elon.honors.price.maker.SelectorRegion
+            <com.platforge.editor.maker.SelectorRegion
                 android:id="@+id/selectorRegion1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-            </edu.elon.honors.price.maker.SelectorRegion>
+            </com.platforge.editor.maker.SelectorRegion>
 
             <LinearLayout
                 android:id="@+id/linearLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <edu.elon.honors.price.maker.SelectorSwitch
+                <com.platforge.editor.maker.SelectorSwitch
                     android:id="@+id/selectorSwitch1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <edu.elon.honors.price.maker.SelectorSwitch
+                <com.platforge.editor.maker.SelectorSwitch
                     android:id="@+id/selectorSwitch2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <edu.elon.honors.price.maker.SelectorVariable
+                <com.platforge.editor.maker.SelectorVariable
                     android:id="@+id/selectorVariable1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SelectorVariable" />
 
-                <edu.elon.honors.price.maker.SelectorVariable
+                <com.platforge.editor.maker.SelectorVariable
                     android:id="@+id/selectorVariable2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SelectorVariable" />
             </LinearLayout>
 
-            <edu.elon.honors.price.maker.SelectorPoint
+            <com.platforge.editor.maker.SelectorPoint
                 android:id="@+id/selectorPoint1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-            </edu.elon.honors.price.maker.SelectorPoint>
+            </com.platforge.editor.maker.SelectorPoint>
 
-            <edu.elon.honors.price.maker.SelectorObjectInstance
+            <com.platforge.editor.maker.SelectorObjectInstance
                 android:id="@+id/selectorObjectInstance1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SelectorObjectInstance" />
 
-            <edu.elon.honors.price.maker.SelectorObjectClass
+            <com.platforge.editor.maker.SelectorObjectClass
                 android:id="@+id/selectorObjectClass1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

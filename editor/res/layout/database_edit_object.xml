@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/actorImage" />
 
-                    <edu.elon.honors.price.maker.SelectorObjectImage
+                    <com.platforge.editor.maker.SelectorObjectImage
                         android:id="@+id/selectorObjectImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -183,11 +183,11 @@
                         android:layout_gravity="center_vertical"
                         android:text="@string/collidesWith" />
 
-                    <edu.elon.honors.price.maker.SelectorCollidesWith
+                    <com.platforge.editor.maker.SelectorCollidesWith
                         android:id="@+id/selectorCollidesWith"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
-                    </edu.elon.honors.price.maker.SelectorCollidesWith>
+                    </com.platforge.editor.maker.SelectorCollidesWith>
                 </TableRow>
 
                 <TableRow
@@ -250,11 +250,11 @@
                 </TableRow>
             </TableLayout>
 
-            <edu.elon.honors.price.maker.SelectorBehaviorInstances
+            <com.platforge.editor.maker.SelectorBehaviorInstances
                 android:id="@+id/selectorBehaviorInstances"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-            </edu.elon.honors.price.maker.SelectorBehaviorInstances>
+            </com.platforge.editor.maker.SelectorBehaviorInstances>
         </LinearLayout>
     </ScrollView>
 

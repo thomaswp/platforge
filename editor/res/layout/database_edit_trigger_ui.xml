@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
-                <edu.elon.honors.price.maker.SelectorUIControl
+                <com.platforge.editor.maker.SelectorUIControl
                     android:id="@+id/selectorUIControlButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
-                <edu.elon.honors.price.maker.SelectorUIControl
+                <com.platforge.editor.maker.SelectorUIControl
                     android:id="@+id/selectorUIControlJoystick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<edu.elon.honors.price.maker.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.platforge.editor.maker.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="fill_parent"
 android:layout_height="wrap_content"
 android:orientation="horizontal">
@@ -11,4 +11,4 @@ android:paddingRight="5dip"
 android:id="@+id/checkedTextView"
 android:layout_gravity="center_vertical"/>
 
-</edu.elon.honors.price.maker.CheckableLinearLayout>
+</com.platforge.editor.maker.CheckableLinearLayout>

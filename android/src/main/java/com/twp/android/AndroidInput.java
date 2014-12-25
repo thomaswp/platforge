@@ -2,9 +2,9 @@ package com.twp.android;
 
 import java.util.ArrayList;
 
-import com.twp.core.game.Debug;
-import com.twp.core.graphics.Graphics;
-import com.twp.core.input.Input;
+import com.platforge.player.core.game.Debug;
+import com.platforge.player.core.graphics.Graphics;
+import com.platforge.player.core.input.Input;
 
 import playn.core.Keyboard.TypedEvent;
 import playn.core.Touch.Event;

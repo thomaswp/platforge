@@ -32,7 +32,7 @@
                 android:text="@string/eventTriggeredWhen"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <edu.elon.honors.price.maker.SelectorVariable
+            <com.platforge.editor.maker.SelectorVariable
                 android:id="@+id/selectorVariable1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     android:text="@string/theVariable" />
             </RadioGroup>
 
-            <edu.elon.honors.price.maker.SelectorVariable
+            <com.platforge.editor.maker.SelectorVariable
                 android:id="@+id/selectorVariable2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

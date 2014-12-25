@@ -1,6 +1,6 @@
 package yuku.ambilwarna;
 
-import edu.elon.honors.price.maker.R;
+import com.platforge.editor.maker.R;
 import android.app.*;
 import android.content.*;
 import android.content.DialogInterface.OnCancelListener;

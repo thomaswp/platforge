@@ -1,0 +1,13 @@
+<module rename-to='platforge'>
+  <inherits name='playn.PlayN'/>
+  <inherits name='PlatforgeAssets'/>
+  <inherits name='com.platforge.PlatforgeData'/>
+  <inherits name="org.jbox2d.JBox2D" />
+
+  <source path='core'/>
+  <source path='html'/>
+
+  <public path="resources" />
+
+  <entry-point class='com.platforge.player.html.PlatforgeHtml'/>
+</module>

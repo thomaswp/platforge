@@ -116,11 +116,11 @@
                     android:gravity="center_horizontal|top"
                     android:orientation="vertical" >
 
-                    <edu.elon.honors.price.maker.SelectorListSize
+                    <com.platforge.editor.maker.SelectorListSize
                         android:id="@+id/selectorListSize"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
-                    </edu.elon.honors.price.maker.SelectorListSize>
+                    </com.platforge.editor.maker.SelectorListSize>
                 </LinearLayout>
             </LinearLayout>
 
