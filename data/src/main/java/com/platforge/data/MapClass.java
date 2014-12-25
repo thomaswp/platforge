@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-import com.platforge.game.Color;
 
 public abstract class MapClass extends GameData {
 	private static final long serialVersionUID = 1L;

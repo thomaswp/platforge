@@ -10,7 +10,7 @@ import com.platforge.data.Formatter;
 import com.platforge.data.MapClass;
 import com.platforge.data.ObjectClass;
 import com.platforge.data.PlatformGame;
-import com.platforge.physics.Vector;
+import com.platforge.data.Vector;
 import com.platforge.data.Event.Parameters;
 import com.platforge.data.action.GameState;
 import com.platforge.data.types.ActorClassPointer;

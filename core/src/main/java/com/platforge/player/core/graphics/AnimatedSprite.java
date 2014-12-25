@@ -2,7 +2,7 @@ package com.platforge.player.core.graphics;
 
 import static playn.core.PlayN.graphics;
 
-import com.platforge.physics.Vector;
+import com.platforge.data.Vector;
 
 import playn.core.Image;
 import playn.core.ImmediateLayer;

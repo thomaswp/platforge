@@ -10,7 +10,7 @@ import com.platforge.data.BehaviorInstance;
 import com.platforge.data.Event;
 import com.platforge.data.Map;
 import com.platforge.data.PlatformGame;
-import com.platforge.physics.Vector;
+import com.platforge.data.Vector;
 import com.platforge.data.Event.Trigger;
 import com.platforge.data.Event.Trigger.Contact;
 import com.platforge.data.action.GameState;

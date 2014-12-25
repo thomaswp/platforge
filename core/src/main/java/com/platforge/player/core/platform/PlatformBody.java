@@ -9,7 +9,7 @@ import org.jbox2d.dynamics.contacts.Contact;
 
 import com.platforge.data.ActorClass;
 import com.platforge.data.MapClass;
-import com.platforge.physics.Vector;
+import com.platforge.data.Vector;
 import com.platforge.data.MapClass.CollidesWith;
 import com.platforge.player.core.game.RectF;
 import com.platforge.player.core.graphics.Sprite;

@@ -1,8 +1,8 @@
 package com.platforge.data.action;
 
+import com.platforge.data.Vector;
 import com.platforge.data.Event.Parameters;
 import com.platforge.data.Event.Parameters.Iterator;
-import com.platforge.physics.Vector;
 import com.platforge.player.core.action.ParameterException;
 import com.platforge.player.core.action.Point;
 import com.platforge.player.core.action.ScriptableFragment;

@@ -19,6 +19,7 @@ import com.platforge.data.ObjectInstance;
 import com.platforge.data.PlatformGame;
 import com.platforge.data.Tileset;
 import com.platforge.data.UILayout;
+import com.platforge.data.Vector;
 import com.platforge.data.UILayout.Button;
 import com.platforge.data.UILayout.JoyStick;
 import com.platforge.data.field.FieldData.ParseDataException;
@@ -27,7 +28,6 @@ import com.platforge.data.types.EventPointer;
 import com.platforge.data.types.ObjectClassPointer;
 import com.platforge.data.types.Switch;
 import com.platforge.data.types.Variable;
-import com.platforge.physics.Vector;
 
 public interface DataObject {
 

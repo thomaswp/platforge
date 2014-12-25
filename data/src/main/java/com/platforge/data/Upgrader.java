@@ -6,8 +6,6 @@ import java.util.Collections;
 
 import com.platforge.data.Event.Action;
 import com.platforge.data.Event.Parameters;
-import com.platforge.game.Color;
-import com.platforge.physics.Vector;
 
 public class Upgrader {
 

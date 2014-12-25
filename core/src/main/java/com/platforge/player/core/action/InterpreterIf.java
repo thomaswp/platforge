@@ -1,7 +1,7 @@
 package com.platforge.player.core.action;
 
 import com.platforge.data.ActorClass;
-import com.platforge.physics.Vector;
+import com.platforge.data.Vector;
 import com.platforge.data.Event.Action;
 import com.platforge.data.action.ActionIf;
 import com.platforge.data.action.ActionIf.CheckIfTheActorData;

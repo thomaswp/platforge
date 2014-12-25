@@ -8,9 +8,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.platforge.data.Color;
 import com.platforge.data.EditorData;
-import com.platforge.game.Color;
-import com.platforge.physics.Vector;
+import com.platforge.data.Vector;
 
 public class ConversionObjectInputStream extends ObjectInputStream {
 

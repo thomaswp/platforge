@@ -1,6 +1,6 @@
 package com.platforge.player.core.input;
 
-import com.platforge.physics.Vector;
+import com.platforge.data.Vector;
 import com.platforge.player.core.game.Debug;
 import com.platforge.player.core.graphics.ImageSprite;
 import com.platforge.player.core.graphics.Viewport;

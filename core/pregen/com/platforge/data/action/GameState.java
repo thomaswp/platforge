@@ -3,7 +3,7 @@ package com.platforge.data.action;
 import com.platforge.data.ActorClass;
 import com.platforge.data.Event;
 import com.platforge.data.ObjectClass;
-import com.platforge.physics.Vector;
+import com.platforge.data.Vector;
 import com.platforge.data.types.ActorClassPointer;
 import com.platforge.data.types.ObjectClassPointer;
 import com.platforge.data.types.Switch;
