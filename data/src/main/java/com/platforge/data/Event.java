@@ -13,8 +13,6 @@ import com.platforge.data.types.ActorClassPointer;
 import com.platforge.data.types.ObjectClassPointer;
 import com.platforge.data.types.Switch;
 import com.platforge.data.types.Variable;
-import com.platforge.game.DataDebug;
-
 import com.platforge.data.Event;
 import com.platforge.data.GameData;
 import com.platforge.data.ICopyable;

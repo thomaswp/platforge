@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-import com.platforge.game.Color;
-
 import com.platforge.data.BehaviorInstance;
 import com.platforge.data.GameData;
 

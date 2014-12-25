@@ -1,8 +1,8 @@
 package com.platforge.player.core.action;
 
+import com.platforge.data.Vector;
 import com.platforge.data.action.ActionPointOperation;
 import com.platforge.data.types.Variable;
-import com.platforge.physics.Vector;
 import com.platforge.player.core.game.Debug;
 import com.platforge.player.core.platform.ActorBody;
 import com.platforge.player.core.platform.ObjectBody;

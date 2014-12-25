@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.platforge.game;
+package com.platforge.data;
 
 
 /**

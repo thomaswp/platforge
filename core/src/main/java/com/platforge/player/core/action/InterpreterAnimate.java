@@ -1,8 +1,8 @@
 package com.platforge.player.core.action;
 
+import com.platforge.data.Vector;
 import com.platforge.data.action.ActionAnimate;
 import com.platforge.data.action.ActionAnimate.WithBounceData;
-import com.platforge.physics.Vector;
 import com.platforge.player.core.platform.BodyAnimation;
 import com.platforge.player.core.platform.BodyAnimationBounce;
 import com.platforge.player.core.platform.PlatformBody;

@@ -3,17 +3,15 @@ package com.platforge.data.action;
 import com.platforge.data.ActorClass;
 import com.platforge.data.Event;
 import com.platforge.data.ObjectClass;
+import com.platforge.data.Vector;
 import com.platforge.data.types.ActorClassPointer;
 import com.platforge.data.types.ObjectClassPointer;
 import com.platforge.data.types.Switch;
 import com.platforge.data.types.Variable;
-import com.platforge.physics.Vector;
-
 import com.platforge.data.*;
 import com.platforge.data.Event.Parameters;
 import com.platforge.data.Event.Parameters.Iterator;
 import com.platforge.data.types.*;
-import com.platforge.physics.*;
 import com.platforge.player.core.action.ParameterException;
 import com.platforge.player.core.action.Point;
 import com.platforge.player.core.input.*;

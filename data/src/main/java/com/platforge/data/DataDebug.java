@@ -1,6 +1,6 @@
-package com.platforge.game;
+package com.platforge.data;
 
-import com.platforge.game.Formatter;
+import com.platforge.data.Formatter;
 
 public class DataDebug {
 	public static void write(long x) {

@@ -1,12 +1,9 @@
 package com.platforge.data.action;
 
-import com.platforge.physics.Vector;
-
 import com.platforge.data.*;
 import com.platforge.data.Event.Parameters;
 import com.platforge.data.Event.Parameters.Iterator;
 import com.platforge.data.types.*;
-import com.platforge.physics.*;
 import com.platforge.player.core.action.ParameterException;
 import com.platforge.player.core.action.Point;
 import com.platforge.player.core.action.ScriptableFragment;

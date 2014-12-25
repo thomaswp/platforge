@@ -1,7 +1,7 @@
 package com.platforge.player.core.action;
 
+import com.platforge.data.Formatter;
 import com.platforge.data.action.ActionDebugBox;
-import com.platforge.game.Formatter;
 
 
 public class InterpreterDebugBox extends ActionInterpreter<ActionDebugBox> {

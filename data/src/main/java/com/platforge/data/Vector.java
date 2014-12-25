@@ -1,8 +1,7 @@
-package com.platforge.physics;
+package com.platforge.data;
 
 import java.io.Serializable;
 
-import com.platforge.data.GameData;
 import com.platforge.data.field.DataObject;
 import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;

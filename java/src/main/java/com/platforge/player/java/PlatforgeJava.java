@@ -1,10 +1,10 @@
-package com.twp.java;
+package com.platforge.player.java;
 
 import playn.core.PlayN;
 import playn.java.JavaPlatform;
 
-import com.platforge.game.Formatter;
-import com.platforge.game.Formatter.Impl;
+import com.platforge.data.Formatter;
+import com.platforge.data.Formatter.Impl;
 import com.platforge.player.core.Platforge;
 
 public class PlatforgeJava {

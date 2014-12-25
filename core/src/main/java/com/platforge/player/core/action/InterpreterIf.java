@@ -1,6 +1,7 @@
 package com.platforge.player.core.action;
 
 import com.platforge.data.ActorClass;
+import com.platforge.data.Vector;
 import com.platforge.data.Event.Action;
 import com.platforge.data.action.ActionIf;
 import com.platforge.data.action.ActionIf.CheckIfTheActorData;
@@ -9,7 +10,6 @@ import com.platforge.data.action.ActionIf.CheckIfTheSwitchData;
 import com.platforge.data.action.ActionIf.CheckIfTheVariableData;
 import com.platforge.data.action.ActionIf.CheckIfTheActorData.CheckTypeData;
 import com.platforge.data.action.ActionIf.CheckIfTheActorObjectData.CheckPositionData;
-import com.platforge.physics.Vector;
 import com.platforge.player.core.game.Rect;
 import com.platforge.player.core.game.RectF;
 import com.platforge.player.core.platform.ActorBody;

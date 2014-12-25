@@ -9,8 +9,6 @@ import com.platforge.data.Event.Parameters;
 import com.platforge.data.field.DataObject;
 import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-import com.platforge.game.Formatter;
-
 import com.platforge.data.Behavior;
 import com.platforge.data.BehaviorInstance;
 import com.platforge.data.GameData;

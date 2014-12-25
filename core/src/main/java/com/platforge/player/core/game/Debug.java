@@ -1,6 +1,6 @@
 package com.platforge.player.core.game;
 
-import com.platforge.game.Formatter;
+import com.platforge.data.Formatter;
 
 import playn.core.PlayN;
 

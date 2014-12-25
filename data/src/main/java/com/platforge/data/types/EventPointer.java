@@ -1,6 +1,7 @@
 package com.platforge.data.types;
 
 import com.platforge.data.Behavior;
+import com.platforge.data.Formatter;
 import com.platforge.data.GameData;
 import com.platforge.data.ICopyable;
 import com.platforge.data.PlatformGame;
@@ -9,8 +10,6 @@ import com.platforge.data.field.DataObject;
 import com.platforge.data.field.FieldData;
 import com.platforge.data.field.PersistData;
 import com.platforge.data.field.FieldData.ParseDataException;
-import com.platforge.game.Formatter;
-
 import com.platforge.data.types.EventPointer;
 
 public class EventPointer extends GameData implements ICopyable<EventPointer> {

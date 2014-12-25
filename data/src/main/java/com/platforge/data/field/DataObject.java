@@ -15,6 +15,7 @@ import com.platforge.data.ObjectInstance;
 import com.platforge.data.PlatformGame;
 import com.platforge.data.Tileset;
 import com.platforge.data.UILayout;
+import com.platforge.data.Vector;
 import com.platforge.data.Behavior.Parameter;
 import com.platforge.data.Event.Action;
 import com.platforge.data.Event.Parameters;
@@ -27,8 +28,6 @@ import com.platforge.data.types.EventPointer;
 import com.platforge.data.types.ObjectClassPointer;
 import com.platforge.data.types.Switch;
 import com.platforge.data.types.Variable;
-import com.platforge.physics.Vector;
-
 import com.platforge.data.field.DataObject;
 import com.platforge.data.field.FieldData;
 

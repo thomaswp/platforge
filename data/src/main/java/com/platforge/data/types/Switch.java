@@ -1,10 +1,9 @@
 package com.platforge.data.types;
 
 import com.platforge.data.Behavior;
+import com.platforge.data.Formatter;
 import com.platforge.data.PlatformGame;
 import com.platforge.data.field.DataObject;
-import com.platforge.game.Formatter;
-
 import com.platforge.data.types.DataScope;
 import com.platforge.data.types.ScopedData;
 import com.platforge.data.types.Switch;

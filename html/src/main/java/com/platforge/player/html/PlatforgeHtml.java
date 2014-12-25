@@ -4,8 +4,8 @@ import playn.core.PlayN;
 import playn.html.HtmlGame;
 import playn.html.HtmlPlatform;
 
-import com.platforge.game.Formatter;
-import com.platforge.game.Formatter.Impl;
+import com.platforge.data.Formatter;
+import com.platforge.data.Formatter.Impl;
 import com.platforge.player.core.Platforge;
 
 public class PlatforgeHtml extends HtmlGame {

@@ -6,10 +6,6 @@ import java.util.Collections;
 
 import com.platforge.data.Event.Action;
 import com.platforge.data.Event.Parameters;
-import com.platforge.game.Color;
-import com.platforge.game.DataDebug;
-import com.platforge.physics.Vector;
-
 import com.platforge.data.ActorClass;
 import com.platforge.data.ActorInstance;
 import com.platforge.data.Directories;

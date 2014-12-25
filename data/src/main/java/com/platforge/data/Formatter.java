@@ -1,4 +1,4 @@
-package com.platforge.game;
+package com.platforge.data;
 
 public class Formatter {
 	public static String format(String format, Object... args) {

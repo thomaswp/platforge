@@ -8,9 +8,6 @@ import java.util.LinkedList;
 import com.platforge.data.field.DataObject;
 import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-import com.platforge.game.Formatter;
-import com.platforge.physics.Vector;
-
 import com.platforge.data.ActorInstance;
 import com.platforge.data.BehaviorInstance;
 import com.platforge.data.Copy;
