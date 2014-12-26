@@ -5,12 +5,7 @@ import java.util.List;
 
 import com.platforge.data.field.DataObject.Constructor;
 
-import com.platforge.data.field.ArrayIO;
-import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
-import com.platforge.data.field.PersistData;
-
-public class PersistData implements FieldData {
+public class PersistData extends OrderedFieldData {
 
 	private final static String NULL = "<<null>>";
 	private final static String REF = "<<ref>>";
@@ -349,7 +344,7 @@ public class PersistData implements FieldData {
 	
 	public <T extends DataObject, L extends List<T>> L addList(L x) throws NumberFormatException, ParseDataException {
 		if (!dataMode) return x;
-		return addList(x, null);
+		return addList(x, (Class<? extends T>) null);
 	}
 	
 	public <T extends DataObject, L extends List<T>> L addList(L x, Class<? extends T> clazz) throws NumberFormatException, ParseDataException {

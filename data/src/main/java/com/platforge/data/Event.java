@@ -214,7 +214,7 @@ public class Event extends GameData {
 					} else if (clazz.equals(LinkedList.class.getName())){
 						params.add(fields.addList(new LinkedList<DataObject>()));
 					} else {
-						params.add(fields.add(null, clazz));
+						params.add(fields.add((DataObject) null, clazz));
 					}
 				}
 			}

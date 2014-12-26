@@ -1,11 +1,7 @@
 package com.platforge.data.field;
 
-import com.platforge.data.field.ArrayHash;
-import com.platforge.data.field.ArrayIO;
-import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 
-abstract class ValueData implements FieldData {
+abstract class ValueData extends OrderedFieldData {
 	protected final DataObject dataObject;
 	
 	public ValueData(DataObject dataObject) {
