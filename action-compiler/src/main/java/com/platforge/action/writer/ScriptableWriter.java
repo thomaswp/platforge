@@ -7,16 +7,16 @@ import org.xml.sax.Attributes;
 public class ScriptableWriter extends ActionFragmentWriter {
 	
 	protected final static String[] IMPORTS = new String[] {
-			"edu.elon.honors.price.data.*",
-			"edu.elon.honors.price.data.types.*",
-			"edu.elon.honors.price.data.Event.Parameters.Iterator",
-			"edu.elon.honors.price.data.Event.Parameters",
-			"edu.elon.honors.price.physics.*",
-			"com.twp.core.input.*",
-			"com.twp.core.platform.*",
+			"com.platforge.data.*",
+			"com.platforge.data.types.*",
+			"com.platforge.data.Event.Parameters",
+			"com.platforge.data.Event.Parameters.Iterator",
+			"com.platforge.player.core.input.*",
+			"com.platforge.player.core.platform.*",
+			"com.platforge.player.core.action.*",
 	};
 	
-	protected final static String PACKAGE = "com.twp.core.action";
+	protected final static String PACKAGE = "com.platforge.data.action";
 	
 	public String fileName;
 	protected String readableName;

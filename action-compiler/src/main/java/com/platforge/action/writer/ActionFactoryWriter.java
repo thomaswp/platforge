@@ -24,6 +24,9 @@ public class ActionFactoryWriter extends Writer {
 //			writeLn("import %s;", s);
 //		}
 		
+		writeLn("import com.platforge.player.core.action.*;");
+		writeLn();
+		
 		writeLn("public class ActionFactory {");
 		tab++;
 		

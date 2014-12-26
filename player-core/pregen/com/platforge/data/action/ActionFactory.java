@@ -1,33 +1,6 @@
 package com.platforge.data.action;
 
-import com.platforge.player.core.action.ActionInterpreter;
-import com.platforge.player.core.action.InterpreterAnimate;
-import com.platforge.player.core.action.InterpreterChangeColor;
-import com.platforge.player.core.action.InterpreterChangeGravity;
-import com.platforge.player.core.action.InterpreterChangeScale;
-import com.platforge.player.core.action.InterpreterCreateActor;
-import com.platforge.player.core.action.InterpreterCreateObject;
-import com.platforge.player.core.action.InterpreterDebugBox;
-import com.platforge.player.core.action.InterpreterDebugMessage;
-import com.platforge.player.core.action.InterpreterDestroyObject;
-import com.platforge.player.core.action.InterpreterDrawToScreen;
-import com.platforge.player.core.action.InterpreterElse;
-import com.platforge.player.core.action.InterpreterIf;
-import com.platforge.player.core.action.InterpreterLoop;
-import com.platforge.player.core.action.InterpreterMoveActor;
-import com.platforge.player.core.action.InterpreterMoveObject;
-import com.platforge.player.core.action.InterpreterPointOperation;
-import com.platforge.player.core.action.InterpreterSetBehaviorParameters;
-import com.platforge.player.core.action.InterpreterSetSwitch;
-import com.platforge.player.core.action.InterpreterSetVariable;
-import com.platforge.player.core.action.InterpreterSetVelocity;
-import com.platforge.player.core.action.InterpreterStop;
-import com.platforge.player.core.action.InterpreterTriggerActorAnimation;
-import com.platforge.player.core.action.InterpreterTriggerActorBehavior;
-import com.platforge.player.core.action.InterpreterTriggerEvent;
-import com.platforge.player.core.action.InterpreterUIAction;
-import com.platforge.player.core.action.InterpreterWait;
-import com.platforge.player.core.action.ScriptableInstance;
+import com.platforge.player.core.action.*;
 
 public class ActionFactory {
 	public final static int[] ACTION_IDS = new int[] {
