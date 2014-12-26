@@ -4,6 +4,4 @@
 
   <source path="data"/>
   <source path="data/types"/>
-  <source path="game"/>
-  <source path="physics"/>
 </module>

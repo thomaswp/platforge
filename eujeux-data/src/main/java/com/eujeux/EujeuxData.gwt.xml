@@ -1,0 +1,4 @@
+<!-- not currently needed or used, but may be in the future -->
+<module>
+  <source path="data"/>
+</module>
