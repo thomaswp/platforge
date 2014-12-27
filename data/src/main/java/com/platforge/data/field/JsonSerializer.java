@@ -2,22 +2,86 @@ package com.platforge.data.field;
 
 import java.util.List;
 
+import com.platforge.data.field.DataObject.Constructor;
+
+import playn.core.Json;
+import playn.core.Json.Writer;
+import playn.core.json.JsonImpl;
+import playn.core.PlayN;
+
 public class JsonSerializer implements FieldData {
 
+	private static Json json;
+	static {
+		json = PlayN.platform() == null ? new JsonImpl() : PlayN.json();
+	}
+	
+	private Writer writer;
+	private Json.Object obj;
+	private boolean write;
+	
+	public static String toJson(DataObject data) {
+		JsonSerializer serializer = new JsonSerializer();
+		serializer.writer = json.newWriter();
+		serializer.write = true;
+		try {
+			serializer.write(data);
+			return serializer.writer.write();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	private void write(DataObject data) throws NumberFormatException, ParseDataException {
+		write(data, data.getClass().getName());
+	}
+	
+	private void write(DataObject data, String className) throws NumberFormatException, ParseDataException {
+		writer.object();
+		writer.value(key("class"), className(className));
+		data.addFields(this);
+		writer.end();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T extends DataObject> T fromJson(String json, Class<T> clazz) {
+		JsonSerializer serializer = new JsonSerializer();
+		serializer.write = false;
+		try {
+			DataObject obj = Constructor.construct(clazz.getName());
+			serializer.obj = JsonSerializer.json.parse(json);
+			if (serializer.obj == null) return null;
+			obj.addFields(serializer);
+			return (T) obj;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	private String nextField() {
 		return null;
 	}
 	
+	private String key(String key) {
+		return key;
+	}
+	
+	private String className(String clazz) {
+		return clazz;
+	}
+	
 	@Override
 	public boolean writeMode() {
-		// TODO Auto-generated method stub
-		return false;
+		return write;
 	}
 
 	@Override
 	public boolean readMode() {
-		// TODO Auto-generated method stub
-		return false;
+		return !write;
+	}
+
+	private void missingKey(String key) throws ParseDataException {
+		throw new ParseDataException("Missing key " + key);
 	}
 
 	@Override
@@ -28,8 +92,14 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public int add(int x, String field) throws ParseDataException,
 			NumberFormatException {
-		// TODO Auto-generated method stub
-		return 0;
+		String key = key(field);
+		if (write) {
+			writer.value(key, x);
+			return x;
+		} else {
+			if (!obj.containsKey(key)) missingKey(key); 
+			return obj.getInt(key);
+		}
 	}
 
 	@Override
@@ -40,8 +110,14 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public long add(long x, String field) throws ParseDataException,
 			NumberFormatException {
-		// TODO Auto-generated method stub
-		return 0;
+		String key = key(field);
+		if (write) {
+			writer.value(key, x);
+			return x;
+		} else {
+			if (!obj.containsKey(key)) missingKey(key); 
+			return obj.getLong(key);
+		}
 	}
 
 	@Override
@@ -52,8 +128,14 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public short add(short x, String field) throws ParseDataException,
 			NumberFormatException {
-		// TODO Auto-generated method stub
-		return 0;
+		String key = key(field);
+		if (write) {
+			writer.value(key, x);
+			return x;
+		} else {
+			if (!obj.containsKey(key)) missingKey(key); 
+			return (short) obj.getInt(key);
+		}
 	}
 
 	@Override
@@ -64,8 +146,14 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public float add(float x, String field) throws ParseDataException,
 			NumberFormatException {
-		// TODO Auto-generated method stub
-		return 0;
+		String key = key(field);
+		if (write) {
+			writer.value(key, x);
+			return x;
+		} else {
+			if (!obj.containsKey(key)) missingKey(key); 
+			return (float) obj.getDouble(key);
+		}
 	}
 
 	@Override
@@ -77,8 +165,14 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public double add(double x, String field) throws ParseDataException,
 			NumberFormatException {
-		// TODO Auto-generated method stub
-		return 0;
+		String key = key(field);
+		if (write) {
+			writer.value(key, x);
+			return x;
+		} else {
+			if (!obj.containsKey(key)) missingKey(key); 
+			return obj.getDouble(key);
+		}
 	}
 
 	@Override
@@ -89,8 +183,14 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public byte add(byte x, String field) throws ParseDataException,
 			NumberFormatException {
-		// TODO Auto-generated method stub
-		return 0;
+		String key = key(field);
+		if (write) {
+			writer.value(key, x);
+			return x;
+		} else {
+			if (!obj.containsKey(key)) missingKey(key); 
+			return (byte) obj.getInt(key);
+		}
 	}
 
 	@Override
@@ -100,8 +200,16 @@ public class JsonSerializer implements FieldData {
 
 	@Override
 	public char add(char x, String field) throws ParseDataException {
-		// TODO Auto-generated method stub
-		return 0;
+		String key = key(field);
+		if (write) {
+			writer.value(key, x);
+			return x;
+		} else {
+			if (!obj.containsKey(key)) missingKey(key); 
+			String s = obj.getString(key);
+			if (s.length() != 1) throw new ParseDataException("Char must be saved as string of length 1");
+			return s.charAt(0);
+		}
 	}
 
 	@Override
@@ -111,8 +219,14 @@ public class JsonSerializer implements FieldData {
 
 	@Override
 	public boolean add(boolean x, String field) throws ParseDataException {
-		// TODO Auto-generated method stub
-		return false;
+		String key = key(field);
+		if (write) {
+			writer.value(key, x);
+			return x;
+		} else {
+			if (!obj.containsKey(key)) missingKey(key); 
+			return obj.getBoolean(key);
+		}
 	}
 
 	@Override
@@ -122,8 +236,14 @@ public class JsonSerializer implements FieldData {
 
 	@Override
 	public String add(String x, String field) throws ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
+		String key = key(field);
+		if (write) {
+			writer.value(key, x);
+			return x;
+		} else {
+			if (!obj.containsKey(key)) missingKey(key); 
+			return obj.getString(key);
+		}
 	}
 
 	@Override
@@ -135,14 +255,13 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public <T extends DataObject> T add(T x, Class<? extends T> clazz,
 			String field) throws ParseDataException, NumberFormatException {
-		// TODO Auto-generated method stub
-		return null;
+		return add(x, clazz.getName(), field);
 	}
 
 	@Override
 	public <T extends DataObject> T add(T x) throws ParseDataException,
 			NumberFormatException {
-		return add(x, nextField());
+		return add(x, x.getClass().getName(), nextField());
 	}
 
 	@Override
@@ -154,8 +273,10 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public <T extends DataObject> T add(T x, String clazz, String field)
 			throws ParseDataException, NumberFormatException {
-		// TODO Auto-generated method stub
-		return null;
+		writer.object(key(field));
+		write(x, clazz);
+		writer.end();
+		return x;
 	}
 
 	@Override
