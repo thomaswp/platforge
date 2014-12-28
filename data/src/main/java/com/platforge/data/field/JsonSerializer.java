@@ -1,13 +1,15 @@
 package com.platforge.data.field;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.platforge.data.field.DataObject.Constructor;
-
 import playn.core.Json;
+import playn.core.Json.Array;
 import playn.core.Json.Writer;
-import playn.core.json.JsonImpl;
 import playn.core.PlayN;
+import playn.core.json.JsonImpl;
+
+import com.platforge.data.field.DataObject.Constructor;
 
 public class JsonSerializer implements FieldData {
 
@@ -33,7 +35,7 @@ public class JsonSerializer implements FieldData {
 	}
 	
 	private void write(DataObject data) throws NumberFormatException, ParseDataException {
-		write(data, data.getClass().getName());
+		write(data, data == null ? null : data.getClass().getName());
 	}
 	
 	private void write(DataObject data, String className) throws NumberFormatException, ParseDataException {
@@ -43,19 +45,31 @@ public class JsonSerializer implements FieldData {
 		writer.end();
 	}
 
+	public static DataObject fromJson(String json) {
+		return fromJson(json);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static <T extends DataObject> T fromJson(String json, Class<T> clazz) {
 		JsonSerializer serializer = new JsonSerializer();
 		serializer.write = false;
 		try {
-			DataObject obj = Constructor.construct(clazz.getName());
-			serializer.obj = JsonSerializer.json.parse(json);
-			if (serializer.obj == null) return null;
-			obj.addFields(serializer);
-			return (T) obj;
+			return (T) serializer.read(JsonSerializer.json.parse(json));
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	private DataObject read(Json.Object obj) throws ParseDataException {
+		String className = nameClass(obj.getString("class"));
+		if (className == null) return null;
+		DataObject data = Constructor.construct(className);
+		Json.Object stackHead = this.obj;
+		this.obj = obj;
+		data.addFields(this);
+		this.obj = stackHead;
+		return data;
+		
 	}
 	
 	private String nextField() {
@@ -70,6 +84,10 @@ public class JsonSerializer implements FieldData {
 		return clazz;
 	}
 	
+	private String nameClass(String name) {
+		return name;
+	}
+	
 	@Override
 	public boolean writeMode() {
 		return write;
@@ -80,8 +98,13 @@ public class JsonSerializer implements FieldData {
 		return !write;
 	}
 
-	private void missingKey(String key) throws ParseDataException {
-		throw new ParseDataException("Missing key " + key);
+	private void checkMissingKey(String key) throws ParseDataException {
+		if (!obj.containsKey(key)) throw new ParseDataException("Missing key " + key);
+	}
+
+	private void invalidArrayLength()
+			throws ParseDataException {
+		throw new ParseDataException("Array length mismatch");
 	}
 
 	@Override
@@ -97,7 +120,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			if (!obj.containsKey(key)) missingKey(key); 
+			checkMissingKey(key);
 			return obj.getInt(key);
 		}
 	}
@@ -115,7 +138,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			if (!obj.containsKey(key)) missingKey(key); 
+			checkMissingKey(key);
 			return obj.getLong(key);
 		}
 	}
@@ -133,7 +156,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			if (!obj.containsKey(key)) missingKey(key); 
+			checkMissingKey(key);
 			return (short) obj.getInt(key);
 		}
 	}
@@ -151,7 +174,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			if (!obj.containsKey(key)) missingKey(key); 
+			checkMissingKey(key);
 			return (float) obj.getDouble(key);
 		}
 	}
@@ -170,7 +193,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			if (!obj.containsKey(key)) missingKey(key); 
+			checkMissingKey(key);
 			return obj.getDouble(key);
 		}
 	}
@@ -188,7 +211,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			if (!obj.containsKey(key)) missingKey(key); 
+			checkMissingKey(key);
 			return (byte) obj.getInt(key);
 		}
 	}
@@ -205,7 +228,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			if (!obj.containsKey(key)) missingKey(key); 
+			checkMissingKey(key);
 			String s = obj.getString(key);
 			if (s.length() != 1) throw new ParseDataException("Char must be saved as string of length 1");
 			return s.charAt(0);
@@ -224,7 +247,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			if (!obj.containsKey(key)) missingKey(key); 
+			checkMissingKey(key);
 			return obj.getBoolean(key);
 		}
 	}
@@ -241,7 +264,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			if (!obj.containsKey(key)) missingKey(key); 
+			checkMissingKey(key);
 			return obj.getString(key);
 		}
 	}
@@ -261,7 +284,7 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public <T extends DataObject> T add(T x) throws ParseDataException,
 			NumberFormatException {
-		return add(x, x.getClass().getName(), nextField());
+		return add(x, x == null ? null : x.getClass().getName(), nextField());
 	}
 
 	@Override
@@ -270,12 +293,43 @@ public class JsonSerializer implements FieldData {
 		return add(x, clazz, nextField());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends DataObject> T add(T x, String clazz, String field)
 			throws ParseDataException, NumberFormatException {
-		writer.object(key(field));
-		write(x, clazz);
-		writer.end();
+		String key = key(field);
+		if (write) {
+			writer.object(key);
+			write(x, clazz);
+			writer.end();
+			return x;
+		} else {
+			checkMissingKey(key);
+			return (T) read(obj.getObject(key));
+		}
+	}
+	
+	// Arrays are stored int the format "length{\n}1|2|3|4"
+	private Object addArray(Object x, String field, ArrayIO io) throws NumberFormatException, ParseDataException {
+		String key = key(field);
+		if (write) {
+			if (x == null) {
+				writer.nul(key);
+			} else {
+				int length = io.length(x);
+				writer.array(key);
+				for (int i = 0; i < length; i++) writer.value(io.readObject(x, i));
+				writer.end();
+			}
+		} else {
+			Array a = obj.getArray(key);
+			if (a == null) return null;
+			int length = a.length();
+			if (x == null || io.length(x) != length) {
+				x = io.create(length);
+			}
+			for (int i = 0; i < length; i++) io.set(x, i, a.getObject(i).toString());
+		}
 		return x;
 	}
 
@@ -288,8 +342,7 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public boolean[] addArray(boolean[] x, String field)
 			throws NumberFormatException, ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
+		return (boolean[]) addArray(x, field, ArrayIO.booleanIO);
 	}
 
 	@Override
@@ -301,8 +354,7 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public int[] addArray(int[] x, String field) throws NumberFormatException,
 			ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
+		return (int[]) addArray(x, field, ArrayIO.intIO);
 	}
 
 	@Override
@@ -314,8 +366,7 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public String[] addArray(String[] x, String field)
 			throws NumberFormatException, ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
+		return (String[]) addArray(x, field, ArrayIO.stringIO);
 	}
 
 	@Override
@@ -327,8 +378,28 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public int[][] add2DArray(int[][] x, String field)
 			throws NumberFormatException, ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
+		String key = key(field);
+		if (write) {
+			writer.array(key);
+			for (int[] v : x) {
+				writer.array();
+				for (int vv : v) writer.value(vv);
+				writer.end();
+			}
+			writer.end();
+			return x;
+		} else {
+			checkMissingKey(key);
+			Array a = obj.getArray(key);
+			if (x == null || x.length != a.length()) x = new int[a.length()][];
+			for (int i = 0; i < x.length; i++) {
+				Array aa = a.getArray(i);
+				if (x[i] == null || x[i].length != aa.length()) x[i] = new int[aa.length()];
+				int[] xx = x[i];
+				for (int j = 0; j < xx.length; j++) xx[j] = aa.getInt(j);
+			}
+			return x;
+		}
 	}
 
 	@Override
@@ -337,24 +408,30 @@ public class JsonSerializer implements FieldData {
 		return addArray(x, nextField());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends DataObject> T[] addArray(T[] x, String field)
 			throws NumberFormatException, ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
+		String key = key(field);
+		if (write) {
+			writer.array(key);
+			for (T v : x) write(v);
+			writer.end();
+			return x;
+		} else {
+			checkMissingKey(key);
+			Array a = obj.getArray(key);
+			if (x == null) throw new ParseDataException("Array cannot be null");
+			if (x.length != a.length()) invalidArrayLength();
+			for (int i = 0; i < x.length; i++) x[i] = (T) read(obj);
+			return x;
+		}
 	}
 
 	@Override
 	public <T extends DataObject, L extends List<T>> L addList(L x)
 			throws NumberFormatException, ParseDataException {
 		return addList(x, nextField());
-	}
-
-	@Override
-	public <T extends DataObject, L extends List<T>> L addList(L x, String field)
-			throws NumberFormatException, ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -368,22 +445,67 @@ public class JsonSerializer implements FieldData {
 	public <T extends DataObject, L extends List<T>> L addList(L x,
 			Class<? extends T> clazz, String field)
 			throws NumberFormatException, ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
+		return addList(x, null, field);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends DataObject, L extends List<T>> L addList(L x, String field)
+			throws NumberFormatException, ParseDataException {
+		String key = key(field);
+		if (write) {
+			writer.array(key);
+			for (T v : x) write(v);
+			writer.end();
+			return x;
+		} else {
+			checkMissingKey(key);
+			Array a = obj.getArray(key);
+			if (x == null) throw new ParseDataException("List cannot be null");
+			x.clear();
+			int size = a.length();
+			for (int i = 0; i < size; i++) x.add((T) read(obj));
+			return x;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> List<T> addPrimitiveList(List<T> x, String field, ArrayIO io) throws NumberFormatException, ParseDataException  {
+		if (write) {
+			int length = x == null ? 0 : x.size();
+			Object array = io.create(length);
+			for (int i = 0; i < length; i++) {
+				io.set(array, i, String.valueOf(x.get(i)));
+			}
+			addArray(array, field, io);
+		} else {
+			Object array = addArray(null, field, io);
+			if (array == null) return null;
+			if (x == null) {
+				x = new ArrayList<T>();
+			} else {
+				x.clear();
+			}
+			int length = io.length(array);
+			for (int i = 0; i < length; i++) {
+				x.add((T) io.readObject(array, i));
+			}
+		}
+		return x;
+	} 
 
 	@Override
 	public List<Integer> addIntList(List<Integer> x)
 			throws NumberFormatException, ParseDataException {
 		return addIntList(x, nextField());
 	}
-
+	
 	@Override
 	public List<Integer> addIntList(List<Integer> x, String field)
 			throws NumberFormatException, ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
+		return addPrimitiveList(x, field, ArrayIO.intIO);
 	}
+	
 
 	@Override
 	public List<String> addStringList(List<String> x)
@@ -394,8 +516,7 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public List<String> addStringList(List<String> x, String field)
 			throws NumberFormatException, ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
+		return addPrimitiveList(x, field, ArrayIO.stringIO);
 	}
 
 	@Override
@@ -407,8 +528,7 @@ public class JsonSerializer implements FieldData {
 	@Override
 	public List<Boolean> addBooleanList(List<Boolean> x, String field)
 			throws NumberFormatException, ParseDataException {
-		// TODO Auto-generated method stub
-		return null;
+		return addPrimitiveList(x, field, ArrayIO.booleanIO);
 	}
 
 }
