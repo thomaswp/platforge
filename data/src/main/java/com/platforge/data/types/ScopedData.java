@@ -2,10 +2,8 @@ package com.platforge.data.types;
 
 import com.platforge.data.GameData;
 import com.platforge.data.ICopyable;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-
-import com.platforge.data.types.DataScope;
+import com.platforge.data.field.StrictFieldData;
 
 public abstract class ScopedData<T> extends GameData
 implements ICopyable<T> {
@@ -15,10 +13,10 @@ implements ICopyable<T> {
 	public DataScope scope;
 
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		id = fields.add(id);
-		int ordinal = fields.add(scope == null ? -1 : scope.ordinal()); 
+		id = fields.add(id, "id");
+		int ordinal = fields.add(scope == null ? -1 : scope.ordinal(), "scope"); 
 		scope = ordinal < 0 ? null : DataScope.values()[ordinal];
 	}
 

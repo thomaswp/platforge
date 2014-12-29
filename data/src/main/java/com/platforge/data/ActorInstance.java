@@ -1,13 +1,8 @@
 package com.platforge.data;
 
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-
-import com.platforge.data.ActorClass;
-import com.platforge.data.ActorInstance;
-import com.platforge.data.GameData;
-import com.platforge.data.PlatformGame;
+import com.platforge.data.field.StrictFieldData;
 
 /**
  * Represents an instance of an actor. This instance can be
@@ -22,12 +17,12 @@ public class ActorInstance extends GameData implements Comparable<ActorInstance>
 	public int row, column;
 
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		id = fields.add(id);
-		classIndex = fields.add(classIndex);
-		row = fields.add(row);
-		column = fields.add(column);
+		id = fields.add(id, "id");
+		classIndex = fields.add(classIndex, "classIndex");
+		row = fields.add(row, "row");
+		column = fields.add(column, "column");
 	}
 	
 	public static Constructor constructor() {

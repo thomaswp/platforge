@@ -1,11 +1,8 @@
 package com.platforge.data;
 
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-
-import com.platforge.data.GameData;
-import com.platforge.data.Tileset;
+import com.platforge.data.field.StrictFieldData;
 
 public class Tileset extends GameData {
 	private static final long serialVersionUID = 2L;
@@ -14,15 +11,15 @@ public class Tileset extends GameData {
 	public String name, bitmapName;
 	
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		tileWidth = fields.add(tileWidth);
-		tileHeight = fields.add(tileHeight);
-		tileSpacing = fields.add(tileSpacing);
-		rows = fields.add(rows);
-		columns = fields.add(columns);
-		name = fields.add(name);
-		bitmapName = fields.add(bitmapName);
+		tileWidth = fields.add(tileWidth, "tileWidth");
+		tileHeight = fields.add(tileHeight, "tileHeight");
+		tileSpacing = fields.add(tileSpacing, "tileSpacing");
+		rows = fields.add(rows, "rows");
+		columns = fields.add(columns, "columns");
+		name = fields.add(name, "name");
+		bitmapName = fields.add(bitmapName, "bitmapName");
 	}
 	
 	public static Constructor constructor() {

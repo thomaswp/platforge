@@ -1,13 +1,8 @@
 package com.platforge.data;
 
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-
-import com.platforge.data.GameData;
-import com.platforge.data.ObjectClass;
-import com.platforge.data.ObjectInstance;
-import com.platforge.data.PlatformGame;
+import com.platforge.data.field.StrictFieldData;
 
 public class ObjectInstance extends GameData implements Comparable<ObjectInstance> {
 	private static final long serialVersionUID = 1L;
@@ -17,12 +12,12 @@ public class ObjectInstance extends GameData implements Comparable<ObjectInstanc
 	public int startX, startY;
 
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		id = fields.add(id);
-		classIndex = fields.add(classIndex);
-		startX = fields.add(startX);
-		startY = fields.add(startY);
+		id = fields.add(id, "id");
+		classIndex = fields.add(classIndex, "classIndex");
+		startX = fields.add(startX, "startX");
+		startY = fields.add(startY, "startY");
 	}
 	
 	public static Constructor constructor() {

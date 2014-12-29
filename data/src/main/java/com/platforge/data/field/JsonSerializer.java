@@ -15,6 +15,8 @@ import com.platforge.data.field.DataObject.Constructor;
 
 public class JsonSerializer implements FieldData {
 
+	private final String ID = "__id", CLASS = "__class";
+	
 	private static Json json;
 	static {
 		json = PlayN.platform() == null ? new JsonImpl() : PlayN.json();
@@ -69,8 +71,8 @@ public class JsonSerializer implements FieldData {
 		}
 		Set<String> stackKeys = this.keys;
 		this.keys = new HashSet<String>();
-		writer.value(key("class"), className(className));
-		writer.value(key("id"), index);
+		writer.value(key(CLASS), className(className));
+		writer.value(key(ID), index);
 		data.addFields(this);
 		this.keys = stackKeys;
 		writer.end();
@@ -106,8 +108,8 @@ public class JsonSerializer implements FieldData {
 		Set<String> stackKeys = this.keys;
 		this.obj = obj;
 		this.keys = new HashSet<String>();
-		String className = nameClass(obj.getString(key("class")));
-		int id = obj.getInt(key("id"));
+		String className = nameClass(obj.getString(key(CLASS)));
+		int id = obj.getInt(key(ID));
 		if (className == null) return null;
 		DataObject data = Constructor.construct(className);
 		data.addFields(this);
@@ -330,32 +332,38 @@ public class JsonSerializer implements FieldData {
 	}
 
 	@Override
-	public <T extends DataObject> T add(T x, Class<? extends T> clazz)
-			throws ParseDataException, NumberFormatException {
+	public <T extends DataObject> T add(T x) throws ParseDataException,
+			NumberFormatException {
 		return add(x, nextField());
 	}
 
 	@Override
-	public <T extends DataObject> T add(T x, Class<? extends T> clazz,
-			String field) throws ParseDataException, NumberFormatException {
-		return add(x, clazz.getName(), field);
-	}
-
-	@Override
-	public <T extends DataObject> T add(T x) throws ParseDataException,
-			NumberFormatException {
-		return add(x, x == null ? null : x.getClass().getName(), nextField());
-	}
-
-	@Override
-	public <T extends DataObject> T add(T x, String clazz)
+	public <T extends DataObject> T add(T x, String field)
 			throws ParseDataException, NumberFormatException {
-		return add(x, clazz, nextField());
+		return addCast(x, x == null ? null : x.getClass().getName(), field);
+	}
+
+	@Override
+	public <T extends DataObject> T addCast(T x, Class<? extends T> clazz)
+			throws ParseDataException, NumberFormatException {
+		return addCast(x, clazz, nextField());
+	}
+
+	@Override
+	public <T extends DataObject> T addCast(T x, Class<? extends T> clazz,
+			String field) throws ParseDataException, NumberFormatException {
+		return addCast(x, clazz.getName(), field);
+	}
+
+	@Override
+	public <T extends DataObject> T addCast(T x, String clazz)
+			throws ParseDataException, NumberFormatException {
+		return addCast(x, clazz, nextField());
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends DataObject> T add(T x, String clazz, String field)
+	public <T extends DataObject> T addCast(T x, String clazz, String field)
 			throws ParseDataException, NumberFormatException {
 		String key = key(field);
 		if (write) {

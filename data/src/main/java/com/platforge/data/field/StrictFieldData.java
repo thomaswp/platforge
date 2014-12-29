@@ -28,9 +28,10 @@ public interface StrictFieldData {
 	
 	public String add(String x, String field) throws ParseDataException;
 	
-	public <T extends DataObject> T add(T x, Class<? extends T> clazz, String field) throws ParseDataException, NumberFormatException;
+	public <T extends DataObject> T add(T x, String field) throws ParseDataException, NumberFormatException;
 	
-	public <T extends DataObject> T add(T x, String clazz, String field) throws ParseDataException, NumberFormatException;
+	public <T extends DataObject> T addCast(T x, Class<? extends T> clazz, String field) throws ParseDataException, NumberFormatException;
+	public <T extends DataObject> T addCast(T x, String clazz, String field) throws ParseDataException, NumberFormatException;
 	
 	public boolean[] addArray(boolean[] x, String field) throws NumberFormatException, ParseDataException;
 	

@@ -2,10 +2,7 @@ package com.platforge.data.field;
 
 import java.util.List;
 
-import com.platforge.data.field.ArrayIO;
-import com.platforge.data.field.DataObject;
-import com.platforge.data.field.EqualsData;
-import com.platforge.data.field.ValueData;
+import javax.xml.crypto.Data;
 
 public class EqualsData extends ValueData {
 	
@@ -294,7 +291,7 @@ public class EqualsData extends ValueData {
 		return x;
 	}
 	
-	public <T extends DataObject> T add(T x, Class<? extends T> clazz) throws ParseDataException, NumberFormatException {
+	public <T extends DataObject> T addCast(T x, Class<? extends T> clazz) throws ParseDataException, NumberFormatException {
 		addField(x);
 		return x;
 	}
@@ -304,7 +301,7 @@ public class EqualsData extends ValueData {
 		return x;
 	}
 	
-	public <T extends DataObject> T add(T x, String clazz) throws ParseDataException, NumberFormatException {
+	public <T extends DataObject> T addCast(T x, String clazz) throws ParseDataException, NumberFormatException {
 		addField(x);
 		return x;
 	}

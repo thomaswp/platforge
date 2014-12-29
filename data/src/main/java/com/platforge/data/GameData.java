@@ -5,10 +5,10 @@ import java.io.Serializable;
 import com.platforge.data.field.DataObject;
 import com.platforge.data.field.EqualsData;
 import com.platforge.data.field.HashData;
-
+import com.platforge.data.field.StrictDataObject;
 import com.platforge.data.GameData;
 
-public abstract class GameData implements Serializable, DataObject {
+public abstract class GameData extends StrictDataObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 //	private static Class<?>[] shallow = {Integer.class, Long.class, Short.class, Double.class, 

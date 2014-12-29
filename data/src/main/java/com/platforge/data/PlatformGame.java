@@ -6,20 +6,8 @@ import java.util.List;
 
 import com.platforge.data.Behavior.BehaviorType;
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-import com.platforge.data.ActorClass;
-import com.platforge.data.Behavior;
-import com.platforge.data.Copy;
-import com.platforge.data.Event;
-import com.platforge.data.GameData;
-import com.platforge.data.Hero;
-import com.platforge.data.Map;
-import com.platforge.data.ObjectClass;
-import com.platforge.data.PlatformGame;
-import com.platforge.data.Tileset;
-import com.platforge.data.UILayout;
-import com.platforge.data.Upgrader;
+import com.platforge.data.field.StrictFieldData;
 
 public class PlatformGame extends GameData {
 	private static final long serialVersionUID = 3L;
@@ -58,40 +46,40 @@ public class PlatformGame extends GameData {
 	public String ID;
 
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		_VERSION_ = fields.add(_VERSION_);
-		fields.addList(maps);
-		selectedMapId = fields.add(selectedMapId);
-		uiLayout = fields.add(uiLayout);
+		_VERSION_ = fields.add(_VERSION_, "version");
+		fields.addList(maps, "maps");
+		selectedMapId = fields.add(selectedMapId, "selectedMapId");
+		uiLayout = fields.add(uiLayout, "uiLayout");
 		
 		int length;
-		length = fields.add(tilesets == null ? 0 : tilesets.length);
+		length = fields.add(tilesets == null ? 0 : tilesets.length, "nTilesets");
 		if (fields.readMode() && (tilesets == null || tilesets.length != length)) {
 			tilesets = new Tileset[length];
 		}
-		tilesets = fields.addArray(tilesets);
+		tilesets = fields.addArray(tilesets, "tilesets");
 		
-		length = fields.add(actors == null ? 0 : actors.length);
+		length = fields.add(actors == null ? 0 : actors.length, "nActors");
 		if (fields.readMode() && (actors == null || actors.length != length)) {
 			actors = new ActorClass[length];
 		}
-		actors = fields.addArray(actors);
+		actors = fields.addArray(actors, "actors");
 		
-		length = fields.add(objects == null ? 0 : objects.length);
+		length = fields.add(objects == null ? 0 : objects.length, "nObjects");
 		if (fields.readMode() && (objects == null || objects.length != length)) {
 			objects = new ObjectClass[length];
 		}
-		objects = fields.addArray(objects);
+		objects = fields.addArray(objects, "objects");
 		
-		switchNames = fields.addArray(switchNames);
-		switchValues = fields.addArray(switchValues);
-		variableNames = fields.addArray(variableNames);
-		variableValues = fields.addArray(variableValues);
-		fields.addList(mapBehaviors);
-		fields.addList(actorBehaviors);
-		fields.addList(objectBehaviors);
-		ID = fields.add(ID);
+		switchNames = fields.addArray(switchNames, "switches");
+		switchValues = fields.addArray(switchValues, "switchValues");
+		variableNames = fields.addArray(variableNames, "variables");
+		variableValues = fields.addArray(variableValues, "variableValues");
+		fields.addList(mapBehaviors, "mapBehaviors");
+		fields.addList(actorBehaviors, "actorBehaviors");
+		fields.addList(objectBehaviors, "objectBehaviors");
+		ID = fields.add(ID, "id");
 	}
 	
 	public static Constructor constructor() {

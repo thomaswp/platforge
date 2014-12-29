@@ -10,5 +10,5 @@ public abstract class StrictDataObject implements DataObject {
 		addFields((StrictFieldData) fields);
 	}
 	
-	abstract void addFields(StrictFieldData fields) throws ParseDataException, NumberFormatException;
+	public abstract void addFields(StrictFieldData fields) throws ParseDataException, NumberFormatException;
 }

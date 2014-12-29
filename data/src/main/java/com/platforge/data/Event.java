@@ -7,8 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
+import com.platforge.data.field.StrictFieldData;
 import com.platforge.data.types.ActorClassPointer;
 import com.platforge.data.types.ObjectClassPointer;
 import com.platforge.data.types.Switch;
@@ -29,12 +29,12 @@ public class Event extends GameData {
 	public final ArrayList<Trigger> triggers;
 
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		name = fields.add(name);
-		disabled = fields.add(disabled);
-		fields.addList(actions);
-		fields.addList(triggers);
+		name = fields.add(name, "name");
+		disabled = fields.add(disabled, "disabled");
+		fields.addList(actions, "actions");
+		fields.addList(triggers, "triggers");
 	}
 	
 	public static Constructor constructor() {
@@ -101,13 +101,13 @@ public class Event extends GameData {
 		public Action dependsOn; 
 
 		@Override
-		public void addFields(FieldData fields) throws ParseDataException,
+		public void addFields(StrictFieldData fields) throws ParseDataException,
 				NumberFormatException {
-			params = fields.add(params);
-			id = fields.add(id);
-			indent = fields.add(indent);
-			description = fields.add(description);
-			dependsOn = fields.add(dependsOn);
+			params = fields.add(params, "params");
+			id = fields.add(id, "id");
+			indent = fields.add(indent, "indent");
+			description = fields.add(description, "description");
+			dependsOn = fields.add(dependsOn, "dependsOn");
 //			if (fields.readMode()) {
 //				if (id == 7) {
 //					System.out.println(this.hashCode());
@@ -168,57 +168,62 @@ public class Event extends GameData {
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public void addFields(FieldData fields) throws ParseDataException,
+		public void addFields(StrictFieldData fields) throws ParseDataException,
 				NumberFormatException {
 			if (fields.writeMode()) {
-				fields.add(params.size());
+				fields.add(params.size(), "nParams");
+				int i = 0;
 				for (Object o : params) {
 					String name = o == null ? null : o.getClass().getName(); 
-					fields.add(name);
+					fields.add(name, "class" + i);
+					String field = "v" + i;
 					if (o == null) {
-						fields.add((String) null);
+						fields.add((String) null, field);
 					} else if (o instanceof Integer) {
-						fields.add((Integer) o);
+						fields.add((Integer) o, field);
 					} else if (o instanceof Boolean) {
-						fields.add((Boolean) o);
+						fields.add((Boolean) o, field);
 					} else if (o instanceof Double) {
-						fields.add((Double) o);
+						fields.add((Double) o, field);
 					} else if (o instanceof Float) {
-						fields.add((Float) o);
+						fields.add((Float) o, field);
 					} else if (o instanceof String) {
-						fields.add((String) o);
+						fields.add((String) o, field);
 					} else if (o instanceof DataObject) {
-						fields.add((DataObject) o);
+						fields.add((DataObject) o, field);
 					} else if (o instanceof LinkedList<?>){
-						fields.addList((LinkedList<DataObject>) o);
+						fields.addList((LinkedList<DataObject>) o, field);
 					} else {
 						throw new ParseDataException("Invalid object in Parameters: " + o.toString());
 					}
+					i++;
 				}
 			} else {
-				int length = fields.add(0);
+				int length = fields.add(0, "nParams");
 				for (int i = 0; i < length; i++) {
-					String clazz = fields.add((String) null);
+					String clazz = fields.add((String) null, "class" + i);
+					String field = "v" + i;
 					if (clazz == null) {
+						fields.add((String) null, field);
 						params.add(null);
 					} else if (clazz.equals(Integer.class.getName())) {
-						params.add(fields.add(0));
+						params.add(fields.add(0, field));
 					} else if (clazz.equals(Boolean.class.getName())) {
-						params.add(fields.add(false));
+						params.add(fields.add(false, field));
 					} else if (clazz.equals(Double.class.getName())) {
-						params.add(fields.add(0.0));
+						params.add(fields.add(0.0, field));
 					} else if (clazz.equals(Float.class.getName())) {
-						params.add(fields.add(0.0f));
+						params.add(fields.add(0.0f, field));
 					} else if (clazz.equals(String.class.getName())) {
-						params.add(fields.add(""));
+						params.add(fields.add("", field));
 					} else if (clazz.equals(LinkedList.class.getName())){
-						params.add(fields.addList(new LinkedList<DataObject>()));
+						params.add(fields.addList(new LinkedList<DataObject>(), field));
 					} else {
-						params.add(fields.add((DataObject) null, clazz));
+						params.add(fields.addCast((DataObject) null, clazz, field));
 					}
 				}
 			}
-			version = fields.add(version);
+			version = fields.add(version, "version");
 		}
 		
 		public static Constructor constructor() {
@@ -540,11 +545,11 @@ public class Event extends GameData {
 		public transient Object gameData;
 
 		@Override
-		public void addFields(FieldData fields) throws ParseDataException,
+		public void addFields(StrictFieldData fields) throws ParseDataException,
 				NumberFormatException {
-			id = fields.add(id);
-			params = fields.add(params);
-			description = fields.add(description);
+			id = fields.add(id, "id");
+			params = fields.add(params, "params");
+			description = fields.add(description, "description");
 		}
 		
 		public static Constructor constructor() {

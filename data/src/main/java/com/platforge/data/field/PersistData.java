@@ -163,11 +163,11 @@ public class PersistData extends OrderedFieldData {
 	
 	public <T extends DataObject> T add(T x) throws ParseDataException, NumberFormatException {
 		if (!dataMode) return x;
-		return add(x, (String) null);
+		return addCast(x, (String) null);
 	}
 	
-	public <T extends DataObject> T add(T x, Class<? extends T> clazz) throws ParseDataException, NumberFormatException {
-		return add(x, clazz == null ? null : clazz.getName());
+	public <T extends DataObject> T addCast(T x, Class<? extends T> clazz) throws ParseDataException, NumberFormatException {
+		return addCast(x, clazz == null ? null : clazz.getName());
 	}
 	
 	/** 
@@ -177,7 +177,7 @@ public class PersistData extends OrderedFieldData {
 	 * persistent fields.
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends DataObject> T add(T x, String clazz) throws ParseDataException, NumberFormatException {
+	public <T extends DataObject> T addCast(T x, String clazz) throws ParseDataException, NumberFormatException {
 		if (!dataMode) return x;
 		String type;
 		if (writeMode) {
@@ -365,7 +365,7 @@ public class PersistData extends OrderedFieldData {
 					throw new ParseDataException("Cannot read into a null array");
 				}
 				for (int i = 0; i < length; i++) {
-					x.add(add((T) null, clazz));
+					x.add(addCast((T) null, clazz));
 				}
 			} else {
 				x = null;

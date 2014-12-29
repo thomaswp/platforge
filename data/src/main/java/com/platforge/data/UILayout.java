@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
+import com.platforge.data.field.StrictFieldData;
 
 public class UILayout extends GameData {
 	private static final long serialVersionUID = 1L;
@@ -17,10 +17,10 @@ public class UILayout extends GameData {
 	public final LinkedList<JoyStick> joysticks = new LinkedList<JoyStick>();
 	
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		fields.addList(buttons);
-		fields.addList(joysticks);
+		fields.addList(buttons, "buttons");
+		fields.addList(joysticks, "joysticks");
 	}
 	
 	public static Constructor constructor() {
@@ -46,14 +46,14 @@ public class UILayout extends GameData {
 		public String name;
 		
 		@Override
-		public void addFields(FieldData fields) throws ParseDataException,
+		public void addFields(StrictFieldData fields) throws ParseDataException,
 				NumberFormatException {
-			x = fields.add(x);
-			y = fields.add(y);
-			radius = fields.add(radius);
-			color= fields.add(color);
-			defaultAction = fields.add(defaultAction);
-			name = fields.add(name);
+			x = fields.add(x, "x");
+			y = fields.add(y, "y");
+			radius = fields.add(radius, "radius");
+			color= fields.add(color, "color");
+			defaultAction = fields.add(defaultAction, "defaultAction");
+			name = fields.add(name, "name");
 		}
 		
 		public CircleControl(int x, int y, int radius, int color,

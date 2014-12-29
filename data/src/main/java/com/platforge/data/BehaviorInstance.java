@@ -7,12 +7,8 @@ import java.util.List;
 import com.platforge.data.Behavior.BehaviorType;
 import com.platforge.data.Event.Parameters;
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-import com.platforge.data.Behavior;
-import com.platforge.data.BehaviorInstance;
-import com.platforge.data.GameData;
-import com.platforge.data.PlatformGame;
+import com.platforge.data.field.StrictFieldData;
 
 public class BehaviorInstance extends GameData {
 	private static final long serialVersionUID = 1L;
@@ -22,12 +18,12 @@ public class BehaviorInstance extends GameData {
 	public final List<Parameters> parameters = new LinkedList<Parameters>();
 
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		behaviorId = fields.add(behaviorId);
-		int ordinal = fields.add(type == null ? -1 : type.ordinal()); 
+		behaviorId = fields.add(behaviorId, "behaviorId");
+		int ordinal = fields.add(type == null ? -1 : type.ordinal(), "type"); 
 		type = ordinal < 0 ? null : BehaviorType.values()[ordinal];
-		fields.addList(parameters);
+		fields.addList(parameters, "parameters");
 	}
 	
 	public static Constructor constructor() {

@@ -7,18 +7,14 @@ import java.util.List;
 import com.platforge.data.Event.Action;
 import com.platforge.data.Event.Trigger;
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
+import com.platforge.data.field.StrictFieldData;
 import com.platforge.data.types.ActorClassPointer;
 import com.platforge.data.types.DataScope;
 import com.platforge.data.types.ObjectClassPointer;
 import com.platforge.data.types.ScopedData;
 import com.platforge.data.types.Switch;
 import com.platforge.data.types.Variable;
-
-import com.platforge.data.Behavior;
-import com.platforge.data.Event;
-import com.platforge.data.GameData;
 
 public class Behavior extends GameData {
 	private static final long serialVersionUID = 1L;
@@ -74,17 +70,17 @@ public class Behavior extends GameData {
 	public LinkedList<Parameter> parameters = new LinkedList<Parameter>();
 
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		name = fields.add(name);
-		int ordinal = fields.add(type == null ? -1 : type.ordinal()); 
+		name = fields.add(name, "name");
+		int ordinal = fields.add(type == null ? -1 : type.ordinal(), "type"); 
 		type = ordinal < 0 ? null : BehaviorType.values()[ordinal];
-		fields.addList(events);
-		fields.addIntList(variables);
-		fields.addStringList(variableNames);
-		fields.addBooleanList(switches);
-		fields.addStringList(switchNames);
-		parameters = fields.addList(parameters);
+		fields.addList(events, "events");
+		fields.addIntList(variables, "variables");
+		fields.addStringList(variableNames, "variableNames");
+		fields.addBooleanList(switches, "switches");
+		fields.addStringList(switchNames, "switchNames");
+		parameters = fields.addList(parameters, "parameters");
 	}
 	
 	public static Constructor constructor() {
@@ -241,11 +237,11 @@ public class Behavior extends GameData {
 		}
 		
 		@Override
-		public void addFields(FieldData fields) throws ParseDataException,
+		public void addFields(StrictFieldData fields) throws ParseDataException,
 				NumberFormatException {
-			int ordinal = fields.add(type == null ? -1 : type.ordinal()); 
+			int ordinal = fields.add(type == null ? -1 : type.ordinal(), "type");
 			type = ordinal < 0 ? null : ParameterType.values()[ordinal];
-			name = fields.add(name);
+			name = fields.add(name, "name");
 		}
 		
 		public Parameter() {

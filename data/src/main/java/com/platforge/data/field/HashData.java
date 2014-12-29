@@ -154,7 +154,7 @@ public class HashData extends ValueData {
 		return x;
 	}
 	
-	public <T extends DataObject> T add(T x, Class<? extends T> clazz) throws ParseDataException, NumberFormatException {
+	public <T extends DataObject> T addCast(T x, Class<? extends T> clazz) throws ParseDataException, NumberFormatException {
 		addHash(x);
 		return x;
 	}
@@ -164,7 +164,7 @@ public class HashData extends ValueData {
 		return x;
 	}
 	
-	public <T extends DataObject> T add(T x, String clazz) throws ParseDataException, NumberFormatException {
+	public <T extends DataObject> T addCast(T x, String clazz) throws ParseDataException, NumberFormatException {
 		addHash(x);
 		return x;
 	}

@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
+import com.platforge.data.field.StrictFieldData;
 
 public class Map extends GameData {
 	private static final long serialVersionUID = 9L;
@@ -18,7 +18,7 @@ public class Map extends GameData {
 
 	@Deprecated
 	public MapLayer actorLayer;
-	@Deprecated
+	// shouldn't persist any longer, but have to keep non-trans for serialization
 	public Serializable editorData;
 	
 	public String name;
@@ -38,28 +38,28 @@ public class Map extends GameData {
 	
 
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		name = fields.add(name);
-		tilesetId = fields.add(tilesetId);
-		rows = fields.add(rows);
-		columns = fields.add(columns);
-		groundY = fields.add(groundY);
-		groundImageName = fields.add(groundImageName);
-		skyImageName = fields.add(skyImageName);
-		gravity = fields.add(gravity);
+		name = fields.add(name, "name");
+		tilesetId = fields.add(tilesetId, "tilesetId");
+		rows = fields.add(rows, "rows");
+		columns = fields.add(columns, "columns");
+		groundY = fields.add(groundY, "groundY");
+		groundImageName = fields.add(groundImageName, "groundImageName");
+		skyImageName = fields.add(skyImageName, "skyImageName");
+		gravity = fields.add(gravity, "gravity");
 		
-		int length = fields.add(events == null ? 0 : events.length);
+		int length = fields.add(events == null ? 0 : events.length, "nEvents");
 		if (fields.readMode() && (events == null || events.length != length)) {
 			events = new Event[length];
 		}
-		events = fields.addArray(events);
+		events = fields.addArray(events, "events");
 		
-		fields.addArray(layers); 
-		fields.addList(actors);
-		fields.addList(objects);
-		fields.addList(behaviors);
-		fields.addStringList(midGrounds);
+		fields.addArray(layers, "layers"); 
+		fields.addList(actors, "actors");
+		fields.addList(objects, "objects");
+		fields.addList(behaviors, "behaviors");
+		fields.addStringList(midGrounds, "midGrounds");
 	}
 	
 	public static Constructor constructor() {

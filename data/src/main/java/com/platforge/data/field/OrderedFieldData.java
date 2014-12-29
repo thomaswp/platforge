@@ -2,6 +2,8 @@ package com.platforge.data.field;
 
 import java.util.List;
 
+import com.platforge.data.field.FieldData.ParseDataException;
+
 public abstract class OrderedFieldData implements FieldData {
 
 	@Override
@@ -56,15 +58,21 @@ public abstract class OrderedFieldData implements FieldData {
 	}
 
 	@Override
-	public <T extends DataObject> T add(T x, Class<? extends T> clazz,
+	public <T extends DataObject> T addCast(T x, Class<? extends T> clazz,
 			String field) throws ParseDataException, NumberFormatException {
-		return add(x, clazz);
+		return addCast(x, clazz);
 	}
 
 	@Override
-	public <T extends DataObject> T add(T x, String clazz, String field)
+	public <T extends DataObject> T addCast(T x, String clazz, String field)
 			throws ParseDataException, NumberFormatException {
-		return add(x, clazz);
+		return addCast(x, clazz);
+	}
+	
+	@Override
+	public <T extends DataObject> T add(T x, String field)
+			throws ParseDataException, NumberFormatException {
+		return add(x);
 	}
 
 	@Override

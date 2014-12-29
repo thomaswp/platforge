@@ -3,8 +3,8 @@ package com.platforge.data;
 import java.io.Serializable;
 
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
+import com.platforge.data.field.StrictFieldData;
 
 public class Vector extends GameData implements Serializable{
 	private static final long serialVersionUID = 2L;
@@ -12,10 +12,10 @@ public class Vector extends GameData implements Serializable{
 	private float x, y;
 
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		x = fields.add(x);
-		y = fields.add(y);
+		x = fields.add(x, "x");
+		y = fields.add(y, "y");
 	}
 	
 	public static Constructor constructor() {

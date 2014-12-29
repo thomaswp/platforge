@@ -1,11 +1,8 @@
 package com.platforge.data;
 
 import com.platforge.data.field.DataObject;
-import com.platforge.data.field.FieldData;
 import com.platforge.data.field.FieldData.ParseDataException;
-
-import com.platforge.data.GameData;
-import com.platforge.data.MapLayer;
+import com.platforge.data.field.StrictFieldData;
 
 public class MapLayer extends GameData {
 	private static final long serialVersionUID = 2L;
@@ -17,14 +14,14 @@ public class MapLayer extends GameData {
 	public int defaultValue;
 
 	@Override
-	public void addFields(FieldData fields) throws ParseDataException,
+	public void addFields(StrictFieldData fields) throws ParseDataException,
 			NumberFormatException {
-		name = fields.add(name);
-		rows = fields.add(rows);
-		columns = fields.add(columns);
-		tiles = fields.add2DArray(tiles);
-		active = fields.add(active);
-		defaultValue = fields.add(defaultValue);
+		name = fields.add(name, "name");
+		rows = fields.add(rows, "rows");
+		columns = fields.add(columns, "columns");
+		tiles = fields.add2DArray(tiles, "tiles");
+		active = fields.add(active, "active");
+		defaultValue = fields.add(defaultValue, "defaultValue");
 	}
 	
 	public static Constructor constructor() {
