@@ -38,7 +38,6 @@ public class ConversionObjectInputStream extends ObjectInputStream {
             throws IOException, ClassNotFoundException {
         ObjectStreamClass desc = super.readClassDescriptor();
         String name = desc.getName();
-    	System.out.println(name);
         if (classNameMapping.containsKey(name)) {
         	Class<?> clazz = classNameMapping.get(name);
         	return clazz == null ? desc : ObjectStreamClass.lookup(clazz);

@@ -12,6 +12,7 @@ import com.platforge.data.Formatter;
 import com.platforge.data.Formatter.Impl;
 import com.platforge.data.PlatformGame;
 import com.platforge.data.Upgrader;
+import com.platforge.data.field.JsonSerializer;
 import com.platforge.data.field.PersistData;
 import com.platforge.player.core.Platforge;
 
@@ -37,12 +38,16 @@ public class PlatforgeJava {
 			ois.close();
 			Upgrader.upgrade(game);
 			
-			String data = PersistData.persistData(game);
-			BufferedWriter writer = new BufferedWriter(new FileWriter("game.txt"));
-			writer.write(data);
-			writer.close();
+			String data = JsonSerializer.toJson(game);
+			System.out.println(data);
 			
-			PlayN.run(new Platforge(data));
+//			String data = PersistData.persistData(game);
+//			BufferedWriter writer = new BufferedWriter(new FileWriter("game.txt"));
+//			writer.write(data);
+//			writer.close();
+			
+			PlatformGame game2 = JsonSerializer.fromJson(data, PlatformGame.class);
+			PlayN.run(new Platforge(game2));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,7 +1,9 @@
 package com.platforge.data.field;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import playn.core.Json;
 import playn.core.Json.Array;
@@ -21,27 +23,56 @@ public class JsonSerializer implements FieldData {
 	private Writer writer;
 	private Json.Object obj;
 	private boolean write;
+	private ArrayList<DataObject> seenObjects = new ArrayList<DataObject>();
+	
+	private Set<String> keys = new HashSet<String>();
+	
+	private int seenObjectIndex(DataObject object) {
+		int size = seenObjects.size();
+		for (int i = 0; i < size; i++) if (object == seenObjects.get(i)) return i;
+		return -1;
+	}
 	
 	public static String toJson(DataObject data) {
 		JsonSerializer serializer = new JsonSerializer();
 		serializer.writer = json.newWriter();
 		serializer.write = true;
 		try {
-			serializer.write(data);
+			serializer.write(data, null);
 			return serializer.writer.write();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	private void write(DataObject data) throws NumberFormatException, ParseDataException {
-		write(data, data == null ? null : data.getClass().getName());
+	private void write(DataObject data, String key) throws NumberFormatException, ParseDataException {
+		write(data, key, data == null ? null : data.getClass().getName());
 	}
 	
-	private void write(DataObject data, String className) throws NumberFormatException, ParseDataException {
-		writer.object();
+	private void write(DataObject data, String key, String className) throws NumberFormatException, ParseDataException {
+		if (data == null) {
+			writer.nul(key);
+			return;
+		}
+		int index = seenObjectIndex(data);
+		if (index >= 0) {
+			writer.value(key, index);
+			return;
+		}
+		index = seenObjects.size();
+		seenObjects.add(data);
+		if (key == null) {
+			writer.object();
+		} else {
+			writer.object(key);
+		}
+		Set<String> stackKeys = this.keys;
+		this.keys = new HashSet<String>();
 		writer.value(key("class"), className(className));
+		writer.value(key("id"), index);
 		data.addFields(this);
+		this.keys = stackKeys;
 		writer.end();
 	}
 
@@ -56,18 +87,34 @@ public class JsonSerializer implements FieldData {
 		try {
 			return (T) serializer.read(JsonSerializer.json.parse(json));
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
 	
+	private DataObject read(String key) throws ParseDataException {
+		if (obj.isNumber(key))  {
+			int index = obj.getInt(key);
+			return seenObjects.get(index);
+		}
+		return read(obj.getObject(key));
+	}
+	
 	private DataObject read(Json.Object obj) throws ParseDataException {
-		String className = nameClass(obj.getString("class"));
+		if (obj == null) return null;
+		Json.Object stackObj = this.obj;
+		Set<String> stackKeys = this.keys;
+		this.obj = obj;
+		this.keys = new HashSet<String>();
+		String className = nameClass(obj.getString(key("class")));
+		int id = obj.getInt(key("id"));
 		if (className == null) return null;
 		DataObject data = Constructor.construct(className);
-		Json.Object stackHead = this.obj;
-		this.obj = obj;
 		data.addFields(this);
-		this.obj = stackHead;
+		this.obj = stackObj;
+		this.keys = stackKeys;
+		while (seenObjects.size() <= id) seenObjects.add(null);
+		seenObjects.set(id, data);
 		return data;
 		
 	}
@@ -76,7 +123,24 @@ public class JsonSerializer implements FieldData {
 		return null;
 	}
 	
+	private String tempKey() {
+		return "__k" + keys.size();
+	}
+	
+	private String keyName(String key) {
+		if (key == null) {
+			key = tempKey();
+		}
+		while (keys.contains(key)) {
+			key += "_";
+		}
+		return key;
+		
+	}
+	
 	private String key(String key) {
+		key = keyName(key);
+		keys.add(key);
 		return key;
 	}
 	
@@ -98,10 +162,6 @@ public class JsonSerializer implements FieldData {
 		return !write;
 	}
 
-	private void checkMissingKey(String key) throws ParseDataException {
-		if (!obj.containsKey(key)) throw new ParseDataException("Missing key " + key);
-	}
-
 	private void invalidArrayLength()
 			throws ParseDataException {
 		throw new ParseDataException("Array length mismatch");
@@ -120,7 +180,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return 0;
 			return obj.getInt(key);
 		}
 	}
@@ -138,7 +198,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return 0;
 			return obj.getLong(key);
 		}
 	}
@@ -156,7 +216,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return 0;
 			return (short) obj.getInt(key);
 		}
 	}
@@ -174,7 +234,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return 0;
 			return (float) obj.getDouble(key);
 		}
 	}
@@ -193,7 +253,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return 0;
 			return obj.getDouble(key);
 		}
 	}
@@ -211,7 +271,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return 0;
 			return (byte) obj.getInt(key);
 		}
 	}
@@ -228,7 +288,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return 0;
 			String s = obj.getString(key);
 			if (s.length() != 1) throw new ParseDataException("Char must be saved as string of length 1");
 			return s.charAt(0);
@@ -247,7 +307,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return false;
 			return obj.getBoolean(key);
 		}
 	}
@@ -264,7 +324,7 @@ public class JsonSerializer implements FieldData {
 			writer.value(key, x);
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return null;
 			return obj.getString(key);
 		}
 	}
@@ -299,13 +359,11 @@ public class JsonSerializer implements FieldData {
 			throws ParseDataException, NumberFormatException {
 		String key = key(field);
 		if (write) {
-			writer.object(key);
-			write(x, clazz);
-			writer.end();
+			write(x, key, clazz);
 			return x;
 		} else {
-			checkMissingKey(key);
-			return (T) read(obj.getObject(key));
+			if (!obj.containsKey(key)) return null;
+			return (T) read(key);
 		}
 	}
 	
@@ -322,13 +380,16 @@ public class JsonSerializer implements FieldData {
 				writer.end();
 			}
 		} else {
+			if (!obj.containsKey(key)) return null;
 			Array a = obj.getArray(key);
 			if (a == null) return null;
 			int length = a.length();
 			if (x == null || io.length(x) != length) {
 				x = io.create(length);
 			}
-			for (int i = 0; i < length; i++) io.set(x, i, a.getObject(i).toString());
+			for (int i = 0; i < length; i++) {
+				io.set(x, a, i);
+			}
 		}
 		return x;
 	}
@@ -389,7 +450,7 @@ public class JsonSerializer implements FieldData {
 			writer.end();
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return null;
 			Array a = obj.getArray(key);
 			if (x == null || x.length != a.length()) x = new int[a.length()][];
 			for (int i = 0; i < x.length; i++) {
@@ -415,15 +476,21 @@ public class JsonSerializer implements FieldData {
 		String key = key(field);
 		if (write) {
 			writer.array(key);
-			for (T v : x) write(v);
+			for (T v : x) write(v, null);
 			writer.end();
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return null;
 			Array a = obj.getArray(key);
 			if (x == null) throw new ParseDataException("Array cannot be null");
 			if (x.length != a.length()) invalidArrayLength();
-			for (int i = 0; i < x.length; i++) x[i] = (T) read(obj);
+			for (int i = 0; i < x.length; i++) {
+				if (a.isNumber(i)) {
+					x[i] = (T) seenObjects.get((int) a.getNumber(i));
+				} else {
+					x[i] = (T) read(a.getObject(i));
+				}
+			}
 			return x;
 		}
 	}
@@ -455,16 +522,22 @@ public class JsonSerializer implements FieldData {
 		String key = key(field);
 		if (write) {
 			writer.array(key);
-			for (T v : x) write(v);
+			for (T v : x) write(v, null);
 			writer.end();
 			return x;
 		} else {
-			checkMissingKey(key);
+			if (!obj.containsKey(key)) return null;
 			Array a = obj.getArray(key);
 			if (x == null) throw new ParseDataException("List cannot be null");
 			x.clear();
 			int size = a.length();
-			for (int i = 0; i < size; i++) x.add((T) read(obj));
+			for (int i = 0; i < size; i++) {
+				if (a.isNumber(i)) {
+					x.add((T) seenObjects.get((int) a.getNumber(i)));
+				} else {
+					x.add((T) read(a.getObject(i)));
+				}
+			}
 			return x;
 		}
 	}

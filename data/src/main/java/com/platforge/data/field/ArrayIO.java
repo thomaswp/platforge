@@ -1,5 +1,7 @@
 package com.platforge.data.field;
 
+import playn.core.Json.Array;
+
 import com.platforge.data.field.ArrayHash;
 import com.platforge.data.field.ArrayIO;
 
@@ -9,6 +11,7 @@ public abstract class ArrayIO extends ArrayHash {
 	public abstract void set(Object x, int index, String value);
 	public abstract Object create(int length);
 	public abstract Object readObject(Object x, int i);
+	public abstract void set(Object x, Array a, int i);
 	
 	public final static ArrayIO intIO = new ArrayIO() {
 		
@@ -19,6 +22,11 @@ public abstract class ArrayIO extends ArrayHash {
 		@Override
 		public void set(Object x, int index, String value) {
 			cast(x)[index] = Integer.parseInt(value);
+		}
+
+		@Override
+		public void set(Object x, Array a, int index) {
+			cast(x)[index] = a.getInt(index);
 		}
 		
 		@Override
@@ -62,6 +70,11 @@ public abstract class ArrayIO extends ArrayHash {
 		public void set(Object x, int index, String value) {
 			cast(x)[index] = Boolean.parseBoolean(value);
 		}
+
+		@Override
+		public void set(Object x, Array a, int index) {
+			cast(x)[index] = a.getBoolean(index);
+		}
 		
 		@Override
 		public String read(Object x, int index) {
@@ -103,6 +116,11 @@ public abstract class ArrayIO extends ArrayHash {
 		@Override
 		public void set(Object x, int index, String value) {
 			cast(x)[index] = value;
+		}
+
+		@Override
+		public void set(Object x, Array a, int index) {
+			cast(x)[index] = a.getString(index);
 		}
 		
 		@Override
