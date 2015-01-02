@@ -174,7 +174,7 @@ public class Event extends GameData {
 				fields.add(params.size(), "nParams");
 				int i = 0;
 				for (Object o : params) {
-					String name = o == null ? null : o.getClass().getName(); 
+					String name = o == null ? null : Constructor.className(o.getClass()); 
 					fields.add(name, "class" + i);
 					String field = "v" + i;
 					if (o == null) {

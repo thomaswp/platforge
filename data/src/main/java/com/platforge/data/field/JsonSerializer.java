@@ -108,7 +108,7 @@ public class JsonSerializer implements FieldData {
 		Set<String> stackKeys = this.keys;
 		this.obj = obj;
 		this.keys = new HashSet<String>();
-		String className = nameClass(obj.getString(key(CLASS)));
+		String className = obj.getString(key(CLASS));
 		int id = obj.getInt(key(ID));
 		if (className == null) return null;
 		DataObject data = Constructor.construct(className);
@@ -146,12 +146,8 @@ public class JsonSerializer implements FieldData {
 		return key;
 	}
 	
-	private String className(String clazz) {
-		return clazz;
-	}
-	
-	private String nameClass(String name) {
-		return name;
+	private String className(String clazz) throws ParseDataException {
+		return Constructor.className(clazz);
 	}
 	
 	@Override
